@@ -2,7 +2,7 @@ class CreateSpeaches < ActiveRecord::Migration
   def change
     create_table :speaches do |t|
     	t.string :title
- 	t.text :description
+ 	    t.text :description
     	t.datetime :date
     	t.string :image
     	t.string :video

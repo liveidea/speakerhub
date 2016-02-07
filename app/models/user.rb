@@ -7,4 +7,9 @@ class User < ActiveRecord::Base
    has_many :conferences
    has_many :speaches
    has_many :themes
+
+
+   def speech? #some calual method for tests, that isnt supposed to do anything special
+     self.speaches.any?
+   end
 end
