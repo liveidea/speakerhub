@@ -1,28 +1,21 @@
-== README
+== Task
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The user can following:
 
-Things you may want to cover:
+* Create Speach
 
-* Ruby version
+* Create Conference
 
-* System dependencies
+* See speakers
 
-* Configuration
+* Search and filtering speakers
 
-* Database creation
+* See conferences
 
-* Database initialization
+* See his performances
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
+* See his conferences
 
 * ...
 
-
-Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
