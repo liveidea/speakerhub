@@ -1,6 +1,5 @@
-# FactoryGirl.define do
-#   factory :user do
-#     first_name "John"
-#     last_name  "Doe"
-#     admin false
-#   end
+FactoryGirl.define do
+  factory :city do
+    name "Lviv"
+  end
+end

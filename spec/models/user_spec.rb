@@ -2,28 +2,17 @@ require "rails_helper"
 
 RSpec.describe User, :type => :model do
 
-  it "should do something" do
-  	expect(1 + 1).to eq 2
-  end
-
   it "validates the name and makes sure it isn't empty" do
-  	user = User.new(f_name: "")
+  	user = build(:user, f_name: "")
   	user.valid?
   	expect(user.errors[:f_name]).not_to be_empty
   end
 
-  # it "calculates total count of users speeches" do
-  #   speech1 = FactoryGirl.create(:speech)
-  #   expect(speech1.place).to eq "Lviv" 
-  # end
-
-
-
   it "calculates total count of users speeches" do
     speech1 = create(:speech)
-  	speech2 = FactoryGirl.create(:speech)
+  	speech2 = create(:speech)
 
-  	user1 = FactoryGirl.create(:user)
+  	user1 = create(:user)
     user1.speeches << speech1
     user1.speeches << speech2
 
@@ -31,9 +20,23 @@ RSpec.describe User, :type => :model do
   	expect(user1.total_speeches).to eq 2
   end
 
+  it "validates email and makes sure it is not wrong" do
+    user = build(:user, email: "text")
+    expect(user.valid?).to be false
+  end
 
+  it "validates emails and makes sure it is unique" do
+    user1 = create(:user)
+    user2 = build(:user)
+    user2.email = user1.email
+    user2.save
+    expect(user2.valid?).to be false
+  end
 
-
-
+  it "shows user-city assosiation works well" do
+    user = build(:user)
+    user.city = build(:city, name: "Berlin")
+    expect(user.city.name).to eq "Berlin"
+  end
 
 end

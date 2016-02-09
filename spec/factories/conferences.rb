@@ -1,6 +1,8 @@
-# FactoryGirl.define do
-#   factory :user do
-#     first_name "John"
-#     last_name  "Doe"
-#     admin false
-#   end
+FactoryGirl.define do
+  factory :conference do
+    title 			"Automation"
+    description "Some text"
+    place 			"Lviv"
+    date        Time.now
+  end
+end
