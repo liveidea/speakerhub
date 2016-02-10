@@ -19,7 +19,7 @@ class SpeechesController < ApplicationController
   def new
     @speech = Speech.new
   end
-
+  
   # GET /speeches/1/edit
   def edit
   end
