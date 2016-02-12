@@ -1,19 +1,16 @@
 require 'rails_helper'
-require 'capybara/rails'
+#require 'spec_helper'
 #include RSpecHtmlMatchers
 
-RSpec.describe StaticPagesController, type: :controller do
+RSpec.describe StaticPagesController, :type => :feature do
 
   describe "GET #home" do
     it "returns http success" do
       get :home
       expect(response).to have_http_status(:success)
-      expect(page).to have_tag('h1')
+      # visit '/'
+      # expect(page).to have_tag("h2")
       
-      #response.should have_tag('h1')
-      #expect(rendered).to have_tag('h1')
-      #expect(page).to have_css('title', :text => 'Home | Speakerhub')
-      #assert_select "title", "Home | Speakerhub"
     end
   end
 
@@ -21,7 +18,6 @@ RSpec.describe StaticPagesController, type: :controller do
     it "returns http success" do
       get :help
       expect(response).to have_http_status(:success)
-      #assert_select "title", "Help | Speakerhub"
     end
   end
 
@@ -29,7 +25,6 @@ RSpec.describe StaticPagesController, type: :controller do
     it "returns http success" do
       get :about
       expect(response).to have_http_status(:success)
-      #assert_select "title", "About | Speakerhub"
     end
   end
 
