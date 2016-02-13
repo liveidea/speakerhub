@@ -1,0 +1,15 @@
+%h1 Listing accounts
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    = render @accounts
+.pagination= paginate @accounts, theme: 'twitter-bootstrap-3'
+%br
+
+= link_to 'New Account', new_account_path

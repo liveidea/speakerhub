@@ -46,7 +46,15 @@ RSpec.describe User, :type => :model do
 
   it "should rewrite user f_name to account f_name" do
     user = create(:user)
+    expect(user.f_name).not_to be_nil
     expect(user.f_name).to eq user.account.f_name
+  end
+
+  it "should rewrite user f_name to account f_name" do
+    user = create(:user)
+    expect(user.f_name).to eq user.account.f_name
+    expect(user.l_name).to eq user.account.l_name
+
   end
 
 end
