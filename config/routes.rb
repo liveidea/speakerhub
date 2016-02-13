@@ -2,8 +2,11 @@ Rails.application.routes.draw do
   root 'static_pages#home'
   get 'static_pages/help', path: '/help'
   get 'static_pages/about', path: 'about'
-
+  #resources :accounts
   devise_for :users
+  resources :users do
+    resources :accounts
+  end
   resources :speeches
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

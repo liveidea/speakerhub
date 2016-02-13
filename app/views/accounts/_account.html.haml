@@ -1,0 +1,7 @@
+%table.table
+  %tbody
+    %tr
+      %td=account.f_name
+      %td=link_to('Edit account' ,edit_user_account_path(:user_id,account))
+      %td=link_to('Show account',user_account_path(:user_id,account))
+      %td=link_to('Delete account',user_account_path(:user_Id,account), method: :delete)

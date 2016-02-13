@@ -5,7 +5,7 @@ class CreateConferences < ActiveRecord::Migration
     	t.text :description
     	t.string :place
     	t.datetime :date
-    	t.belongs_to :user
+#    	t.belongs_to :user
       t.timestamps null: false
     end
   end

@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
    has_many :speeches
    has_and_belongs_to_many :themes
    belongs_to :account
-   attr_accessor :f_name
+   attr_accessor :f_name, :l_name
    after_create :account_create
 
    def total_speeches
@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
    end
 
    def account_create
-     self.create_account(f_name: f_name)
+     self.create_account(f_name: f_name, l_name: l_name)
      self.save
    end
 
