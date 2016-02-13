@@ -2,7 +2,7 @@ require 'rails_helper'
 #require 'spec_helper'
 #include RSpecHtmlMatchers
 
-RSpec.describe StaticPagesController, :type => :feature do
+RSpec.describe StaticPagesController, :type => :controller do
 
   describe "GET #home" do
     it "returns http success" do
