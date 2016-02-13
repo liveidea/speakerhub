@@ -74,6 +74,7 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-bootstrap-views (0.0.7)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.6.0)
@@ -234,11 +235,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap-sass (~> 3.3.6)
+  bootstrap-sass
   byebug
   capybara
   coffee-rails (~> 4.1.0)
   devise
+  devise-bootstrap-views
   factory_girl_rails
   haml-rails (~> 0.9)
   jbuilder (~> 2.0)

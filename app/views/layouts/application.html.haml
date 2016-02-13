@@ -1,4 +1,3 @@
-!!!
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
@@ -8,9 +7,19 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  %body
-    - if user_signed_in?
-      %li= link_to('Logout', destroy_user_session_path, :method => :delete)
-    - else
-      %li= link_to('Login', new_user_session_path)
+    %body
+      %nav.navbar.navbar-inverse
+        .container-fluid
+          .navbar-header
+            %ul.nav.navbar-nav
+              %li=link_to('Speakerhub',root_path,class: 'navbar-brand')
+              %li=link_to('Speakers','#')
+              %li=link_to('Conferences','#')
+              %li=link_to('My speeches','#')
+              %li=link_to('My conferences','#')
+          %ul.nav.navbar-nav.navbar-right
+            - if user_signed_in?
+              %li= link_to('Logout', destroy_user_session_path, :method => :delete)
+            - else
+              %li= link_to('Login', new_user_session_path)
     = yield
