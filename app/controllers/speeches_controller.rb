@@ -14,7 +14,7 @@ class SpeechesController < ApplicationController
       render text: "Speech not found", status: 404
     end
   end
-
+  
   # GET /speeches/new
   def new
     @speech = Speech.new
@@ -53,7 +53,6 @@ class SpeechesController < ApplicationController
       end
     end
   end
-
   # DELETE /speeches/1
   # DELETE /speeches/1.json
   def destroy
