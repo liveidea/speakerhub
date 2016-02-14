@@ -28,6 +28,7 @@ class SpeechesController < ApplicationController
   # POST /speeches.json
   def create
     @speech = Speech.new(speech_params)
+    @speech.user = current_user
 
     respond_to do |format|
       if @speech.save
@@ -61,6 +62,10 @@ class SpeechesController < ApplicationController
       format.html { redirect_to speeches_url, notice: 'Speech was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def my_speeches
+    @my_speeches = Speech.where(user_id: current_user)
   end
 
   private

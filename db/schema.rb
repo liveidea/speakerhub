@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160213140733) do
+ActiveRecord::Schema.define(version: 20160214123018) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "f_name",           limit: 255
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20160213140733) do
     t.string   "skype_account",    limit: 255
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.string   "image",            limit: 255
   end
 
   create_table "cities", force: :cascade do |t|
@@ -50,11 +51,11 @@ ActiveRecord::Schema.define(version: 20160213140733) do
     t.integer  "conference_id", limit: 4
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.integer  "theme_id",      limit: 4
   end
 
   create_table "themes", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.integer  "speech_id",  limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end

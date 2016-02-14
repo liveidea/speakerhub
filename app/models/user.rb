@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
    def account_create
      self.create_account(f_name: f_name, l_name: l_name)
      self.save
-     binding.pry
+     #binding.pry
    end
 
 
