@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160213144805) do
+ActiveRecord::Schema.define(version: 20160214104500) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "f_name",           limit: 255
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20160213144805) do
     t.string   "skype_account",    limit: 255
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.string   "image",            limit: 255
   end
 
   create_table "cities", force: :cascade do |t|

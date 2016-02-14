@@ -1,6 +1,23 @@
 %p#notice= notice
 
-
+First name:
+=@account.f_name
+%br
+Last name:
+=@account.l_name
+%br
+Phone number:
+=@account.phone
+%br
+Facebook account:
+=@account.facebook_account
+%br
+Skype account:
+=@account.skype_account
+%br
+Photo:
+=image_tag @account.image.show
+%br
 = link_to 'Edit', edit_account_path(@account)
 \|
-= link_to 'Back', accounts_path
+= link_to 'Back', account_path
