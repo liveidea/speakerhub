@@ -5,8 +5,13 @@ Rails.application.routes.draw do
   get 'contact' => 'static_pages#contact'
 
   devise_for :users
+
+
   resources :speeches
   resources :accounts
+  resources :conferences do
+      get :my_conferences, on: :collection
+    end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
