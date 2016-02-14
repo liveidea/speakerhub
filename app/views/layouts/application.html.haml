@@ -17,8 +17,7 @@
               %li=link_to('Conferences','#')
               %li=link_to('My speeches','#')
               %li=link_to('My conferences','#')
-              %li=link_to('My account',user_account_path(:user_id, :account_id))
-              %li=link_to('All accounts',user_accounts_path(:user_id, :account_id))
+              %li=link_to('My account','#')
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
               %li= link_to('Logout', destroy_user_session_path, :method => :delete)
