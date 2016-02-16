@@ -1,0 +1,19 @@
+%h1 My conferences
+.container.table_size
+  %table.table.table-hover
+    %thead
+      %tr
+        %th Title
+        %th Adress
+        %th Start date
+        %th Finish date
+    %tbody
+      - @my_conferences.each do |my_conference|
+        %tr
+          %td= my_conference.title
+          %td= my_conference.place
+          %td= my_conference.start_date.to_date
+          %td= my_conference.finish_date.to_date
+          %td= link_to 'Show', my_conference
+          %td= link_to 'Edit', edit_conference_path(my_conference)
+          %td= link_to 'Destroy', my_conference, :method => :delete, :data => { :confirm => 'Are you sure?' }

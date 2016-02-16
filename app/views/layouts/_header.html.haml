@@ -4,14 +4,42 @@
       %ul.nav.navbar-nav
         %li=link_to('Speakerhub',root_path,class: 'navbar-brand')
         %li=link_to('Speeches', speeches_path)
-        %li=link_to('Conferences','#')
-        %li=link_to('My speeches', my_speeches_speeches_path)
-        %li=link_to('My conferences','#')
+        %li=link_to('Conferences',conferences_path)
     %ul.nav.navbar-nav.navbar-right
-      %li= link_to "Home", root_path
-      %li= link_to "Help", help_path
+      %li
+        -if user_signed_in? == false
+          = link_to(new_user_session_path) do
+            Login
+            %span.glyphicon.glyphicon-log-in
+      -# %li= link_to "Help", help_path
       - if user_signed_in?
-        %li= link_to('My account', account_path(current_user.account))
-        %li= link_to('Logout', destroy_user_session_path, :method => :delete)
-      - else
-        %li= link_to('Login', new_user_session_path)
+        %li.dropdown
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            Hello,
+            =current_user.account.f_name
+            %span.caret
+          %ul.dropdown-menu
+            %li
+              =link_to(my_speeches_speeches_path) do
+                My conferences
+                %span.glyphicon.glyphicon-pencil
+            %li
+              =link_to(my_conferences_conferences_path) do
+                My Speeches
+                %span.glyphicon.glyphicon-blackboard
+            %li
+              =link_to(new_conference_path) do
+                Create conference
+                %span.glyphicon.glyphicon-plus
+            %li
+              =link_to(new_speech_path) do
+                Create Speech
+                %span.glyphicon.glyphicon-plus
+            %li
+              =link_to(account_path(current_user.account, class: "list-group-item")) do
+                Account
+                %span.glyphicon.glyphicon-user
+            %li
+              =link_to(destroy_user_session_path, :method => :delete) do
+                Logout
+                %span.glyphicon.glyphicon-log-out

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+
+%p=@conference.title
+%p=@conference.description
+%p=@conference.place
+%p=@conference.start_date.to_date
+%p=@conference.finish_date
+
+= link_to 'Edit', edit_conference_path(@conference)
+\|
+= link_to 'Back', conferences_path

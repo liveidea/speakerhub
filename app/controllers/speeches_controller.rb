@@ -14,12 +14,12 @@ class SpeechesController < ApplicationController
       render text: "Speech not found", status: 404
     end
   end
-  
+
   # GET /speeches/new
   def new
     @speech = Speech.new
   end
-  
+
   # GET /speeches/1/edit
   def edit
   end
@@ -76,6 +76,6 @@ class SpeechesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def speech_params
-      params.require(:speech).permit(:title, :description, :place, :date, :image, :video )
+      params.require(:speech).permit(:title, :description, :place, :date, :image, :video,:theme_id,:conference_id )
     end
 end
