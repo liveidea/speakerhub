@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     get 'my_speeches', on: :collection
   end
   resources :accounts
+  resources :conferences do
+      get :my_conferences, on: :collection
+    end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

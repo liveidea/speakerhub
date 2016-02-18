@@ -4,7 +4,17 @@ class SpeechesController < ApplicationController
   # GET /speeches
   # GET /speeches.json
   def index
-    @speeches = Speech.all
+    # @speeches = Speech.all
+
+    @speeches = Speech.where(nil) # creates an anonymous scope
+    @speeches = @speeches.location(params[:place]) if params[:place].present?
+    @speeches = @speeches.theme(params[:theme]) if params[:theme].present?
+    @speeches = @speeches.joins(:theme).order('themes.name') if params[:sort_by_theme] ==  'on'
+    @speeches = @speeches.order(:title) if params[:sort_by_title] ==  'on'
+    @speeches = @speeches.order(:place) if params[:sort_by_city] ==  'on'
+    @speeches = @speeches.order(:date ) if params[:sort_by_date] ==  'on'
+    # @speeches = @products.location(params[:location]) if params[:location].present?
+    # @speeches = @products.starts_with(params[:starts_with]) if params[:starts_with].present?
   end
 
   # GET /speeches/1
@@ -14,12 +24,12 @@ class SpeechesController < ApplicationController
       render text: "Speech not found", status: 404
     end
   end
-  
+
   # GET /speeches/new
   def new
     @speech = Speech.new
   end
-  
+
   # GET /speeches/1/edit
   def edit
   end
@@ -76,6 +86,6 @@ class SpeechesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def speech_params
-      params.require(:speech).permit(:title, :description, :place, :date, :image, :video )
+      params.require(:speech).permit(:title, :description, :place, :date, :image, :video,:theme_id,:conference_id )
     end
 end
