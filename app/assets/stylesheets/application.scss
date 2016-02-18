@@ -15,7 +15,30 @@
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";
- .table_size {
+ table {
    width: 100%;
    border: 0;
  }
+
+.container
+{
+  width: 70%;
+}
+
+.speeches_conf
+{
+  float: right;
+}
+
+textarea
+{
+  width: 100px;
+  height: 100px;
+}
+
+.footer
+{
+  position: absolute;
+  bottom:0;
+  width: 70%
+}

@@ -1,23 +1,37 @@
+= stylesheet_link_tag "show_user"
+-if @account.image.file
+  =image_tag @account.image.show, class: "img-rounded"
 %p#notice= notice
-
-First name:
-=@account.f_name
-%br
-Last name:
-=@account.l_name
-%br
-Phone number:
-=@account.phone
-%br
-Facebook account:
-=@account.facebook_account
-%br
-Skype account:
-=@account.skype_account
-%br
-%p Photo:
-=image_tag @account.image.show
-%br
-= link_to 'Edit', edit_account_path(@account)
-\|
-= link_to 'Home', root_path
+.text
+  %h1.pos="#{@account.f_name} #{@account.l_name}"
+  %table.pos
+    %tr
+      %th Email:
+      %th=@account.user.email
+    -if element_present?(@account.phone)
+      %tr
+        %th Phone number:
+        %th=@account.phone
+    -if element_present?(@account.facebook_account)
+      %tr
+        %th Facebook account:
+        %th=link_to("#{@account.facebook_account}".split('/')[3],
+        @account.facebook_account, :target => "_blank")
+    -if element_present?(@account.skype_account)
+      %tr
+        %th Skype:
+        %th=@account.skype_account
+  -if current_user == @account.user
+    = link_to 'Edit account info', edit_account_path(@account), class: "btn btn-primary"
+    = link_to 'Edit user info', edit_user_registration_path(current_user), class: "btn btn-primary"
+.speech
+  -if element_present?(@account.user.speeches)
+    %h2="#{@account.f_name} speeches"
+    -speeches = @account.user.speeches.all
+    -speeches.each do |speech|
+      %p=link_to("#{speech.title}",speech_path(speech), :target => "_blank")
+  -if element_present?(@account.user.conferences)
+    %h2="#{@account.f_name} conferences"
+    -conferences = @account.user.conferences.all
+    -conferences.each do |conference|
+      %p=link_to("#{conference.title}",conference_path(conference), :target => "_blank")

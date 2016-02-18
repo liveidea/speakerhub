@@ -1,0 +1,53 @@
+img
+{
+  // position: absolute; top: 65px; left: 85px;
+  width: 200px;
+  height: 270px;
+  left: 85 px;
+}
+
+.text
+{
+  // position: absolute; top: 345px; left: 85px;
+  p
+  {
+    font-family: serif;
+    font-size: 1.5em;
+    font-style: italic;
+    text-indent: 1em;
+  }
+  left: 85px;
+  text-align: left;
+  h1
+  {
+    font-family: "Comic Sans MS", cursive, sans-serif
+  }
+  .pos
+  {
+    text-align: left;
+  }
+  th, td {
+      text-align: left;
+      padding: 8px;
+  }
+
+  tr:nth-child(even){background-color: #f2f2f2}
+}
+
+table {
+    border-collapse: collapse;
+    width: 30%;
+}
+
+
+
+.btn{
+  margin-top: 15px;
+}
+
+.speech {
+  position: absolute;
+  right: 400px;
+  top: 55px;
+  font-family: "Comic Sans MS", cursive, sans-serif
+}

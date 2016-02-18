@@ -1,19 +1,24 @@
 %h1 My conferences
-.container.table_size
-  %table.table.table-hover
-    %thead
+%table.table.table-hover
+  %thead
+    %tr
+      %th Title
+      %th Adress
+      %th Date of event
+      %th Speeches applied to conference
+  %tbody
+    - @my_conferences.each do |my_conference|
       %tr
-        %th Title
-        %th Adress
-        %th Start date
-        %th Finish date
-    %tbody
-      - @my_conferences.each do |my_conference|
-        %tr
-          %td= my_conference.title
-          %td= my_conference.place
-          %td= my_conference.start_date.to_date
-          %td= my_conference.finish_date.to_date
-          %td= link_to 'Show', my_conference
-          %td= link_to 'Edit', edit_conference_path(my_conference)
-          %td= link_to 'Destroy', my_conference, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= link_to(my_conference.title, my_conference)
+        %td= my_conference.place
+        %td
+          -if my_conference.start_date<my_conference.finish_date
+            ="#{my_conference.start_date.day}-#{my_conference.finish_date.to_formatted_s(:rfc822) }"
+          -else
+            =my_conference.start_date.to_date.to_formatted_s(:rfc822)
+        %td
+          -my_conference.speeches.each do |speech|
+            %p
+              =link_to(speech.title,speech)
+        %td= link_to 'Edit', edit_conference_path(my_conference)
+        %td= link_to 'Destroy', my_conference, :method => :delete, :data => { :confirm => 'Are you sure?' }

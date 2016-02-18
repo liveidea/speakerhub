@@ -1,10 +1,16 @@
 class ConferencesController < ApplicationController
   before_action :set_conference, only: [:show, :edit, :update, :destroy]
-
   # GET /conferences
   # GET /conferences.json
+  before_action :check_permissions, only: [:edit, :update, :destroy]
   def index
     @conferences = Conference.all
+    filtering_params(params).each do |key, value|
+      @conferences = @conferences.public_send(key, value) if value.present?
+    end
+    # @conferences = @conferences.sort_by_title(params[:title]) if params[:title].present?
+    # @conferences = @conferences.sort_by_start_date(params[:start_date]) if params[:start_date].present?
+    # @conferences = @conferences.sort_by_finish_date(params[:finish_date]) if params[:finish_date].present?
   end
 
   # GET /conferences/1
@@ -67,6 +73,10 @@ class ConferencesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def filtering_params(params)
+      params.slice(:title, :start_date, :finish_date)
+    end
+
     def set_conference
       @conference = Conference.find(params[:id])
     end
@@ -75,5 +85,13 @@ class ConferencesController < ApplicationController
     def conference_params
       #params[:conference]
       params.require(:conference).permit(:title, :description, :place, :start_date, :finish_date)
+    end
+    def check_permissions
+      if current_user == @conference.user
+        return true
+      else
+        redirect_to :root
+        flash[:alert] = "You dont have permission to view this page!"
+      end
     end
 end
