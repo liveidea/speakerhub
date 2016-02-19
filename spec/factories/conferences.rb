@@ -3,6 +3,7 @@ FactoryGirl.define do
     title 			"Automation"
     description "Some text"
     place 			"Lviv"
-    date        Time.now
+    start_date  DateTime.now.to_date
+    finish_date DateTime.now.to_date + 1.day
   end
 end

@@ -7,5 +7,5 @@ class Speech < ActiveRecord::Base
 	validates :title, presence: true
 
 	scope :location,    -> (city)  { where place: city }
-	scope :theme,       -> (theme) { Speech.where( theme: theme) }
+	scope :theme,       -> (theme) { where theme: theme }
 end

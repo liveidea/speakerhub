@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
-
+  before_action :check_permissions, only: [:edit, :update, :destroy]
   # GET /accounts
   # GET /accounts.json
   def index
@@ -71,6 +71,14 @@ class AccountsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
       #params[:account]
-      params.require(:account).permit(:f_name, :l_name, :facebook_account, :phone, :skype_account, :image, :scale)
+      params.require(:account).permit(:f_name, :l_name, :facebook_account, :phone, :skype_account, :image)
+    end
+    def check_permissions
+      if current_user == @account.user
+        return true
+      else
+        redirect_to :root
+        flash[:alert] = "You dont have permission to view this page!"
+      end
     end
 end

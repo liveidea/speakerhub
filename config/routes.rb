@@ -6,7 +6,8 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :speeches do
-    get 'my_speeches', on: :collection
+    get 'my_speeches',          on: :collection
+    get 'select_my_conference', on: :collection
   end
   resources :accounts
   resources :conferences do

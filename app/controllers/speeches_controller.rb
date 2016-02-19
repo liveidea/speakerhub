@@ -1,6 +1,6 @@
 class SpeechesController < ApplicationController
-  before_action :set_speech, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_speech, only: [:edit, :update, :destroy]
+  before_action :check_permissions, only: [:edit, :update, :destroy]
   # GET /speeches
   # GET /speeches.json
   def index
@@ -20,9 +20,8 @@ class SpeechesController < ApplicationController
   # GET /speeches/1
   # GET /speeches/1.json
   def show
-    unless @speech
-      render text: "Speech not found", status: 404
-    end
+    @speech = Speech.where(id: params[:id]).first
+    render text: "Speech not found", status: 404 unless @speech
   end
 
   # GET /speeches/new
@@ -78,6 +77,11 @@ class SpeechesController < ApplicationController
     @my_speeches = Speech.where(user_id: current_user)
   end
 
+  def select_my_conference
+    @conferences = Conference.all
+    #@conference_id = params
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_speech
@@ -87,5 +91,14 @@ class SpeechesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def speech_params
       params.require(:speech).permit(:title, :description, :place, :date, :image, :video,:theme_id,:conference_id )
+    end
+
+    def check_permissions
+      if current_user == @speech.user
+        return true
+      else
+        redirect_to :root
+        flash[:alert] = "You dont have permission to view this page!"
+      end
     end
 end

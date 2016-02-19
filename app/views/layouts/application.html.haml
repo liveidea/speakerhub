@@ -8,6 +8,8 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
     %body
+      -if flash[:alert]
+        =content_tag(:div, flash[:alert], class: "alert alert-danger")
       = render 'layouts/header'
       .container
         = yield

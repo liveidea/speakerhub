@@ -11,28 +11,37 @@
               %li= message
 
       .form-group
-        =f.label :theme
-        =f.select :theme_id, options_for_select(Theme.all.pluck(:name, :id), params[:place]), {:prompt => "Select"}, {:class => "form-control"}
+        = f.label :theme
+        = f.select :theme_id, options_for_select(Theme.all.pluck(:name, :id), params[:place]), {:prompt => "Select"}, {:class => "form-control"}
       .form-group
         =f.label :Conference
         =f.select :conference_id, Conference.all.pluck(:title, :id), autofocus: true, class: "form-control"
+      / .form-group
+      /   = f.label :conference
+      /   = link_to 'Select Conference', select_my_conference_speeches_path, class: "btn btn-success form-control", style: "float: right !important; margin-top: 0;"
+      /   / =f.check_box :title, {style: "width: 30px; height: 30px;"}
+      .form-group.has-warning.has-feedback
+        = f.label :title
+        = f.text_field :title, autofocus: true, class: "form-control"
+        %span.glyphicon.glyphicon-warning-sign.form-control-feedback
       .form-group
-        =f.label :title
-        =f.text_field :title, autofocus: true, class: "form-control"
+        = f.label :description
+        = f.text_area :description, autofocus: true, class: "form-control"
       .form-group
-        =f.label :description
-        =f.text_area :description, autofocus: true, class: "form-control"
-      .form-group
-        =f.label :place
-        =f.select :place, options_for_select(City.pluck(:name), params[:place]), {:prompt => "Select"}, {:class => "form-control"}
-      .form-group
-        =f.label :date
+        = f.label :place
+        = f.select :place, options_for_select(City.pluck(:name), params[:place]), {:prompt => "Select"}, {:class => "form-control"}
+      .form-group.has-warning.has-feedback
+        = f.label :date
         %br
-        =f.date_select :date, {prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, {style: "border-radius: 10px"}
+        = f.date_field :date, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, class: "form-control"
+        %span.glyphicon.glyphicon-warning-sign.form-control-feedback
       .form-group
-        =f.label :image
-        =f.file_field :image, autofocus: true, class: "form-control"
+        = f.label :image
+        = f.file_field :image, autofocus: true, class: "form-control"
       .form-group
-        =f.label :video
-        =f.text_field :video, autofocus: true, class: "form-control", placeholder: "Enter link"
+        = f.label :video
+        = f.text_field :video, autofocus: true, class: "form-control", placeholder: "Enter link"
       = f.submit class: "btn btn-primary"
+%p{style: "float: right !important;"}
+  %span.glyphicon.glyphicon-warning-sign
+  Required fields

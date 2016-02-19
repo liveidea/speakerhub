@@ -1,4 +1,4 @@
-%nav.navbar.navbar-fixed-top.navbar-inverse
+%nav.navbar.navbar-inverse.navbar-fixed-top.navbar-color
   .container-fluid
     .navbar-header
       %ul.nav.navbar-nav
@@ -24,11 +24,11 @@
           %ul.dropdown-menu
             %li
               =link_to(my_speeches_speeches_path) do
-                My conferences
+                My speeches
                 %span.glyphicon.glyphicon-pencil
             %li
               =link_to(my_conferences_conferences_path) do
-                My Speeches
+                My conferences
                 %span.glyphicon.glyphicon-blackboard
             %li
               =link_to(new_conference_path) do
