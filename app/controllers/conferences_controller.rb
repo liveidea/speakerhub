@@ -8,7 +8,7 @@ class ConferencesController < ApplicationController
     filtering_params(params).each do |key, value|
       @conferences = @conferences.public_send(key, value) if value.present?
     end
-    # @conferences = @conferences.sort_by_title(params[:title]) if params[:title].present?
+    @conferences = @conferences.title(params[:title]) if params[:title].present?
     # @conferences = @conferences.sort_by_start_date(params[:start_date]) if params[:start_date].present?
     # @conferences = @conferences.sort_by_finish_date(params[:finish_date]) if params[:finish_date].present?
   end
@@ -66,7 +66,7 @@ class ConferencesController < ApplicationController
   def destroy
     @conference.destroy
     respond_to do |format|
-      format.html { redirect_to conferences_url, notice: 'Conference was successfully destroyed.' }
+      format.html { redirect_to my_conferences_conferences_url, notice: 'Conference was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -74,7 +74,7 @@ class ConferencesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def filtering_params(params)
-      params.slice(:title, :start_date, :finish_date)
+      params.slice(:start_date, :finish_date)
     end
 
     def set_conference

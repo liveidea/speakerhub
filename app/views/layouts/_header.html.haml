@@ -4,7 +4,7 @@
       %ul.nav.navbar-nav
         %li=link_to('Speakerhub',root_path,class: 'navbar-brand')
         %li=link_to('Speeches', speeches_path)
-        %li=link_to('Conferences',conferences_path)
+        %li=link_to('Conferences', conferences_path)
     %ul.nav.navbar-nav.navbar-right
       %li
         -if user_signed_in? == false
