@@ -1,3 +1,17 @@
+h1
+{
+  font-family: "Comic Sans MS", cursive, sans-serif
+}
+.pos
+{
+  text-align: left;
+}
+.acc_info_pos
+  {
+    position: absolute;
+    top: 135px;
+    left: 530px;
+  }
 img
 {
   // position: absolute; top: 65px; left: 85px;
@@ -6,8 +20,14 @@ img
   // left: 85 px;
   width: 20%;
   height: auto;
+  padding-top: 10px;
+  border-radius: 25px;
 }
-
+.index-img
+{
+  height: auto;
+  width: 40%;
+}
 .text
 {
   // position: absolute; top: 345px; left: 85px;
@@ -20,14 +40,7 @@ img
   }
   left: 85px;
   text-align: left;
-  h1
-  {
-    font-family: "Comic Sans MS", cursive, sans-serif
-  }
-  .pos
-  {
-    text-align: left;
-  }
+
   th, td {
       text-align: left;
       padding: 8px;
@@ -38,7 +51,7 @@ img
 
 table {
     border-collapse: collapse;
-    width: 30%;
+    width: 20%;
 }
 
 
@@ -49,7 +62,7 @@ table {
 
 .speech {
   position: absolute;
-  right: 400px;
-  top: 55px;
+  right: 25%;
+  top: 7%;
   font-family: "Comic Sans MS", cursive, sans-serif
 }

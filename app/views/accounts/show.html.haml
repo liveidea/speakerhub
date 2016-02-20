@@ -1,10 +1,15 @@
 = stylesheet_link_tag "show_user"
+-# .col-sm-6
+%h1.pos="#{@account.f_name} #{@account.l_name}"
 -if @account.image.file
   =image_tag @account.image.show, class: "img-rounded"
+-if current_user == @account.user
+  %br
+    = link_to 'Edit account info', edit_account_path(@account), class: "btn btn-primary"
+    = link_to 'Edit user info', edit_user_registration_path(current_user), class: "btn btn-primary"
 %p#notice= notice
 .text
-  %h1.pos="#{@account.f_name} #{@account.l_name}"
-  %table.pos
+  %table.acc_info_pos
     %tr
       %th Email:
       %th=@account.user.email
@@ -25,9 +30,11 @@
       %tr
         %th Skype:
         %th=@account.skype_account
-  -if current_user == @account.user
-    = link_to 'Edit account info', edit_account_path(@account), class: "btn btn-primary"
-    = link_to 'Edit user info', edit_user_registration_path(current_user), class: "btn btn-primary"
+    -if @account.user.city
+      %tr
+        %th Home city:
+        %th=@account.user.city.name
+
 .speech
   -if element_present?(@account.user.speeches)
     %h2="#{@account.f_name} speeches"

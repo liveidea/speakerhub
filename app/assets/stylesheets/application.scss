@@ -15,6 +15,14 @@
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";
+ .nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+ .row
+ {
+   border: none;
+ }
  table {
    width: 100%;
    border: 0;
@@ -41,4 +49,10 @@ textarea
   position: absolute;
   bottom:0;
   width: 70%
+}
+.paginate_pos
+{
+  position: absolute;
+  bottom: 35px;
+  left: 40%;
 }

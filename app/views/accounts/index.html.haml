@@ -1,15 +1,22 @@
 %h1 Listing accounts
-
-%table
-  %thead
-    %tr
-      %th
-      %th
-      %th
-
-  %tbody
-    = render @accounts
-.pagination= paginate @accounts, theme: 'twitter-bootstrap-3'
-%br
-
-= link_to 'New Account', new_account_path
+-# = link_to 'New Account', new_account_path
+.col-sm-10
+  .row
+    -@accounts.each do |account|
+      .col-md-4.nopadding
+        .caption.text-center
+          =image_tag account.image, class: "index-img"
+          .hall-title
+            =link_to("#{account.f_name} #{account.l_name}", account_path(account), target: "_blank")
+.panel.panel-default.text-left{style: "border-style: solid"}
+.col-sm-2.sidenav
+  .panel.panel-default.text-left{style: "border-style: solid"}
+    .panel-heading
+      %h3 Filter
+    .panel-body{style: "overflow: auto;"}
+      =form_tag(accounts_path, action: :get) do
+        =label_tag "Search user"
+        =text_field_tag :name, nil, class: "form-control"
+        =submit_tag "search", class: "btn btn-default"
+.paginate_pos
+  =paginate @accounts, :theme => 'twitter-bootstrap-3'
