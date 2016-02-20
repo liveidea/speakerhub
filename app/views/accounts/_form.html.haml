@@ -12,6 +12,8 @@
         =f.text_field :f_name, autofocus: true, class: "form-control"
         =f.label :last_name
         =f.text_field :l_name, autofocus: true, class: "form-control"
+        =f.label :home_city
+        =f.select :city_id, options_for_select(City.all.pluck(:name, :id)), {:prompt => "Select home city"}, {:class => "form-control"}
         =f.label :phone_number
         =f.telephone_field :phone, autofocus: true, class: "form-control"
         =f.label :facebook_account

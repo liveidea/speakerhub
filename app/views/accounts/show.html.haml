@@ -8,6 +8,10 @@
     %tr
       %th Email:
       %th=@account.user.email
+    -if @account.user.city
+      %tr
+        %th Home city:
+        %th=@account.user.city.name
     -if element_present?(@account.phone)
       %tr
         %th Phone number:

@@ -1,3 +1,66 @@
 -provide(:title, "Home")
-%h1 Speakerhub app
-%p Someday it will be Speakerhub app home page
+.row
+	.col-sm-3
+		.thumbnail
+			%h1{style: "font: bold 30px Georgia, serif;"} Five active speakers
+			%table.table.table-hover
+				%thead
+					%tr
+						%th Name
+						%th Speeches count
+				%tbody
+					- User.joins(:speeches).select("users.*, COUNT(speeches.id) as count_speeches").order("count_speeches DESC").group("users.id").limit(5).each do |user|
+						%tr
+							%td= "#{user.account.f_name} #{user.account.l_name}"
+							%td= user.attributes["count_speeches"]				
+	.col-sm-5
+		.thumbnail
+			%h1{style: "font: bold 30px Georgia, serif;"} Five last speeches
+			%table.table.table-hover
+				%thead
+					%tr
+						%th Theme
+						%th Title
+						%th Place
+						%th Date
+				%tbody
+					- Speech.all.limit(5).each do |speech|
+						%tr
+							%td= speech.theme.name unless speech.theme.nil?
+							%td= link_to speech.title, speech 
+							%td= speech.place
+							%td= speech.date.to_date
+	.col-sm-4
+		.thumbnail
+			%h1{style: "font: bold 30px Georgia, serif;"} Five last conferences
+			%table.table.table-hover
+				%thead
+					%tr
+						%th Title
+						%th Adress
+						%th Date of event
+				%tbody
+					- Conference.all.limit(5).each do |conference|
+						%tr
+							%td= link_to conference.title, conference
+							%td= conference.place
+							%td
+								-if conference.start_date < conference.finish_date
+									= "#{conference.start_date.day}-#{conference.finish_date.to_formatted_s(:rfc822) }"
+								-else
+									= conference.start_date.to_date.to_formatted_s(:rfc822)
+
+
+
+
+/ %h1 Listing accounts
+/ -# = link_to 'New Account', new_account_path
+/ .row
+/  -@accounts.each do |account|
+/    .col-md-4.nopadding
+/      .caption.text-center
+/        =image_tag account.image, class: "index-img"
+/        .hall-title
+/          =link_to("#{account.f_name} #{account.l_name}", account_path(account), target: "_blank")
+/  .paginate_pos
+/    =paginate @accounts, :theme => 'twitter-bootstrap-3'
