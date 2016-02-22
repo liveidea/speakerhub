@@ -17,5 +17,12 @@
     -else
       =@conference.start_date.to_date.to_formatted_s(:rfc822)
   %p=@conference.place
+-# =link_to @conference.avaliable ? "make unchecked" : "make checked", make_checked_conference_path(@conference),
+-#   remote: true, data: {id: 'make_checked'}
 -if @conference.user == current_user
   = link_to 'Edit', edit_conference_path(@conference), class: "btn btn-primary"
+.panel-body{style: "overflow: auto;"}
+  =form_tag(send_email_conference_path(@conference), method: :get, style: "padding-top: 15px;") do
+    =label_tag "Send request email to the conference organizator"
+    =text_area_tag :email_text,nil, class: "form-control", placeholder: "Please enter additional info to the email organizator. Pleace notice that your email and personal info will be included already."
+    =submit_tag "Send request email", class:"btn btn-primary"

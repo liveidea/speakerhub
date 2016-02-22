@@ -15,3 +15,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+// $("a.link").on("ajax:success",function()
+// {
+//   $(this).closest("tr").css("background-color", "green")
+// });

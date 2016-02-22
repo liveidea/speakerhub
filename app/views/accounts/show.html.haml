@@ -1,48 +1,86 @@
-= stylesheet_link_tag "show_user"
--# .col-sm-6
-%h1.pos="#{@account.f_name} #{@account.l_name}"
--if @account.image.file
-  =image_tag @account.image.show, class: "img-rounded"
--if current_user == @account.user
-  %br
-    = link_to 'Edit account info', edit_account_path(@account), class: "btn btn-primary"
-    = link_to 'Edit user info', edit_user_registration_path(current_user), class: "btn btn-primary"
-%p#notice= notice
-.text
-  %table.acc_info_pos
-    %tr
-      %th Email:
-      %th=@account.user.email
-    -if @account.user.city
-      %tr
-        %th Home city:
-        %th=@account.user.city.name
-    -if element_present?(@account.phone)
-      %tr
-        %th Phone number:
-        %th=@account.phone
-    -if element_present?(@account.facebook_account)
-      %tr
-        %th Facebook account:
-        %th=link_to("#{@account.facebook_account}".split('/')[3],
-        @account.facebook_account, :target => "_blank")
-    -if element_present?(@account.skype_account)
-      %tr
-        %th Skype:
-        %th=@account.skype_account
-    -if @account.user.city
-      %tr
-        %th Home city:
-        %th=@account.user.city.name
-
-.speech
-  -if element_present?(@account.user.speeches)
-    %h2="#{@account.f_name} speeches"
-    -speeches = @account.user.speeches.all
-    -speeches.each do |speech|
-      %p=link_to("#{speech.title}",speech_path(speech), :target => "_blank")
-  -if element_present?(@account.user.conferences)
-    %h2="#{@account.f_name} conferences"
-    -conferences = @account.user.conferences.all
-    -conferences.each do |conference|
-      %p=link_to("#{conference.title}",conference_path(conference), :target => "_blank")
+-# = stylesheet_link_tag "show_user"
+-# -# .col-sm-6
+-# %h1.pos="#{@account.f_name} #{@account.l_name}"
+-# .avatar-c
+-#   -if @account.image.file
+-#     =image_tag @account.image.show, class: "img-rounded"
+-#   -if current_user == @account.user
+-#     %br
+-#       = link_to 'Edit account info', edit_account_path(@account), class: "btn btn-primary"
+-#       = link_to 'Edit user info', edit_user_registration_path(current_user), class: "btn btn-primary"
+-# -# %p#notice= notice
+-# .text
+-#   %tab
+-#         %th Phone number:
+-#         %th=@account.phone
+-#     -if element_present?(@account.facebook_account)
+-#       %tr
+-#         %th Facebook account:
+-#         %th=link_to("#{@account.facebook_account}".split('/')[3],
+-#         @account.facebook_account, :target => "_blank")
+-#     -if element_present?(@account.skype_account)
+-#       %tr
+-#         %th Skype:
+-#         %th=@account.skype_account
+-#     -if @account.user.city
+-#       %tr
+-#         %th Home city:
+-#         %th=@account.user.city.name
+-#
+-# .speech
+-#   -if element_present?(@account.user.speeches)
+-#     %h2="#{@account.f_name} speeches"
+-#     -speeches = @account.user.speeches.all
+-#     -speeches.each do |speech|
+-#       %p=link_to("#{speech.title}",speech_path(speech), :target => "_blank")
+-#   -if element_present?(@account.user.conferences)
+-#     %h2="#{@account.f_name} conferences"
+-#     -conferences = @account.user.conferences.all
+-#     -conferences.each do |conference|
+-#       %p=link_to("#{conference.title}",conference_path(conference), :target => "_blank")
+.row
+  .col-md-3.col-xs-12.nopadding
+    %h1.pos="#{@account.f_name} #{@account.l_name}"
+    -if @account.image.file
+      =image_tag @account.image.show, class: "img-rounded show_img"
+    -if current_user == @account.user
+      %br
+        = link_to 'Edit account info', edit_account_path(@account), class: "btn btn-primary"
+        = link_to 'Edit user info', edit_user_registration_path(current_user), class: "btn btn-primary"
+  .col-md-3.col-xs-12
+    %table
+      %tr.color-tr
+        %th Email:
+        %th=@account.user.email
+      -if @account.user.city
+        %tr.color-tr
+          %th Home city:
+          %th=@account.user.city.name
+      -if element_present?(@account.phone)
+        %tr.color-tr
+          %th Phone number:
+          %th=@account.phone
+      -if element_present?(@account.facebook_account)
+        %tr.color-tr
+          %th Facebook account:
+          %th=link_to("#{@account.facebook_account}".split('/')[3],
+          @account.facebook_account, :target => "_blank")
+      -if element_present?(@account.skype_account)
+        %tr.color-tr
+          %th Skype:
+          %th=@account.skype_account
+      -if @account.user.city
+        %tr.color-tr
+          %th Home city:
+          %th=@account.user.city.name
+  .col-md-2-col-xs-12
+    -if element_present?(@account.user.speeches)
+      %h2="#{@account.f_name} speeches"
+      -speeches = @account.user.speeches.all
+      -speeches.each do |speech|
+        =link_to("#{speech.title}",speech_path(speech), :target => "_blank")
+    -if element_present?(@account.user.conferences)
+      %h2="#{@account.f_name} conferences"
+      -conferences = @account.user.conferences.all
+      -conferences.each do |conference|
+        =link_to("#{conference.title}",conference_path(conference), :target => "_blank")

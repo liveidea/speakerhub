@@ -1,5 +1,5 @@
 class ConferencesController < ApplicationController
-  before_action :set_conference, only: [:show, :edit, :update, :destroy]
+  before_action :set_conference, only: [:show, :edit, :update, :destroy, :make_checked, :send_email]
   # GET /conferences
   # GET /conferences.json
   before_action :check_permissions, only: [:edit, :update, :destroy]
@@ -9,6 +9,7 @@ class ConferencesController < ApplicationController
       @conferences = @conferences.public_send(key, value) if value.present?
     end
     @conferences = @conferences.title(params[:title]) if params[:title].present?
+
     # @conferences = @conferences.sort_by_start_date(params[:start_date]) if params[:start_date].present?
     # @conferences = @conferences.sort_by_finish_date(params[:finish_date]) if params[:finish_date].present?
   end
@@ -36,6 +37,7 @@ class ConferencesController < ApplicationController
       if @conference.save
         format.html { redirect_to @conference, notice: 'Conference was successfully created.' }
         format.json { render :show, status: :created, location: @conference }
+
       else
         format.html { render :new }
         format.json { render json: @conference.errors, status: :unprocessable_entity }
@@ -57,10 +59,15 @@ class ConferencesController < ApplicationController
       else
         format.html { render :edit }
         format.json { render json: @conference.errors, status: :unprocessable_entity }
+
       end
     end
   end
-
+def make_checked
+  @conference.avaliable = !@conference.avaliable
+  @conference.save
+  render json: @conference.avaliable.to_json
+end
   # DELETE /conferences/1
   # DELETE /conferences/1.json
   def destroy
@@ -69,6 +76,11 @@ class ConferencesController < ApplicationController
       format.html { redirect_to my_conferences_conferences_url, notice: 'Conference was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+  def send_email
+    # @user = current_user
+    UserMailer.request_send(current_user, @conference, params[:email_text]).deliver_now
+    redirect_to :back
   end
 
   private
@@ -84,7 +96,7 @@ class ConferencesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def conference_params
       #params[:conference]
-      params.require(:conference).permit(:title, :description, :place, :start_date, :finish_date)
+      params.require(:conference).permit(:title, :description, :place, :start_date, :finish_date, :avaliable)
     end
     def check_permissions
       if current_user == @conference.user

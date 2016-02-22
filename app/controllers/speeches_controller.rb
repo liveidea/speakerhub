@@ -38,6 +38,7 @@ class SpeechesController < ApplicationController
   # POST /speeches.json
   def create
     @speech = Speech.new(speech_params)
+
     @speech.user = current_user
 
     respond_to do |format|

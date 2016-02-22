@@ -15,14 +15,25 @@
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";
- .nopadding {
-   padding: 0 !important;
-   margin: 0 !important;
-}
- .row
+ .index_pos
  {
-   border: none;
+   padding-top: 40px;
  }
+ .btn {
+   margin-top: 15px;
+ }
+ .content_pos
+ {
+   padding-top: 10%;
+ }
+//  .nopadding {
+//    padding: 0 !important;
+//    margin: 0 !important;
+// }
+.index_element_padding
+{
+
+}
  table {
    width: 100%;
    border: 0;
@@ -38,15 +49,13 @@
   float: right;
 }
 
-textarea
-{
-  width: 100px;
-  height: 100px;
-}
-
+// textarea
+// {
+//   width: 100px;
+//   height: 100px;
+// }
 .footer
 {
-  position: absolute;
   bottom:0;
   width: 70%
 }
@@ -56,3 +65,46 @@ textarea
   bottom: 35px;
   left: 40%;
 }
+.pos
+{
+  text-align: left;
+  display: inline-block;
+}
+.show_img
+{
+  width: 85%;
+  height: auto;  border-radius: 10%;
+}
+.index_img
+{
+  width: 65%;
+  height: auto;
+}
+table {
+    // border-collapse: collapse;
+    width: 20%;
+}
+  th, td {
+      text-align: left;
+      padding: 8px;
+  }
+    // .index-img
+    // {
+    //   height: auto;
+    //   width: 65%;
+    // }
+  .color-tr:nth-child(even){background-color: #f2f2f2}
+  .text
+  {
+    p
+    {
+      font-family: serif;
+      font-size: 1.5em;
+      font-style: italic;
+      text-indent: 1em;
+    }
+    .row
+    {
+      margin-top: 30%;
+    }
+  }

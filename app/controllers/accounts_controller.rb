@@ -5,7 +5,9 @@ class AccountsController < ApplicationController
   # GET /accounts.json
   def index
     #@accounts = Account.all
-    @accounts = Account.all.page(params[:page]).per(9)
+    @accounts = Account.all.page(params[:page]).per(6)
+    @accounts = @accounts.name_search(params[:f_name]) if params[:f_name].present?
+    @accounts = @accounts.joins(:themes).where( themes: {id: params[:theme]}) if params[:theme].present?
   end
 
   # GET /accounts/1
@@ -71,7 +73,7 @@ class AccountsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
       #params[:account]
-      params.require(:account).permit(:f_name, :l_name, :facebook_account, :phone, :skype_account, :image, :city_id)
+      params.require(:account).permit(:f_name, :l_name, :facebook_account, :phone, :skype_account, :image, :city_id, theme_ids:[])
     end
     def check_permissions
       if current_user == @account.user
