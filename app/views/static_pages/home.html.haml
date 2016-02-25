@@ -1,66 +1,93 @@
--provide(:title, "Home")
-.row
-	.col-sm-3
-		.thumbnail
-			%h1{style: "font: bold 30px Georgia, serif;"} Five active speakers
-			%table.table.table-hover
-				%thead
-					%tr
-						%th Name
-						%th Speeches count
-				%tbody
-					- User.joins(:speeches).select("users.*, COUNT(speeches.id) as count_speeches").order("count_speeches DESC").group("users.id").limit(5).each do |user|
-						%tr
-							%td= "#{user.account.f_name} #{user.account.l_name}"
-							%td= user.attributes["count_speeches"]				
-	.col-sm-5
-		.thumbnail
-			%h1{style: "font: bold 30px Georgia, serif;"} Five last speeches
-			%table.table.table-hover
-				%thead
-					%tr
-						%th Theme
-						%th Title
-						%th Place
-						%th Date
-				%tbody
-					- Speech.all.limit(5).each do |speech|
-						%tr
-							%td= speech.theme.name unless speech.theme.nil?
-							%td= link_to speech.title, speech 
-							%td= speech.place
-							%td= speech.date.to_date
-	.col-sm-4
-		.thumbnail
-			%h1{style: "font: bold 30px Georgia, serif;"} Five last conferences
-			%table.table.table-hover
-				%thead
-					%tr
-						%th Title
-						%th Adress
-						%th Date of event
-				%tbody
-					- Conference.all.limit(5).each do |conference|
-						%tr
-							%td= link_to conference.title, conference
-							%td= conference.place
-							%td
-								-if conference.start_date < conference.finish_date
-									= "#{conference.start_date.day}-#{conference.finish_date.to_formatted_s(:rfc822) }"
-								-else
-									= conference.start_date.to_date.to_formatted_s(:rfc822)
+.home
+	-provide(:title, "Home")
+	.title
+		%h1 Speakerhub
+
+	/ * Cariusel * /
+	.carousel.slide{:id => "myCarousel", "data-ride" => "carousel"}
+
+		/ * Indicators * /
+		%ol.carousel-indicators
+			%li.active{"data-slide-to" => "0", "data-target" => "#myCarousel"}
+			%li{"data-slide-to" => "1", "data-target" => "#myCarousel"}
+			%li{"data-slide-to" => "2", "data-target" => "#myCarousel"}
+
+		/ * Wrapper for slides * /
+		.center-text 
+			%p Amaze, Inspire, Educate
+			%p Find the perfect speaker for your next event.
+		.carousel-inner{:role => "listbox"}
+			.item.active
+				%img{:alt => "Speech_1", :height => "700", :src => "home_page_images/speaking_1.jpg", :width => "1200"}/
+				.carousel-caption
+					%h3 “I may not agree with you, but I will defend to the death your right to make an ass of yourself.” 
+					%p ― Oscar Wilde ―
+			.item
+				%img{:alt => "Speech_2", :height => "700", :src => "home_page_images/speaking_2.jpg", :width => "1200"}/
+				.carousel-caption
+					%h3 “If freedom of speech is taken away, then dumb and silent we may be led, like sheep to the slaughter.” 
+					%p ― George Washington ―
+			.item
+				%img{:alt => "Speech_2", :height => "700", :src => "home_page_images/speaking_3.jpg", :width => "1200"}/
+				.carousel-caption
+					%h3 “Sometimes life hits you in the head with a brick. Don't lose faith.”
+					%p - Steve Jobs ―
+		/ Left and right controls
+		%a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel", :role => "button"}
+			%span.glyphicon.glyphicon-chevron-left{"aria-hidden" => "true"}
+			%span.sr-only Previous
+		%a.right.carousel-control{"data-slide" => "next", :href => "#myCarousel", :role => "button"}
+			%span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
+			%span.sr-only Next
+
+	.info
+		.row
+			.col-lg-3.sidenav
+				.panel.panel-default
+					.panel-heading.text-center
+						%h3 Themes
+					.panel-body
+						- Theme.all.each do |theme|
+							%p= link_to theme.name, root_path + "?theme= #{theme.name.capitalize.strip}"
+
+			.col-lg-9.active-users
+				%h2 Four active speakers
+				- User.joins(:speeches).select("users.*, COUNT(speeches.id) as count_speeches").order("count_speeches DESC").group("users.id").limit(4).each do |user|
+					.col-lg-3.col-sm-6
+						.flex-container
+							.flex-item--name= "Name: #{user.account.f_name} #{user.account.l_name}"
+							.flex-item--avatar{style: "background-image: url(#{user.account.image})"}
+							.flex-item--view-prof.btn View profile
+							.flex-item--count
+								Count of speeches:
+								= user.attributes["count_speeches"]
 
 
 
 
-/ %h1 Listing accounts
-/ -# = link_to 'New Account', new_account_path
-/ .row
-/  -@accounts.each do |account|
-/    .col-md-4.nopadding
-/      .caption.text-center
-/        =image_tag account.image, class: "index-img"
-/        .hall-title
-/          =link_to("#{account.f_name} #{account.l_name}", account_path(account), target: "_blank")
-/  .paginate_pos
-/    =paginate @accounts, :theme => 'twitter-bootstrap-3'
+	.lets-started
+		.container-fluid
+			%h2 Let's Get Started
+			.col-sm-offset-4.col-sm-4.col-sm-offset-4
+				%p Orate is an online marketplace that connects event organizers and public speakers. Organizers can find the perfect speaker, meeting both their event’s needs & budget.
+			.row
+				.col-sm-6
+					.left-side-button{class: "btn btn-default"} START LOOKING
+				.col-sm-6
+					.right-side-button{class: "btn btn-default"} START SPEAKING
+
+/{style: "background-image: url('home_page_images/home_table.jpg')"}
+
+
+
+								
+/ - unless @users.nil?
+/ 	.row
+/ 		.col-lg-12
+/ 		%h2= "Theme: #{@theme}" 
+/ 		- @users.each do |user|
+/ 			.col-md-3.nopadding
+/ 				.caption.text-center
+/ 					=image_tag user.account.image, class: "index-img"
+/ 					.hall-title
+/ 						=link_to("#{user.account.f_name} #{user.account.l_name}", account_path(user.account), target: "_blank")

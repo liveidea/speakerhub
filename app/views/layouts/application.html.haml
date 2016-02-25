@@ -7,6 +7,10 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
+
+    = stylesheet_link_tag 'application', 'http://fonts.googleapis.com/css?family=Oleo+Script', media: 'all', 'data-turbolinks-track' => true
+    = stylesheet_link_tag 'application', 'http://fonts.googleapis.com/css?family=Arizonia', media: 'all', 'data-turbolinks-track' => true
+    / <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     %body
       -if flash[:alert]
         =content_tag(:div, flash[:alert], class: "alert alert-danger")
@@ -14,5 +18,5 @@
       .container
         = yield
         = render 'layouts/footer'
-        -# %br
-        -# = debug(params) if Rails.env.development?
+        %br
+        = debug(params) if Rails.env.development?

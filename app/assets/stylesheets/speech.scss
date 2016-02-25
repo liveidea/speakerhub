@@ -1,0 +1,107 @@
+// Place all the styles related to the StaticPages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+/* mixins, variables, etc. */
+.speech {
+  .title {
+    background-image: image-url('title_table.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-attachment: scroll;
+    height: 180px;
+    margin-bottom: 30px;
+    h2 {
+      font-family: "Roboto", sans-serif;
+      font-size: 50px;
+      font-weight: 200;
+      margin-left: 30px;
+      font-style: italic;
+    }
+  }
+  .foto {
+    .flex-container {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      overflow: auto;
+      width: 230px;
+      border-radius: 2%;
+      margin: auto;
+      border: 1px solid grey;
+      background-color: white;
+      .flex-item {
+        margin: 5px;
+        &--name {
+          -webkit-align-self: flex-start;
+          align-self: center;
+          @extend .flex-item;
+          font: bold 17px Georgia, serif;
+          color: #0080FF;
+          text-shadow: 1px 1px 10px rgb(13, 13, 13);
+        }
+        &--avatar { 
+          @extend .flex-item;
+          align-self: center;
+          -webkit-align-self: center;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          border-radius: 2%;
+          flex: none;
+          width: 210px;      
+          height: 210px;      
+        }
+
+        &--view-speech {
+          @extend .flex-item; 
+          border: 1px solid green;
+          align-self: center;
+          // width: 50%;     
+          // flex: none;
+          // @extend .flex-item; 
+          // align-self: right;
+          // width: 65%;
+          // height: 35px;
+          // align-self: flex-end;
+          // border-radius: 20px;  
+          // color: #cc3399;
+        }
+      }
+    }
+  }
+  .profile {
+    padding-left: 30px;
+    h2 { 
+      font-family: "Roboto", sans-serif;
+      font-weight: 700;
+    }
+    h3 { 
+      font-family: "Roboto", sans-serif;
+      font-weight: 700;
+    }
+    h4 { 
+      font-family: "Roboto", sans-serif;
+      font-weight: 700;
+    }
+    p { 
+      text-indent: 30px;
+    }
+    .imagef {
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 5px;
+      height: 300px;
+      width: 300px;
+      margin: auto;
+    }
+  }
+}

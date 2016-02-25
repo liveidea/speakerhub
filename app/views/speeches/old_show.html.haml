@@ -1,0 +1,23 @@
+%p#notice= notice
+.text-center
+	.thumbnail{style: "padding: 0 0 15px 0; border: none; border-radius: 0; align: left"}
+		= image_tag @speech.image, class: "img-thumbnail"
+		%p
+		%strong Title: 
+		= @speech.title
+		%p
+		%strong Description:
+		= @speech.description
+		%p
+		%strong Place:
+		= @speech.place
+		%p
+		%strong Date:
+		= @speech.date.to_date
+		%p
+			%strong Video:
+		= raw @speech.video
+
+= link_to 'Back', speeches_path, class: "btn btn-primary"
+= link_to 'Edit', edit_speech_path(@speech), class: "btn btn-info"
+= link_to 'Destroy', speech_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"

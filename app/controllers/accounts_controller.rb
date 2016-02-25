@@ -4,8 +4,11 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    #@accounts = Account.all
+    # @accounts = Account.all
     @accounts = Account.all.page(params[:page]).per(9)
+    # if params[:theme].present? do
+    #   @accounts.each do |account| 
+    #     .theme(params[:theme]) if params[:theme].present?
   end
 
   # GET /accounts/1

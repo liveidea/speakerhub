@@ -1,62 +1,97 @@
 %p#notice= notice
-%h1{style: "font-family: 'Times New Roman', Times, serif; font-weight: bold; text-shadow: 2px -2px 1px darkblue"} All speeches
-.col-lg-3.sidenav
-  .panel.panel-default.text-left{style: "border-style: solid"}
-    .panel-heading
-      %h1 Filter
-    .panel-body{style: "overflow: auto;"}
-      = form_tag({controller: "speeches", :action => :index}, method: :get) do
-        = label_tag "Filter by city:"
-        = select_tag "place", options_for_select(City.pluck(:name), params[:place]), class: "form-control", prompt: "Select all" 
-        = label_tag "Filter by theme:"
-        = select_tag "theme", options_for_select(Theme.pluck(:name, :id), params[:theme]), class: "form-control", prompt: "Select all"
-        %div
-          = check_box_tag 'sort_by_theme', params[:sort_by_theme], params[:sort_by_theme], style: "width: 15px; height: 15px;"
-          Sort by Theme
-        %div
-          = check_box_tag 'sort_by_title', params[:sort_by_title], params[:sort_by_title], style: "width: 15px; height: 15px;"
-          Sort by Title
-        %div
-          = check_box_tag 'sort_by_city', params[:sort_by_city], params[:sort_by_city], style: "width: 15px; height: 15px;" 
-          Sort by City
-        %div
-          = check_box_tag 'sort_by_date', params[:sort_by_date], params[:sort_by_date], style: "width: 15px; height: 15px;" 
-          Sort by Date
-        .panel-footer
-          = submit_tag "Submit", class: "btn btn-default", style: "margin: auto; width: 100%; font-weight: bold;"
-.col-lg-9
-  %table.table.table-hover
-    %thead
-      %tr
-        %th Conference
-        %th Theme
-        %th Title
-        %th Description
-        %th Place
-        %th Date
-        %th Image
-        %th Video
-    %tbody
-      - @speeches.each do |speech|
-        %tr
-          / - if speech.conference.nil?
-          /   %td
-          / - else
-          /   %td= link_to speech.conference.title, "#"
-          %td
-            =link_to(speech.conference.title, conference_path(speech.conference)) unless speech.conference.nil?
+.show-speeches
+  .container-fluid
+    .row
+      .col-md-12{class: "title"}
+        %h2 Speeches
+    .row
+      .col-lg-4.col-sm-4.col-md-4{class: "sidenav filter"}
+        .panel.panel-default
+          .panel-heading.text-center
+            %h3 Filter
+          .panel-body
+            = form_tag({controller: "speeches", :action => :index}, method: :get) do
+              = label_tag "Filter by city:"
+              = select_tag "place", options_for_select(City.pluck(:name), params[:place]), class: "form-control", prompt: "Select all" 
+              = label_tag "Filter by theme:"
+              = select_tag "theme", options_for_select(Theme.pluck(:name, :id), params[:theme]), class: "form-control", prompt: "Select all"
+              .box
+                = check_box_tag 'sort_by_theme', params[:sort_by_theme], params[:sort_by_theme]
+                Sort by Theme
+              .box
+                = check_box_tag 'sort_by_title', params[:sort_by_title], params[:sort_by_title]
+                Sort by Title
+              .box
+                = check_box_tag 'sort_by_city', params[:sort_by_city], params[:sort_by_city]
+                Sort by City
+              .box
+                = check_box_tag 'sort_by_date', params[:sort_by_date], params[:sort_by_date]
+                Sort by Date
+              .panel-footer
+                .row
+                  .col-md-6
+                    = submit_tag "Search", class: "btn btn-primary"
+                  .col-md-6
+                    = submit_tag "Clear search", class: "btn btn-default"
+
+      .col-lg-8.col-sm-8.col-md-8{class: "list"}
+        .row
+          .col-md-12{class: "text"}
+            %p Want to browse open calls for speakers and some of the events Orate is working on? We like your initiative!
+            %p
+              %i Please note that this is not an exhaustive list of organizations that Orate is working with at any given time. Look out for an email from our team when we connect with an event organizer who is looking for a speaker like you.
+        - @speeches.each do |speech|
+          .row
+            .col-md-3.col-sm-4.col-xs-4{class: "foto"}
+              .flex-container
+                .flex-item--avatar{style: "background-image: url(#{speech.image});"}
+                .flex-item--view-speech.btn See more >>
+            .col-md-9.col-sm-8.col-xs-8{class: "profile"}
+              .panel-default
+                .panel-body
+                  %h3= speech.title
+                  %h5= "by #{speech.user.account.f_name} #{speech.user.account.l_name}"
+                .panel-footer
+                  %strong= "Conference: #{speech.conference.title unless speech.conference.nil?} | #{speech.date.strftime("Date: %d/%m/%Y")}"
+                  %span= speech.theme.name unless speech.theme.nil?
 
 
+      /   %table.table.table-hover
+      /     %thead
+      /       %tr
+      /         %th Conference
+      /         %th Theme
+      /         %th Title
+      /         %th Description
+      /         %th Place
+      /         %th Date
+      /         %th Image
+      /         %th Video
+      /         %th Available
+      /     %tbody
+      /       - @speeches.each do |speech|
+      /         %tr{class: "row"}
+      /           / - if speech.conference.nil?
+      /           /   %td
+      /           / - else
+      /           /   %td= link_to speech.conference.title, "#"
+      /           %td
+      /             =link_to(speech.conference.title, conference_path(speech.conference)) unless speech.conference.nil?
+      /           / %td
+      /           / -speech.conference.each do |conference|
+      /           /   %p
+      /           /     =link_to(conference.title,conference)
+      /           %td= speech.theme.name unless speech.theme.nil?
+      /           %td= link_to speech.title, speech 
+      /           %td= speech.description
+      /           %td= speech.place
+      /           %td= speech.date.to_date
+      /           %td= image_tag speech.image, height: '50' unless speech.image
+      /           %td= raw speech.video
+      /           %td= link_to speech.available ? "Make unchecked" : "Make checked", maked_checked_speech_path(speech, format: :json), remote: true, class: "link", data: {id: speech.id}
+      / = link_to 'Create new Speech', new_speech_path, class: "btn btn-success"
 
-          / %td
-          / -speech.conference.each do |conference|
-          /   %p
-          /     =link_to(conference.title,conference)
-          %td= speech.theme.name unless speech.theme.nil?
-          %td= link_to speech.title, speech 
-          %td= speech.description
-          %td= speech.place
-          %td= speech.date.to_date
-          %td= image_tag speech.image, height: '50' unless speech.image
-          %td= raw speech.video
-= link_to 'Create new Speech', new_speech_path, class: "btn btn-success"
+/ :javascript
+/   $("a.link").on("ajax:success", function(){
+/     $(this).closest(".row").css("background-color", "yellow")
+/   });

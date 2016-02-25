@@ -3,6 +3,7 @@ class Account < ActiveRecord::Base
   attr_accessor :city_id
   has_one :user
   before_save :save_city
+  
   # scope :name -> (name) {}
   private
   def save_city

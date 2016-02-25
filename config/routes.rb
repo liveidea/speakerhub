@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :speeches do
     get 'my_speeches',          on: :collection
     get 'select_my_conference', on: :collection
+    get 'maked_checked',        on: :member
   end
   resources :accounts
   resources :conferences do

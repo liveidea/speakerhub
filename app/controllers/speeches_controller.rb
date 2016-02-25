@@ -1,12 +1,11 @@
 class SpeechesController < ApplicationController
-  before_action :set_speech, only: [:edit, :update, :destroy]
+  before_action :set_speech, only: [:edit, :update, :destroy, :maked_checked]
   before_action :check_permissions, only: [:edit, :update, :destroy]
   # GET /speeches
   # GET /speeches.json
   def index
     # @speeches = Speech.all
-
-    @speeches = Speech.where(nil) # creates an anonymous scope
+    @speeches = Speech.all # creates an anonymous scope
     @speeches = @speeches.location(params[:place]) if params[:place].present?
     @speeches = @speeches.theme(params[:theme]) if params[:theme].present?
     @speeches = @speeches.joins(:theme).order('themes.name') if params[:sort_by_theme] ==  'on'
@@ -38,7 +37,7 @@ class SpeechesController < ApplicationController
   def create
     @speech = Speech.new(speech_params)
     @speech.user = current_user
-
+    current_user.themes << @speech.theme unless current_user.themes.include?(@speech.theme) 
     respond_to do |format|
       if @speech.save
         format.html { redirect_to @speech, notice: 'Speech was successfully created.' }
@@ -77,6 +76,15 @@ class SpeechesController < ApplicationController
     @my_speeches = Speech.where(user_id: current_user)
   end
 
+  def maked_checked
+    @speech.available = !@speech.available
+    @speech.save
+    render json: @speech.to_json
+    # respond_to do |format|
+    #   format.js
+    # end
+  end
+
   def select_my_conference
     @conferences = Conference.all
     #@conference_id = params
@@ -90,7 +98,7 @@ class SpeechesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def speech_params
-      params.require(:speech).permit(:title, :description, :place, :date, :image, :video,:theme_id,:conference_id )
+      params.require(:speech).permit(:title, :description, :place, :date, :image, :video,:theme_id,:conference_id, :available)
     end
 
     def check_permissions
