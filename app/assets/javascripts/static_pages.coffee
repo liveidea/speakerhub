@@ -7,6 +7,23 @@ paintIt = (element, backgroundColor, textColor) ->
   if textColor?
     element.style.color = textColor
 
-$(document).ready ->
-  $('.something').on 'click', ->
-    $(this).css('color', 'red').slideUp(2000).slideDown 2000
+# $(document).ready ->
+#   $('.something').on 'click', ->
+#     $(this).css('color', 'red').slideUp(2000).slideDown 2000
+  
+	# $('.js-select-city').select2
+	#   placeholder: 'Select a state'
+	#   allowClear: true
+	
+# $(".page").ready ->
+# 	$('.something').on 'click', ->
+#     $(this).css('color', 'red').slideUp(2000).slideDown 2000
+  # $('.js-select-city').select2
+  #   allowClear: true
+  #   placeholder: 'Select a state'
+#   $('.js-select-theme').select2
+#     allowClear: true
+#     placeholder: 'Select a theme'
+
+
+

@@ -38,7 +38,7 @@
     }
     .panel-body {
       padding: 30px;
-      select {
+      .select2 {
         margin-top: 5px;
         margin-bottom: 5px; 
       }
@@ -51,7 +51,7 @@
         }
       }
       .panel-footer{
-        input {
+        input, .btn-default {
           margin: auto;
           width: 100%;
           font-weight: bold;
@@ -61,10 +61,15 @@
   }
 
   .list {
-    .row {
+    .row.item-list {
       margin-bottom: 10px;
       &:hover{
         background-color: #f5f5f5;
+        .speech-title {
+          a {
+            color: #336600
+          }
+        }
       }
       .text {
         p {
@@ -100,21 +105,22 @@
               height: 140px;      
             }
 
-            &--view-speech {
+            &--by-user {
               @extend .flex-item; 
-              align-self: right;
               width: 65%;
-              height: 35px;
+              height: 18px;
               align-self: flex-end;
               border-radius: 20px;  
-              color: #cc3399;
+              font-weight: bold;
+              font-size: 12px;
+              font-style: italic;
             }
           }
         }
       }
       .profile {
         .panel-body {
-          height: 160px;
+          height: 120px;
           h3 {
             font-family: "Roboto", sans-serif;
             font-weight: 700;
@@ -125,13 +131,28 @@
             float: right;
             font-style: italic;
           }
+          .speech-title {
+            a {
+              text-decoration: none;
+            }
+          }
         }
         .panel-footer {
-          span{
+          span {
+            font-style: italic;
+          }
+          .theme{
             float: right
           }
         }
       }
     }
+  }
+  .paginate_pos {
+    position: static;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
   }
 }

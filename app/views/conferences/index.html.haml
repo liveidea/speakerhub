@@ -12,6 +12,7 @@
         =label_tag "Finish date"
         =date_field_tag :finish_date
         =submit_tag "search", class: "btn btn-default", style: "margin: top: 30px; width: 100%; font-weight: bold;"
+
 .col-sm-10
   %table.table.table-hover
     %thead
@@ -34,4 +35,13 @@
             -conference.speeches.each do |speech|
               %p
                 =link_to(speech.title,speech)
+          %td=link_to conference.avaliable ? "make unchecked" : "make checked", make_checked_conference_path(conference),
+            remote: true, format: :json, data: {id: conference.id}, class: "link"
 = link_to 'New Conference', new_conference_path, class: "btn btn-primary"
+
+
+:javascript
+  $("a.link").on("ajax:success",function()
+  {
+    $(this).closest("tr").css("background-color", "green")
+  });

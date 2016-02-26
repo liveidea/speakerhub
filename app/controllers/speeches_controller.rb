@@ -5,7 +5,7 @@ class SpeechesController < ApplicationController
   # GET /speeches.json
   def index
     # @speeches = Speech.all
-    @speeches = Speech.all # creates an anonymous scope
+    @speeches = Speech.all.page(params[:page]).per(5) # creates an anonymous scope
     @speeches = @speeches.location(params[:place]) if params[:place].present?
     @speeches = @speeches.theme(params[:theme]) if params[:theme].present?
     @speeches = @speeches.joins(:theme).order('themes.name') if params[:sort_by_theme] ==  'on'
@@ -36,6 +36,7 @@ class SpeechesController < ApplicationController
   # POST /speeches.json
   def create
     @speech = Speech.new(speech_params)
+
     @speech.user = current_user
     current_user.themes << @speech.theme unless current_user.themes.include?(@speech.theme) 
     respond_to do |format|
@@ -73,7 +74,13 @@ class SpeechesController < ApplicationController
   end
 
   def my_speeches
-    @my_speeches = Speech.where(user_id: current_user)
+    @my_speeches = Speech.where(user_id: current_user).page(params[:page]).per(1)
+    @my_speeches = @my_speeches.location(params[:place]) if params[:place].present?
+    @my_speeches = @my_speeches.theme(params[:theme]) if params[:theme].present?
+    @my_speeches = @my_speeches.joins(:theme).order('themes.name') if params[:sort_by_theme] ==  'on'
+    @my_speeches = @my_speeches.order(:title) if params[:sort_by_title] ==  'on'
+    @my_speeches = @my_speeches.order(:place) if params[:sort_by_city] ==  'on'
+    @my_speeches = @my_speeches.order(:date ) if params[:sort_by_date] ==  'on'
   end
 
   def maked_checked

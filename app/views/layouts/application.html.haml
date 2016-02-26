@@ -7,11 +7,23 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-
+    
     = stylesheet_link_tag 'application', 'http://fonts.googleapis.com/css?family=Oleo+Script', media: 'all', 'data-turbolinks-track' => true
     = stylesheet_link_tag 'application', 'http://fonts.googleapis.com/css?family=Arizonia', media: 'all', 'data-turbolinks-track' => true
+    = stylesheet_link_tag 'application', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', media: 'all', 'data-turbolinks-track' => true
+
+    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css", :rel => "stylesheet"}/
+    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"}
+    / = stylesheet_link_tag 'application', 'select2.css', media: 'all', 'data-turbolinks-track' => true
+    / = stylesheet_link_tag 'application', 'select2-bootstrap.css', media: 'all', 'data-turbolinks-track' => true
+
+
+
+    / <link rel="stylesheet" href="select2.css">
+    / <link rel="stylesheet" href="select2-bootstrap.css">
     / <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-    %body
+
+    %body.page
       -if flash[:alert]
         =content_tag(:div, flash[:alert], class: "alert alert-danger")
       = render 'layouts/header'

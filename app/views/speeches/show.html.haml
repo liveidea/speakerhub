@@ -1,31 +1,34 @@
 %p#notice= notice
 .speech
 	.container-fluid
-		.row{style: "border: 1px solid red"}
+		.row
 			.col-md-12{class: "title"}
 				%h2= "'#{@speech.title}'"
 		.row
-			.col-md-3.col-sm-3.col-xs-3{class: "foto", style: "border: 1px solid red"}
+			.col-md-3.col-sm-3.col-xs-3{class: "foto"}
 				.flex-container
-					.flex-item--avatar{style: "background-image: url(#{@speech.user.account.image});"}
+					= link_to "", account_path(@speech.user.account), class: "flex-item--avatar", style: "background-image: url(#{@speech.user.account.image});"
 					.flex-item--name= "#{@speech.user.account.f_name} #{@speech.user.account.l_name}"
-					/ .flex-item--view-speech.btn.btn-primary  View profile
+				.row
+					.col-md-12{style: "text-align: center"}
+						%div= link_to "Edit speech", edit_speech_path(@speech), class: "btn btn-primary", style: "width: 60%;"
+
 			.col-md-9.col-sm-9.col-xs-9{class: "profile", style: "border: 1px solid red"}
-				%h2 Conference
-				%h4
+				%h2= "Conference: #{ @speech.conference.title unless @speech.conference.nil? }"
+				%h4.margin_left
+					Place and date:
+					%br
 					%i{class: "fa fa-map-marker"}
-					Conference place and date
+					= @speech.place
+					= "#{@speech.conference.start_date.strftime("%d/%m/%Y")}-#{@speech.conference.finish_date.strftime("%d/%m/%Y")}" if @speech.conference 
 				/= image_tag @speech.image
 				.imagef{style: "background-image: url('#{@speech.image}')"}
-				%h3 Description
-				%p= @speech.description
-				%h2 Video
+				%h4.margin_left Description:
+				%p.margin_left= @speech.description
+				.video 
+					= youtube_video(@speech.video)
 
 
-/ .flex-container
-/ 	.flex-item--name= "#{user.account.f_name} #{user.account.l_name}"
-/ 	.flex-item--avatar{style: "background-image: url(#{user.account.image})"}
-/ 	.flex-item--view-prof.btn.btn-primary View profile
 
 
 

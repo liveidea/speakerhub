@@ -48,16 +48,15 @@
 						%h3 Themes
 					.panel-body
 						- Theme.all.each do |theme|
-							%p= link_to theme.name, root_path + "?theme= #{theme.name.capitalize.strip}"
+							%p= link_to theme.name, accounts_path + "?theme=#{theme.id}"
 
 			.col-lg-9.active-users
 				%h2 Four active speakers
 				- User.joins(:speeches).select("users.*, COUNT(speeches.id) as count_speeches").order("count_speeches DESC").group("users.id").limit(4).each do |user|
 					.col-lg-3.col-sm-6
 						.flex-container
-							.flex-item--name= "Name: #{user.account.f_name} #{user.account.l_name}"
-							.flex-item--avatar{style: "background-image: url(#{user.account.image})"}
-							.flex-item--view-prof.btn View profile
+							.flex-item--name= "#{user.account.f_name} #{user.account.l_name}"
+							= link_to "", account_path(user.account), class: "flex-item--avatar", style: "background-image: url(#{user.account.image})"
 							.flex-item--count
 								Count of speeches:
 								= user.attributes["count_speeches"]
@@ -72,9 +71,9 @@
 				%p Orate is an online marketplace that connects event organizers and public speakers. Organizers can find the perfect speaker, meeting both their event’s needs & budget.
 			.row
 				.col-sm-6
-					.left-side-button{class: "btn btn-default"} START LOOKING
+					= link_to "START LOOKING", accounts_path, class: "left-side-button btn btn-default"
 				.col-sm-6
-					.right-side-button{class: "btn btn-default"} START SPEAKING
+					= link_to "START SPEAKING", conferences_path, class: "right-side-button btn btn-default"
 
 /{style: "background-image: url('home_page_images/home_table.jpg')"}
 

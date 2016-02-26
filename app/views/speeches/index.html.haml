@@ -1,4 +1,16 @@
 %p#notice= notice
+:javascript
+  $(document).ready(function() {
+    $(".js-select-city").select2({
+      placeholder: 'Select a city(cities)',
+      allowClear: true
+    });
+    $(".js-select-theme").select2({
+      placeholder: 'Select a theme(themes)',
+      allowClear: true
+    });
+  });
+
 .show-speeches
   .container-fluid
     .row
@@ -12,84 +24,106 @@
           .panel-body
             = form_tag({controller: "speeches", :action => :index}, method: :get) do
               = label_tag "Filter by city:"
-              = select_tag "place", options_for_select(City.pluck(:name), params[:place]), class: "form-control", prompt: "Select all" 
+              = select_tag "place", options_for_select(Speech.distinct.pluck(:place), params[:place]), class: "js-select-city form-control", include_blank: true, multiple: true
               = label_tag "Filter by theme:"
-              = select_tag "theme", options_for_select(Theme.pluck(:name, :id), params[:theme]), class: "form-control", prompt: "Select all"
+              = select_tag "theme", options_for_select(Theme.pluck(:name, :id), params[:theme]), class: "js-select-theme form-control", include_blank: true, multiple: true
               .box
                 = check_box_tag 'sort_by_theme', params[:sort_by_theme], params[:sort_by_theme]
                 Sort by Theme
               .box
                 = check_box_tag 'sort_by_title', params[:sort_by_title], params[:sort_by_title]
                 Sort by Title
-              .box
-                = check_box_tag 'sort_by_city', params[:sort_by_city], params[:sort_by_city]
-                Sort by City
+              / .box
+              /   = check_box_tag 'sort_by_city', params[:sort_by_city], params[:sort_by_city]
+              /   Sort by City
               .box
                 = check_box_tag 'sort_by_date', params[:sort_by_date], params[:sort_by_date]
-                Sort by Date
+                Sort by Date              
               .panel-footer
                 .row
                   .col-md-6
                     = submit_tag "Search", class: "btn btn-primary"
                   .col-md-6
-                    = submit_tag "Clear search", class: "btn btn-default"
+                    .btn.btn-default= link_to "Clear search", speeches_path
 
       .col-lg-8.col-sm-8.col-md-8{class: "list"}
         .row
           .col-md-12{class: "text"}
-            %p Want to browse open calls for speakers and some of the events Orate is working on? We like your initiative!
-            %p
-              %i Please note that this is not an exhaustive list of organizations that Orate is working with at any given time. Look out for an email from our team when we connect with an event organizer who is looking for a speaker like you.
+            %p 
+              %i Here you can see all speeches, that are available.
         - @speeches.each do |speech|
-          .row
+          .row.item-list
             .col-md-3.col-sm-4.col-xs-4{class: "foto"}
               .flex-container
-                .flex-item--avatar{style: "background-image: url(#{speech.image});"}
-                .flex-item--view-speech.btn See more >>
+                = link_to "", speech_path(speech), class: "flex-item--avatar", style: "background-image: url(#{speech.image});"
             .col-md-9.col-sm-8.col-xs-8{class: "profile"}
               .panel-default
                 .panel-body
-                  %h3= speech.title
-                  %h5= "by #{speech.user.account.f_name} #{speech.user.account.l_name}"
+                  %h3.speech-title= link_to "#{speech.title}", speech_path(speech)
+                  %h5
+                    = link_to "by #{speech.user.account.f_name} #{speech.user.account.l_name}", account_path(speech.user.account), class: "flex-item--by-user"
                 .panel-footer
-                  %strong= "Conference: #{speech.conference.title unless speech.conference.nil?} | #{speech.date.strftime("Date: %d/%m/%Y")}"
-                  %span= speech.theme.name unless speech.theme.nil?
+                  /%strong= "Conference: #{speech.conference.title unless speech.conference.nil?} | #{speech.date.strftime("Date: %d/%m/%Y")}"
+                  %strong{style: "float:left"} Conference: 
+                  %span= "#{speech.conference.title unless speech.conference.nil?} |"
+                  %strong Date:
+                  %span= speech.date.strftime("%d/%m/%Y")
+                  /| #{speech.date.strftime("Date: %d/%m/%Y")}"
+                  %span.theme= speech.theme.name unless speech.theme.nil?
+    .paginate_pos= paginate @speeches, :theme => 'twitter-bootstrap-3'
 
 
-      /   %table.table.table-hover
-      /     %thead
-      /       %tr
-      /         %th Conference
-      /         %th Theme
-      /         %th Title
-      /         %th Description
-      /         %th Place
-      /         %th Date
-      /         %th Image
-      /         %th Video
-      /         %th Available
-      /     %tbody
-      /       - @speeches.each do |speech|
-      /         %tr{class: "row"}
-      /           / - if speech.conference.nil?
-      /           /   %td
-      /           / - else
-      /           /   %td= link_to speech.conference.title, "#"
-      /           %td
-      /             =link_to(speech.conference.title, conference_path(speech.conference)) unless speech.conference.nil?
-      /           / %td
-      /           / -speech.conference.each do |conference|
-      /           /   %p
-      /           /     =link_to(conference.title,conference)
-      /           %td= speech.theme.name unless speech.theme.nil?
-      /           %td= link_to speech.title, speech 
-      /           %td= speech.description
-      /           %td= speech.place
-      /           %td= speech.date.to_date
-      /           %td= image_tag speech.image, height: '50' unless speech.image
-      /           %td= raw speech.video
-      /           %td= link_to speech.available ? "Make unchecked" : "Make checked", maked_checked_speech_path(speech, format: :json), remote: true, class: "link", data: {id: speech.id}
-      / = link_to 'Create new Speech', new_speech_path, class: "btn btn-success"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /   %table.table.table-hover
+  /     %thead
+  /       %tr
+  /         %th Conference
+  /         %th Theme
+  /         %th Title
+  /         %th Description
+  /         %th Place
+  /         %th Date
+  /         %th Image
+  /         %th Video
+  /         %th Available
+  /     %tbody
+  /       - @speeches.each do |speech|
+  /         %tr{class: "row"}
+  /           / - if speech.conference.nil?
+  /           /   %td
+  /           / - else
+  /           /   %td= link_to speech.conference.title, "#"
+  /           %td
+  /             =link_to(speech.conference.title, conference_path(speech.conference)) unless speech.conference.nil?
+  /           / %td
+  /           / -speech.conference.each do |conference|
+  /           /   %p
+  /           /     =link_to(conference.title,conference)
+  /           %td= speech.theme.name unless speech.theme.nil?
+  /           %td= link_to speech.title, speech 
+  /           %td= speech.description
+  /           %td= speech.place
+  /           %td= speech.date.to_date
+  /           %td= image_tag speech.image, height: '50' unless speech.image
+  /           %td= raw speech.video
+  /           %td= link_to speech.available ? "Make unchecked" : "Make checked", maked_checked_speech_path(speech, format: :json), remote: true, class: "link", data: {id: speech.id}
+  / = link_to 'Create new Speech', new_speech_path, class: "btn btn-success"
 
 / :javascript
 /   $("a.link").on("ajax:success", function(){
