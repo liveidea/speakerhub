@@ -47,7 +47,7 @@
 					.panel-heading.text-center
 						%h3 Themes
 					.panel-body
-						- Theme.all.each do |theme|
+						- Theme.all.order(:name).each do |theme|
 							%p= link_to theme.name, accounts_path + "?theme=#{theme.id}"
 
 			.col-lg-9.active-users
@@ -74,19 +74,3 @@
 					= link_to "START LOOKING", accounts_path, class: "left-side-button btn btn-default"
 				.col-sm-6
 					= link_to "START SPEAKING", conferences_path, class: "right-side-button btn btn-default"
-
-/{style: "background-image: url('home_page_images/home_table.jpg')"}
-
-
-
-								
-/ - unless @users.nil?
-/ 	.row
-/ 		.col-lg-12
-/ 		%h2= "Theme: #{@theme}" 
-/ 		- @users.each do |user|
-/ 			.col-md-3.nopadding
-/ 				.caption.text-center
-/ 					=image_tag user.account.image, class: "index-img"
-/ 					.hall-title
-/ 						=link_to("#{user.account.f_name} #{user.account.l_name}", account_path(user.account), target: "_blank")

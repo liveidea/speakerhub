@@ -275,11 +275,6 @@ footer ul li {
     border-radius: 10px;
     overflow: auto;
     text-align: center;
-    height: 300px;
-    .container-fluid {
-      height: 300px;
-      position: relative;
-    }
 
     h2 {
       font-family: "Roboto", sans-serif;
@@ -297,84 +292,22 @@ footer ul li {
       margin-bottom: 40px;
     }
     
-    .row {
-      position: absolute;
-      width: 100%;
-      bottom: 0px;
-    }
     .col-sm-6 {
       .btn-default {
         font-weight: bold;
       }
       .left-side-button {
         margin-bottom: 30px;
-        margin-left: 75%;
+        margin-left: 65%;
       }
       .right-side-button {
         margin-bottom: 30px;
-        margin-right: 75%;
+        margin-right: 65%;
       }      
     }
   }
-
-
-
-
-
-  // .col-md-3 {
-  //   border-style: solid;
-  // }
-
-
-
   .image {
     width: 200px;
     height: 200px;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // h2 {
-  //   font: bold 30px Georgia, serif;
-  //   text-align: center;
-  //   margin-bottom: 20px;
-  // }
-  // .user {
-  //   background-color: #707070;
-  //   border-radius: 5px;
-  //   padding: 15px;
-  // }
-  // // .name{
-  // //   text-align: left;
-  // // }
-  // // img {
-  // //   vertical-align: middle;
-  // //   height: auto;
-  // //   width: 100%;
-  // //   border-radius: 5%;
-  // //   margin: 10px 0 10px;
-  // // }
-  // .hall-title {
-
-  // }
-  // .panel-default.text-left {
-  //   border-style: solid;
-  //   border-radius: 30px;
-  //   overflow: hidden;
-  //   }
-
 }

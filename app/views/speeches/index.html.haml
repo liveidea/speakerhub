@@ -1,15 +1,4 @@
 %p#notice= notice
-:javascript
-  $(document).ready(function() {
-    $(".js-select-city").select2({
-      placeholder: 'Select a city(cities)',
-      allowClear: true
-    });
-    $(".js-select-theme").select2({
-      placeholder: 'Select a theme(themes)',
-      allowClear: true
-    });
-  });
 
 .show-speeches
   .container-fluid
@@ -49,7 +38,7 @@
       .col-lg-8.col-sm-8.col-md-8{class: "list"}
         .row
           .col-md-12{class: "text"}
-            %p 
+            %p#some
               %i Here you can see all speeches, that are available.
         - @speeches.each do |speech|
           .row.item-list
@@ -72,60 +61,3 @@
                   %span.theme= speech.theme.name unless speech.theme.nil?
     .paginate_pos= paginate @speeches, :theme => 'twitter-bootstrap-3'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /   %table.table.table-hover
-  /     %thead
-  /       %tr
-  /         %th Conference
-  /         %th Theme
-  /         %th Title
-  /         %th Description
-  /         %th Place
-  /         %th Date
-  /         %th Image
-  /         %th Video
-  /         %th Available
-  /     %tbody
-  /       - @speeches.each do |speech|
-  /         %tr{class: "row"}
-  /           / - if speech.conference.nil?
-  /           /   %td
-  /           / - else
-  /           /   %td= link_to speech.conference.title, "#"
-  /           %td
-  /             =link_to(speech.conference.title, conference_path(speech.conference)) unless speech.conference.nil?
-  /           / %td
-  /           / -speech.conference.each do |conference|
-  /           /   %p
-  /           /     =link_to(conference.title,conference)
-  /           %td= speech.theme.name unless speech.theme.nil?
-  /           %td= link_to speech.title, speech 
-  /           %td= speech.description
-  /           %td= speech.place
-  /           %td= speech.date.to_date
-  /           %td= image_tag speech.image, height: '50' unless speech.image
-  /           %td= raw speech.video
-  /           %td= link_to speech.available ? "Make unchecked" : "Make checked", maked_checked_speech_path(speech, format: :json), remote: true, class: "link", data: {id: speech.id}
-  / = link_to 'Create new Speech', new_speech_path, class: "btn btn-success"
-
-/ :javascript
-/   $("a.link").on("ajax:success", function(){
-/     $(this).closest(".row").css("background-color", "yellow")
-/   });

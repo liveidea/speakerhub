@@ -15,26 +15,15 @@
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+//= require_tree
 
-// $("a.link").on("ajax:success",function()
-// {
-//   $(this).closest("tr").css("background-color", "green")
-// });
-
-
-
-
-
-
-// $(".show-speeches").ready(function() {
-//   $(".js-select-city").select2({
-//     placeholder: 'Select a state',
-//     allowClear: true
-//   });
-// });
-
-// $(".js-select-city").select2({
-//   placeholder: 'Select a state',
-//   allowClear: true
-// });
+$(document).on('ready page:load', function () {
+    $(".js-select-city").select2({
+      placeholder: 'Select a city(cities)',
+      allowClear: true
+    });
+    $(".js-select-theme").select2({
+      placeholder: 'Select a theme(themes)',
+      allowClear: true
+    });
+  });

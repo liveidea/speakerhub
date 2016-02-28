@@ -2,11 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-paintIt = (element, backgroundColor, textColor) ->
-  element.style.backgroundColor = backgroundColor
-  if textColor?
-    element.style.color = textColor
-
 # $(document).ready ->
 #   $('.something').on 'click', ->
 #     $(this).css('color', 'red').slideUp(2000).slideDown 2000
@@ -15,15 +10,7 @@ paintIt = (element, backgroundColor, textColor) ->
 	#   placeholder: 'Select a state'
 	#   allowClear: true
 	
-# $(".page").ready ->
-# 	$('.something').on 'click', ->
-#     $(this).css('color', 'red').slideUp(2000).slideDown 2000
-  # $('.js-select-city').select2
-  #   allowClear: true
-  #   placeholder: 'Select a state'
-#   $('.js-select-theme').select2
-#     allowClear: true
-#     placeholder: 'Select a theme'
+
 
 
 

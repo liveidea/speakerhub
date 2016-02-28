@@ -14,6 +14,11 @@ class SpeechesController < ApplicationController
     @speeches = @speeches.order(:date ) if params[:sort_by_date] ==  'on'
     # @speeches = @products.location(params[:location]) if params[:location].present?
     # @speeches = @products.starts_with(params[:starts_with]) if params[:starts_with].present?
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render xml: @speeches}
+      format.json { render json: @speeches}
+    end
   end
 
   # GET /speeches/1
@@ -74,7 +79,7 @@ class SpeechesController < ApplicationController
   end
 
   def my_speeches
-    @my_speeches = Speech.where(user_id: current_user).page(params[:page]).per(1)
+    @my_speeches = Speech.where(user_id: current_user).page(params[:page]).per(5)
     @my_speeches = @my_speeches.location(params[:place]) if params[:place].present?
     @my_speeches = @my_speeches.theme(params[:theme]) if params[:theme].present?
     @my_speeches = @my_speeches.joins(:theme).order('themes.name') if params[:sort_by_theme] ==  'on'
