@@ -3,6 +3,11 @@ class Speech < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :conference
 	belongs_to :theme
+
+	has_many :comments, as: :commentable
+
+
+
 	validates :date, presence: true
 	validates :title, presence: true
 

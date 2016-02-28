@@ -25,6 +25,7 @@ class SpeechesController < ApplicationController
   # GET /speeches/1.json
   def show
     @speech = Speech.where(id: params[:id]).first
+    @comment = Comment.new
     render text: "Speech not found", status: 404 unless @speech
   end
 
@@ -97,10 +98,10 @@ class SpeechesController < ApplicationController
     # end
   end
 
-  def select_my_conference
-    @conferences = Conference.all
-    #@conference_id = params
-  end
+  # def select_my_conference
+  #   @conferences = Conference.all
+  #   #@conference_id = params
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

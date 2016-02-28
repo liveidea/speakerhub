@@ -4,6 +4,10 @@ class Account < ActiveRecord::Base
   attr_accessor :theme_ids
   has_one :user
   has_many :themes, through: :user
+
+  has_many :comments
+
+
   before_save :save_city
   before_save :save_params
   scope :name_search, -> (name_s) {where("f_name LIKE ? or l_name LIKE ? or concat(f_name, ' ', l_name) LIKE ?", "%#{name_s}%", "%#{name_s}%" , "%#{name_s}%")}
