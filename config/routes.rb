@@ -8,13 +8,20 @@ Rails.application.routes.draw do
   resources :speeches do
     get 'my_speeches', on: :collection
   end
-  resources :accounts
+  resources :requests, only: [] do
+    get 'change_status', on: :member
+  end
+  resources :accounts do
+    get 'my_requests', on: :collection
+  end
   resources :conferences do
       get :my_conferences, on: :collection
       get :make_checked, on: :member
       get :send_email, on: :member
+      resources :requests
     end
-
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

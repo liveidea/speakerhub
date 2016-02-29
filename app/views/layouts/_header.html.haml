@@ -29,6 +29,10 @@
                 My conferences
                 %span.glyphicon.glyphicon-blackboard
             %li
+              =link_to(my_requests_accounts_path) do
+                My requests
+                %span.glyphicon.glyphicon-user
+            %li
               =link_to(new_conference_path) do
                 Create conference
                 %span.glyphicon.glyphicon-plus
@@ -37,7 +41,7 @@
                 Create Speech
                 %span.glyphicon.glyphicon-plus
             %li
-              =link_to(account_path(current_user.account, class: "list-group-item")) do
+              =link_to(account_path(current_user.account)) do
                 Account
                 %span.glyphicon.glyphicon-user
             %li

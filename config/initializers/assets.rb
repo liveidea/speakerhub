@@ -3,6 +3,7 @@
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( show_user.css )
+Rails.application.config.assets.precompile += %w( close_box_red.png )
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path
 

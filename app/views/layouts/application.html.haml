@@ -9,8 +9,13 @@
     = csrf_meta_tags
     %body
       -if flash[:alert]
-        =content_tag(:div, flash[:alert], class: "alert alert-danger")
+        -flash[:alert].each do |error|
+          =content_tag(:div, error, class: "alert alert-danger")
       = render 'layouts/header'
+      -if flash[:success]
+        =content_tag(:div, flash[:success], class: "alert alert-success")
+      -if notice
+        =content_tag(:div, notice, class: "alert alert-success")
       .container
         = yield
         = render 'layouts/footer'

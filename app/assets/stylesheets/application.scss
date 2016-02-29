@@ -15,13 +15,14 @@
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";
+ // @import "compass/css3";
  .index_pos
  {
    padding-top: 40px;
  }
- .btn {
-   margin-top: 15px;
- }
+ // .btn {
+ //   margin-top: 15px;
+ // }
  .content_pos
  {
    padding-top: 10%;
@@ -61,9 +62,7 @@
 }
 .paginate_pos
 {
-  position: absolute;
-  bottom: 35px;
-  left: 40%;
+ text-align: center;
 }
 .pos
 {
@@ -77,8 +76,9 @@
 }
 .index_img
 {
-  width: 65%;
+  width: 55%;
   height: auto;
+  margin-top: 35px;
 }
 table {
     // border-collapse: collapse;
@@ -108,3 +108,65 @@ table {
       margin-top: 30%;
     }
   }
+
+  #abc {
+width:100%;
+height:100%;
+opacity:.95;
+top:0;
+left:0;
+display:none;
+position:fixed;
+background-color:#313131;
+overflow:auto
+}
+img#close {
+position:absolute;
+right:-14px;
+top:-14px;
+cursor:pointer
+}
+#popupContact {
+position:absolute;
+left:50%;
+top:17%;
+margin-left:-202px;
+font-family:'Raleway',sans-serif
+}
+
+.form {
+max-width:600px;
+min-width:500px;
+padding:10px 50px;
+border:2px solid gray;
+border-radius:10px;
+font-family:raleway;
+background-color:#fff
+}
+
+.popup_header {
+background-color:#FEFFED;
+padding:20px 35px;
+margin:-10px -50px;
+text-align:center;
+border-radius:10px 10px 0 0
+}
+
+img#close {
+position:absolute;
+right:-14px;
+top:-14px;
+cursor:pointer
+}
+
+
+.iconMenuBadge {
+position: absolute;
+top: 2px;
+left: 2px;
+}
+.buttonBadge {
+position: absolute;
+top: -9px;
+left: -15px;
+}

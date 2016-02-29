@@ -5,7 +5,7 @@
     -@accounts.each do |account|
       .col-md-4.index_elements_padding
         .caption.text-center
-          =image_tag account.image, class: "index_img"
+          =image_tag account.image.show, class: "index_img"
           .hall-title
             =link_to("#{account.f_name} #{account.l_name}", account_path(account), target: "_blank")
 .panel.panel-default.text-left{style: "border-style: solid"}

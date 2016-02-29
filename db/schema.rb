@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160221084606) do
+ActiveRecord::Schema.define(version: 20160223103340) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "f_name",           limit: 255
@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(version: 20160221084606) do
     t.datetime "updated_at",                null: false
     t.date     "finish_date"
     t.boolean  "avaliable"
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.integer  "conference_id", limit: 4
+    t.integer  "account_id",    limit: 4
+    t.integer  "status",        limit: 4,   default: 0
+    t.string   "message",       limit: 255
+    t.string   "answer",        limit: 255
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   create_table "speeches", force: :cascade do |t|

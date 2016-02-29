@@ -1,0 +1,39 @@
+- if @active_conference_requests.any?
+  %table.table.table-hover{style: "width: 60%"}
+    %h2 Requests recieved for this confernce
+    %thead
+      %tr
+        %th User
+        %th Comment left on request
+    %tbody
+      -@active_conference_requests.each do |request|
+        %tr
+          %th=link_to("#{request.account.f_name} #{request.account.l_name}", account_path(request.account))
+          %th=request.message
+          %th#abc
+            #popupContact
+              .form
+                =form_for([request.conference, request], id: "form", remote: true) do |f|
+                  %h2.popup_header Answer form
+                  #error_messages
+                  =image_tag('close_box_red.png', size: "32x32", alt: "Edit Entry", id: "close")
+                  %p
+                    =f.label :Accept_request
+                    =f.radio_button :status, :Accepted, id: "radio01"
+                  %p
+                    =f.label :Decline_request
+                    =f.radio_button :status, :Declined, id: "radio02"
+                  =f.label :request_descition_comment
+                  %p
+                    =f.text_area :answer, rows: 5 ,style: "width: 100%", placeholder: "Please enter additional info to the email organizator. Pleace notice that your email and personal info will be included already."
+                    =f.submit "Answer request", id: "text_message"
+          %th=link_to('Answer on request', '#', id: "popup", class: "btn btn-warning")
+:javascript
+  $("a#popup").click(function()
+  {
+    $(this).closest('tr').find('#abc').css("display", "block");
+  })
+  $("img#close").click(function()
+  {
+    $(this).closest('tr').find('#abc').css("display", "none");
+  })

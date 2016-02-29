@@ -1,0 +1,8 @@
+=form_for([@conference, @request], remote: true) do |f|
+  =f.text_area :message, class: "form-control", style: "width: 40%;", rows: 5, placeholder: "Please enter additional info to the email organizator. Pleace notice that your email and personal info will be included already."
+  =f.submit class: "btn btn-primary", id: "submit_button"
+-if @request.errors.any?
+  .alert.alert-danger
+    #error_explanation
+      -@request.errors.full_messages.each do |msg|
+        %h3= msg
