@@ -3,8 +3,9 @@
     .navbar-header
       %ul.nav.navbar-nav
         %li
-          =link_to('Speakerhub',root_path,class: 'navbar-brand')
-          %span.glyphicon.glyphicon-tree-deciduous{style: "margin-top: 10px; font-size: 2em;"}
+          =link_to(root_path, class: 'navbar-brand', style: "padding: 12px 15px 15px;") do
+            %span.glyphicon.glyphicon-tree-deciduous
+            Speakerhub
         %li=link_to('Speakers', accounts_path)
         %li=link_to('Conferences', conferences_path)
         %li=link_to('Speeches', speeches_path)
@@ -14,7 +15,6 @@
           = link_to(new_user_session_path) do
             Login
             %span.glyphicon.glyphicon-log-in
-      -# %li= link_to "Help", help_path
       - if user_signed_in?
         %li.dropdown
           %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}

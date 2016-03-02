@@ -25,7 +25,7 @@ class SpeechesController < ApplicationController
   # GET /speeches/1.json
   def show
     @speech = Speech.where(id: params[:id]).first
-    @comment = Comment.new
+    @comments = @speech.comments.order(created_at: :desc)
     render text: "Speech not found", status: 404 unless @speech
   end
 
@@ -44,7 +44,7 @@ class SpeechesController < ApplicationController
     @speech = Speech.new(speech_params)
 
     @speech.user = current_user
-    current_user.themes << @speech.theme unless current_user.themes.include?(@speech.theme) 
+    current_user.themes << @speech.theme if @speech.theme && !current_user.themes.include?(@speech.theme) 
     respond_to do |format|
       if @speech.save
         format.html { redirect_to @speech, notice: 'Speech was successfully created.' }
@@ -76,6 +76,7 @@ class SpeechesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to speeches_url, notice: 'Speech was successfully destroyed.' }
       format.json { head :no_content }
+      format.json { render json: @speech }
     end
   end
 
@@ -87,6 +88,11 @@ class SpeechesController < ApplicationController
     @my_speeches = @my_speeches.order(:title) if params[:sort_by_title] ==  'on'
     @my_speeches = @my_speeches.order(:place) if params[:sort_by_city] ==  'on'
     @my_speeches = @my_speeches.order(:date ) if params[:sort_by_date] ==  'on'
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render xml: @speeches}
+      format.json { render json: @speeches}
+    end
   end
 
   def maked_checked

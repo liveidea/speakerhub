@@ -1,13 +1,8 @@
-%footer.container-fluid.navbar-fixed-bottom
+%footer.container-fluid
   %small
-    %a{href: "#"}Speakhub app
+    %a{href: "#{root_path}"}Speakhub app
   %nav
     %ul
       %li= link_to "About",  about_path
       %li= link_to "Contact", contact_path
-      %li= link_to "News",    '#', class: "something", onclick: "paintIt(this, 'red')"
-
-/ <div class="navbar-fixed-bottom row-fluid">
-/ 	<div class="navbar-inner">
-/ 	  <div class="container">
-
+      %li= link_to "News", 'http://www.bbc.com/'

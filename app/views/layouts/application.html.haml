@@ -3,7 +3,6 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title
       =full_title(yield(:title))
-      | Speakerhub
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
@@ -14,14 +13,7 @@
 
     %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css", :rel => "stylesheet"}/
     %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"}
-    / = stylesheet_link_tag 'application', 'select2.css', media: 'all', 'data-turbolinks-track' => true
-    / = stylesheet_link_tag 'application', 'select2-bootstrap.css', media: 'all', 'data-turbolinks-track' => true
-
-
-
-    / <link rel="stylesheet" href="select2.css">
-    / <link rel="stylesheet" href="select2-bootstrap.css">
-    / <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    %script{:src => "http://maps.googleapis.com/maps/api/js"}
 
     %body.page
       -if flash[:alert]
@@ -29,6 +21,5 @@
       = render 'layouts/header'
       .container
         = yield
-        = render 'layouts/footer'
-        %br
-        = debug(params) if Rails.env.development?
+      = render 'layouts/footer'
+

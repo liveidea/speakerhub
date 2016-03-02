@@ -7,15 +7,14 @@ Rails.application.routes.draw do
   devise_for :users
   resources :speeches do
     resources :comments, only: [ :create]
-    get 'my_speeches',          on: :collection
-    # get 'select_my_conference', on: :collection
-    get 'maked_checked',        on: :member
+    get :my_speeches,   on: :collection
+    get :maked_checked, on: :member
   end
   resources :accounts
   resources :conferences do
     get :my_conferences, on: :collection
-    get :make_checked, on: :member
-    get :send_email, on: :member
+    get :make_checked,   on: :member
+    get :send_email,     on: :member
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
