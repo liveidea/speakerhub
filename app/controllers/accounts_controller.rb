@@ -1,4 +1,4 @@
-class AccountsController < ApplicationController
+  class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
   before_action :check_permissions, only: [:edit, :update, :destroy]
   # GET /accounts
