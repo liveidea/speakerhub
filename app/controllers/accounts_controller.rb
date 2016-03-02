@@ -12,7 +12,7 @@
   # GET /accounts/1
   # GET /accounts/1.json
   def show
-    @account_requests = Request.all.where(conference: current_user.conferences)
+    #@account_requests = Request.all.where(conference: current_user.conferences)
   end
 
   # GET /accounts/new

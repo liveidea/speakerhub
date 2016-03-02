@@ -4,5 +4,6 @@ FactoryGirl.define do
     description "Some text"
     place       "Lviv"
     date        Time.now
+    user
   end
 end

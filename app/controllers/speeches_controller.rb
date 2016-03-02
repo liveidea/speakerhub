@@ -1,6 +1,7 @@
 class SpeechesController < ApplicationController
   before_action :set_speech, only: [:show, :edit, :update, :destroy, :maked_checked]
   before_action :check_permissions, only: [:edit, :update, :destroy]
+  
   # GET /speeches
   # GET /speeches.json
   def index
@@ -22,7 +23,6 @@ class SpeechesController < ApplicationController
   # GET /speeches/1.json
   def show
     @comments = @speech.comments.order(created_at: :desc)
-    render text: "Speech not found", status: 404 unless @speech
   end
 
   # GET /speeches/new
@@ -104,6 +104,8 @@ class SpeechesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_speech
       @speech = Speech.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        render :file => "#{Rails.root}/public/404", :layout => false, :status => 404
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
