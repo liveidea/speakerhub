@@ -35,8 +35,8 @@
             -conference.speeches.each do |speech|
               %p
                 =link_to(speech.title,speech)
-          %td=link_to conference.avaliable ? "make unchecked" : "make checked", make_checked_conference_path(conference),
-            remote: true, format: :json, data: {id: conference.id}, class: "link"
+          -# %td=link_to conference.avaliable ? "make unchecked" : "make checked", make_checked_conference_path(conference),
+          -#   remote: true, format: :json, data: {id: conference.id}, class: "link"
 = link_to 'New Conference', new_conference_path, class: "btn btn-primary"
 
 

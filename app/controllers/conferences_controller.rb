@@ -9,27 +9,25 @@ class ConferencesController < ApplicationController
       @conferences = @conferences.public_send(key, value) if value.present?
     end
     @conferences = @conferences.title(params[:title]) if params[:title].present?
-
-    # @conferences = @conferences.sort_by_start_date(params[:start_date]) if params[:start_date].present?
-    # @conferences = @conferences.sort_by_finish_date(params[:finish_date]) if params[:finish_date].present?
   end
 
-  # GET /conferences/1
-  # GET /conferences/1.json
   def show
+    @request = @conference.requests.build
+    @active_conference_requests = Request.all.where(conference_id: params[:id], status: 0)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
-  # GET /conferences/new
   def new
     @conference = Conference.new
   end
 
-  # GET /conferences/1/edit
+
   def edit
   end
 
-  # POST /conferences
-  # POST /conferences.json
   def create
     @conference = Conference.new(conference_params)
     @conference.user = current_user
@@ -49,8 +47,6 @@ class ConferencesController < ApplicationController
     @my_conferences=Conference.where(user: current_user)
   end
 
-  # PATCH/PUT /conferences/1
-  # PATCH/PUT /conferences/1.json
   def update
     respond_to do |format|
       if @conference.update(conference_params)
@@ -63,13 +59,7 @@ class ConferencesController < ApplicationController
       end
     end
   end
-def make_checked
-  @conference.avaliable = !@conference.avaliable
-  @conference.save
-  render json: @conference.avaliable.to_json
-end
-  # DELETE /conferences/1
-  # DELETE /conferences/1.json
+
   def destroy
     @conference.destroy
     respond_to do |format|
@@ -77,14 +67,13 @@ end
       format.json { head :no_content }
     end
   end
-  def send_email
-    # @user = current_user
-    UserMailer.request_send(current_user, @conference, params[:email_text]).deliver_now
-    redirect_to :back
-  end
+  # def send_email
+  #
+  #   UserMailer.request_send(current_user, @conference, params[:email_text]).deliver_now
+  #   redirect_to :back
+  # end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def filtering_params(params)
       params.slice(:start_date, :finish_date)
     end

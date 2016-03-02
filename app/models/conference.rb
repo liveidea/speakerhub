@@ -1,6 +1,7 @@
 class Conference < ActiveRecord::Base
 	belongs_to :user
 	has_many :speeches
+	has_many :requests
 	validates :place, presence: true
 	validates :title, presence: true
 	validates :start_date, :finish_date, presence: true

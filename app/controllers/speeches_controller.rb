@@ -1,10 +1,9 @@
 class SpeechesController < ApplicationController
-  before_action :set_speech, only: [:edit, :update, :destroy, :maked_checked]
+  before_action :set_speech, only: [:show, :edit, :update, :destroy, :maked_checked]
   before_action :check_permissions, only: [:edit, :update, :destroy]
   # GET /speeches
   # GET /speeches.json
   def index
-    # @speeches = Speech.all
     @speeches = Speech.all.page(params[:page]).per(5) # creates an anonymous scope
     @speeches = @speeches.location(params[:place]) if params[:place].present?
     @speeches = @speeches.theme(params[:theme]) if params[:theme].present?
@@ -12,8 +11,6 @@ class SpeechesController < ApplicationController
     @speeches = @speeches.order(:title) if params[:sort_by_title] ==  'on'
     @speeches = @speeches.order(:place) if params[:sort_by_city] ==  'on'
     @speeches = @speeches.order(:date ) if params[:sort_by_date] ==  'on'
-    # @speeches = @products.location(params[:location]) if params[:location].present?
-    # @speeches = @products.starts_with(params[:starts_with]) if params[:starts_with].present?
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render xml: @speeches}
@@ -24,7 +21,6 @@ class SpeechesController < ApplicationController
   # GET /speeches/1
   # GET /speeches/1.json
   def show
-    @speech = Speech.where(id: params[:id]).first
     @comments = @speech.comments.order(created_at: :desc)
     render text: "Speech not found", status: 404 unless @speech
   end
@@ -103,11 +99,6 @@ class SpeechesController < ApplicationController
     #   format.js
     # end
   end
-
-  # def select_my_conference
-  #   @conferences = Conference.all
-  #   #@conference_id = params
-  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

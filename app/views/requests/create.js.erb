@@ -1,0 +1,6 @@
+<%if @request.errors.any?%>
+  $('#error_messages').html("<%= escape_javascript render(:partial=>'errors', :locals=>{:target=> @request})%>")
+<%else%>
+  $('#request_form').html("<%= escape_javascript render(:partial=>'success')%>")
+  $('#error_messages').hide()
+<%end%>

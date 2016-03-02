@@ -26,6 +26,10 @@
     }
   }
   .foto {
+    .profile_button {
+      margin-top: 10px;
+      .btn { width: 60%; }
+    }
     .flex-container {
       display: -webkit-flex;
       display: flex;

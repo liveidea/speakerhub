@@ -1,0 +1,9 @@
+#requests_table
+%table{style: "width: 100%;"}
+  %h2 Requests sent as speaker
+  -current_user.account.requests.each do |request|
+    %tr.color-tr
+      %th=request.message
+      %th=request.status
+      %th=request.answer
+      %th=link_to('Delete request', conference_request_path(request.conference, request) , :method => :delete, :data => { :confirm => 'Are you sure?' })

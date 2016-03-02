@@ -34,6 +34,9 @@ gem 'bootstrap-kaminari-views'
 gem 'carrierwave'
 gem "mini_magick"
 gem 'select2-rails', '~> 4.0', '>= 4.0.1'
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', :require => nil
+gem "redis-rails"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -15,10 +15,9 @@
 					.row
 						.col-md-12{style: "text-align: center"}
 							.row
-								%div= link_to "Edit speech", edit_speech_path(@speech), class: "btn btn-primary", style: "width: 60%;"
+								.profile_button= link_to "Edit speech", edit_speech_path(@speech), class: "btn btn-primary"
 							.row
-								%div= link_to "Destroy speech", speech_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger", style: "width: 60%;"
-
+								.profile_button= link_to "Destroy speech", speech_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
 			/* Profile */
 			.col-md-9.col-sm-9.col-xs-9{class: "profile"}
 				%h2= "Conference: #{ @speech.conference.title unless @speech.conference.nil? }"

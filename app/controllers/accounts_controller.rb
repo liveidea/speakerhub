@@ -6,12 +6,13 @@ class AccountsController < ApplicationController
   def index
     @accounts = Account.all.page(params[:page]).per(6)
     @accounts = @accounts.name_search(params[:f_name]) if params[:f_name].present?
-    @accounts = @accounts.joins(:themes).where( themes: {id: params[:theme]}) if params[:theme].present?
+    @accounts = @accounts.joins(:user => :themes).where( themes: {id: params[:theme]}) if params[:theme].present?
   end
 
   # GET /accounts/1
   # GET /accounts/1.json
   def show
+    @account_requests = Request.all.where(conference: current_user.conferences)
   end
 
   # GET /accounts/new
@@ -21,6 +22,15 @@ class AccountsController < ApplicationController
 
   # GET /accounts/1/edit
   def edit
+  end
+  def my_requests
+    @active_requests_recieved = Request.where({conference: current_user.conferences, status: 0})
+    @inactive_requests = Request.where({conference: current_user.conferences, status: [1,2]})
+    @account = current_user.account
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # POST /accounts

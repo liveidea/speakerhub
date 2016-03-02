@@ -51,6 +51,16 @@ ActiveRecord::Schema.define(version: 20160228125255) do
     t.boolean  "avaliable"
   end
 
+  create_table "requests", force: :cascade do |t|
+    t.integer  "conference_id", limit: 4
+    t.integer  "account_id",    limit: 4
+    t.integer  "status",        limit: 4,   default: 0
+    t.string   "message",       limit: 255
+    t.string   "answer",        limit: 255
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
   create_table "speeches", force: :cascade do |t|
     t.string   "title",         limit: 255
     t.text     "description",   limit: 65535
