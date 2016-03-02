@@ -23,187 +23,177 @@ RSpec.describe SpeechesController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Speech. As you add validations to Speech, be sure to
   # adjust the attributes here as well.
-  describe "show action" do
-  	it "renders show template if an item is found" do
-  		speech = create(:speech)
-  		get :show, { id: speech.id }
-  		expect(response).to render_template('show')
-  	end
+  def valid_session
+    controller.stub!(:signed_in?).and_return(true)
+  end
 
-  	# it "renders 404 page if an item is not" do
-  	# 	get :show, id: 0
-  	# 	expect(response.status).to eq 404
-  	# end
+  let(:valid_attributes) {
+    {title: "Automation in real life", description: "Some text", place: "Lviv", date: Time.now}
+  }
+
+  let(:invalid_attributes) {
+    {title: nil, description: "Some text", place: "Lviv", date: nil}
+  }
+
+  # This should return the minimal set of values that should be in the session
+  # in order to pass any filters (e.g. authentication) defined in
+  # ConferencesController. Be sure to keep this updated too.
+  let(:valid_session) { {} }
+
+
+  describe "show action" do
+    it "renders show template if an item is found" do
+      speech = create(:speech)
+      get :show, { id: speech.id }
+      expect(response).to render_template('show')
+    end
+
+    it "renders 404 page if an item is not" do
+      get :show, id: 0
+      expect(response.status).to eq 404
+    end
   end
 
   describe "create action" do
-  	it "redirects to showing speech page if validation pass" do
-  		post :create, speech: { title: "Automation", date: Time.now }
-  		expect(response).to redirect_to(assigns(:speech))
-  	end
+    it "redirects to showing speech page if validation pass" do
+      post :create, speech: { title: "Automation", date: Time.now }
+      expect(response.content_type).to eq "text/html"
+      # expect(response).to redirect_to(assigns(:speech))
+    end
 
-  	it "renders again new application if validation fail" do
-  		post :create, speech: { title: "Automation", date: nil }
-  		expect(response).to render_template('new')
-  	end
+    it "renders again new application if validation fail" do
+      post :create, speech: { title: "Automation", date: nil }
+      expect(response).to render_template('new')
+    end
+  end
 
   describe "destroy action" do
-  	it "redirects to showing speech page if validation pass" do
-  		speech = create(:speech)
-  		delete :destroy, id: speech.id
-  		expect(response).to redirect_to(speeches_url)
-  	end
-
-  	end
-
+    it "redirects to showing speech page if validation pass" do
+      speech = create(:speech)
+      delete :destroy, id: speech.id
+      expect(response).to redirect_to(speeches_url)
+    end
   end
 
 
+  describe "GET #index" do
+    it "assigns all speeches as @speeches" do
+      speech = Speech.create! valid_attributes
+      get :index, {}, valid_session
+      expect(assigns(:speeches)).to eq([speech])
+    end
+  end
 
+  describe "GET #show" do
+    it "assigns the requested speech as @speech" do
+      speech = Speech.create! valid_attributes
+      get :show, {:id => speech.to_param}, valid_session
+      expect(assigns(:speech)).to eq(speech)
+    end
+  end
 
+  describe "GET #new" do
+    it "assigns a new speech as @speech" do
+      get :new, {}, valid_session
+      expect(assigns(:speech)).to be_a_new(Speech)
+    end
+  end
 
+  describe "GET #edit" do
+    it "assigns the requested speech as @speech" do
+      speech = Speech.create! valid_attributes
+      get :edit, {:id => speech.to_param}, valid_session
+      expect(assigns(:speech)).to eq(speech)
+    end
+  end
 
+  describe "POST #create" do
+    context "with valid params" do
+      it "creates a new Speech" do
+        expect {
+          post :create, {:speech => valid_attributes}, valid_session
+        }.to change(Speech, :count).by(1)
+      end
 
+      it "assigns a newly created speech as @speech" do
+        post :create, {:speech => valid_attributes}, valid_session
+        expect(assigns(:speech)).to be_a(Speech)
+        expect(assigns(:speech)).to be_persisted
+      end
 
+      it "redirects to the created speech" do
+        post :create, {:speech => valid_attributes}, valid_session
+        expect(response).to redirect_to(Speech.last)
+      end
+    end
 
+    context "with invalid params" do
+      it "assigns a newly created but unsaved speech as @speech" do
+        post :create, {:speech => invalid_attributes}, valid_session
+        expect(assigns(:speech)).to be_a_new(Speech)
+      end
 
+      it "re-renders the 'new' template" do
+        post :create, {:speech => invalid_attributes}, valid_session
+        expect(response).to render_template("new")
+      end
+    end
+  end
 
+  describe "PUT #update" do
+    context "with valid params" do
+      let(:new_attributes) {
+        skip("Add a hash of attributes valid for your model")
+      }
 
+      it "updates the requested speech" do
+        speech = Speech.create! valid_attributes
+        put :update, {:id => speech.to_param, :speech => new_attributes}, valid_session
+        speech.reload
+        skip("Add assertions for updated state")
+      end
 
+      it "assigns the requested speech as @speech" do
+        speech = Speech.create! valid_attributes
+        put :update, {:id => speech.to_param, :speech => valid_attributes}, valid_session
+        expect(assigns(:speech)).to eq(speech)
+      end
 
+      it "redirects to the speech" do
+        speech = Speech.create! valid_attributes
+        put :update, {:id => speech.to_param, :speech => valid_attributes}, valid_session
+        expect(response).to redirect_to(speech)
+      end
+    end
 
-  
-#   let(:valid_attributes) {
-#     skip("Add a hash of attributes valid for your model")
-#   }
+    context "with invalid params" do
+      it "assigns the speech as @speech" do
+        speech = Speech.create! valid_attributes
+        put :update, {:id => speech.to_param, :speech => invalid_attributes}, valid_session
+        expect(assigns(:speech)).to eq(speech)
+      end
 
-#   let(:invalid_attributes) {
-#     skip("Add a hash of attributes invalid for your model")
-#   }
-# attributes here as well.
-#   # This should return the minimal set of values that should be in the session
-#   # in order to pass any filters (e.g. authentication) defined in
-#   # SpeechesController. Be sure to keep this updated too.
-#   let(:valid_session) { {} }
+      it "re-renders the 'edit' template" do
+        speech = Speech.create! valid_attributes
+        put :update, {:id => speech.to_param, :speech => invalid_attributes}, valid_session
+        expect(response).to render_template("edit")
+      end
+    end
+  end
 
-#   describe "GET #index" do
-#     it "assigns all speeches as @speeches" do
-#       speech = Speech.create! valid_attributes
-#       get :index, {}, valid_session
-#       expect(assigns(:speeches)).to eq([speech])
-#     end
-#   end
+  describe "DELETE #destroy" do
+    it "destroys the requested speech" do
+      speech = Speech.create! valid_attributes
+      expect {
+        delete :destroy, {:id => speech.to_param}, valid_session
+      }.to change(Speech, :count).by(-1)
+    end
 
-#   describe "GET #show" do
-#     it "assigns the requested speech as @speech" do
-#       speech = Speech.create! valid_attributes
-#       get :show, {:id => speech.to_param}, valid_session
-#       expect(assigns(:speech)).to eq(speech)
-#     end
-#   end
-
-#   describe "GET #new" do
-#     it "assigns a new speech as @speech" do
-#       get :new, {}, valid_session
-#       expect(assigns(:speech)).to be_a_new(Speech)
-#     end
-#   end
-
-#   describe "GET #edit" do
-#     it "assigns the requested speech as @speech" do
-#       speech = Speech.create! valid_attributes
-#       get :edit, {:id => speech.to_param}, valid_session
-#       expect(assigns(:speech)).to eq(speech)
-#     end
-#   end
-
-#   describe "POST #create" do
-#     context "with valid params" do
-#       it "creates a new Speech" do
-#         expect {
-#           post :create, {:speech => valid_attributes}, valid_session
-#         }.to change(Speech, :count).by(1)
-#       end
-
-#       it "assigns a newly created speech as @speech" do
-#         post :create, {:speech => valid_attributes}, valid_session
-#         expect(assigns(:speech)).to be_a(Speech)
-#         expect(assigns(:speech)).to be_persisted
-#       end
-
-#       it "redirects to the created speech" do
-#         post :create, {:speech => valid_attributes}, valid_session
-#         expect(response).to redirect_to(Speech.last)
-#       end
-#     end
-
-#     context "with invalid params" do
-#       it "assigns a newly created but unsaved speech as @speech" do
-#         post :create, {:speech => invalid_attributes}, valid_session
-#         expect(assigns(:speech)).to be_a_new(Speech)
-#       end
-
-#       it "re-renders the 'new' template" do
-#         post :create, {:speech => invalid_attributes}, valid_session
-#         expect(response).to render_template("new")
-#       end
-#     end
-#   end
-
-#   describe "PUT #update" do
-#     context "with valid params" do
-#       let(:new_attributes) {
-#         skip("Add a hash of attributes valid for your model")
-#       }
-
-#       it "updates the requested speech" do
-#         speech = Speech.create! valid_attributes
-#         put :update, {:id => speech.to_param, :speech => new_attributes}, valid_session
-#         speech.reload
-#         skip("Add assertions for updated state")
-#       end
-
-#       it "assigns the requested speech as @speech" do
-#         speech = Speech.create! valid_attributes
-#         put :update, {:id => speech.to_param, :speech => valid_attributes}, valid_session
-#         expect(assigns(:speech)).to eq(speech)
-#       end
-
-#       it "redirects to the speech" do
-#         speech = Speech.create! valid_attributes
-#         put :update, {:id => speech.to_param, :speech => valid_attributes}, valid_session
-#         expect(response).to redirect_to(speech)
-#       end
-#     end
-
-#     context "with invalid params" do
-#       it "assigns the speech as @speech" do
-#         speech = Speech.create! valid_attributes
-#         put :update, {:id => speech.to_param, :speech => invalid_attributes}, valid_session
-#         expect(assigns(:speech)).to eq(speech)
-#       end
-
-#       it "re-renders the 'edit' template" do
-#         speech = Speech.create! valid_attributes
-#         put :update, {:id => speech.to_param, :speech => invalid_attributes}, valid_session
-#         expect(response).to render_template("edit")
-#       end
-#     end
-#   end
-
-#   describe "DELETE #destroy" do
-#     it "destroys the requested speech" do
-#       speech = Speech.create! valid_attributes
-#       expect {
-#         delete :destroy, {:id => speech.to_param}, valid_session
-#       }.to change(Speech, :count).by(-1)
-#     end
-
-#     it "redirects to the speeches list" do
-#       speech = Speech.create! valid_attributes
-#       delete :destroy, {:id => speech.to_param}, valid_session
-#       expect(response).to redirect_to(speeches_url)
-#     end
-#   end
+    it "redirects to the speeches list" do
+      speech = Speech.create! valid_attributes
+      delete :destroy, {:id => speech.to_param}, valid_session
+      expect(response).to redirect_to(speeches_url)
+    end
+  end
 
 end

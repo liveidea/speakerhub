@@ -1,12 +1,11 @@
 class SpeechesController < ApplicationController
-  before_action :set_speech, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_speech, only: [:edit, :update, :destroy, :maked_checked]
+  before_action :check_permissions, only: [:edit, :update, :destroy]
   # GET /speeches
   # GET /speeches.json
   def index
     # @speeches = Speech.all
-
-    @speeches = Speech.where(nil) # creates an anonymous scope
+    @speeches = Speech.all.page(params[:page]).per(5) # creates an anonymous scope
     @speeches = @speeches.location(params[:place]) if params[:place].present?
     @speeches = @speeches.theme(params[:theme]) if params[:theme].present?
     @speeches = @speeches.joins(:theme).order('themes.name') if params[:sort_by_theme] ==  'on'
@@ -15,14 +14,19 @@ class SpeechesController < ApplicationController
     @speeches = @speeches.order(:date ) if params[:sort_by_date] ==  'on'
     # @speeches = @products.location(params[:location]) if params[:location].present?
     # @speeches = @products.starts_with(params[:starts_with]) if params[:starts_with].present?
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render xml: @speeches}
+      format.json { render json: @speeches}
+    end
   end
 
   # GET /speeches/1
   # GET /speeches/1.json
   def show
-    unless @speech
-      render text: "Speech not found", status: 404
-    end
+    @speech = Speech.where(id: params[:id]).first
+    @comment = Comment.new
+    render text: "Speech not found", status: 404 unless @speech
   end
 
   # GET /speeches/new
@@ -40,7 +44,7 @@ class SpeechesController < ApplicationController
     @speech = Speech.new(speech_params)
 
     @speech.user = current_user
-
+    current_user.themes << @speech.theme unless current_user.themes.include?(@speech.theme) 
     respond_to do |format|
       if @speech.save
         format.html { redirect_to @speech, notice: 'Speech was successfully created.' }
@@ -76,8 +80,28 @@ class SpeechesController < ApplicationController
   end
 
   def my_speeches
-    @my_speeches = Speech.where(user_id: current_user)
+    @my_speeches = Speech.where(user_id: current_user).page(params[:page]).per(5)
+    @my_speeches = @my_speeches.location(params[:place]) if params[:place].present?
+    @my_speeches = @my_speeches.theme(params[:theme]) if params[:theme].present?
+    @my_speeches = @my_speeches.joins(:theme).order('themes.name') if params[:sort_by_theme] ==  'on'
+    @my_speeches = @my_speeches.order(:title) if params[:sort_by_title] ==  'on'
+    @my_speeches = @my_speeches.order(:place) if params[:sort_by_city] ==  'on'
+    @my_speeches = @my_speeches.order(:date ) if params[:sort_by_date] ==  'on'
   end
+
+  def maked_checked
+    @speech.available = !@speech.available
+    @speech.save
+    render json: @speech.to_json
+    # respond_to do |format|
+    #   format.js
+    # end
+  end
+
+  # def select_my_conference
+  #   @conferences = Conference.all
+  #   #@conference_id = params
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -87,6 +111,15 @@ class SpeechesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def speech_params
-      params.require(:speech).permit(:title, :description, :place, :date, :image, :video,:theme_id,:conference_id )
+      params.require(:speech).permit(:title, :description, :place, :date, :image, :video,:theme_id,:conference_id, :available)
+    end
+
+    def check_permissions
+      if current_user == @speech.user
+        return true
+      else
+        redirect_to :root
+        flash[:alert] = "You dont have permission to view this page!"
+      end
     end
 end

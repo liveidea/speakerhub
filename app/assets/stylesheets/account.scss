@@ -1,0 +1,38 @@
+.account {
+  font-family: Times New Roman, serif;
+  font-style: oblique;
+  margin-top: 1.5%;
+  .img
+  {
+    width: 95%;
+    height: auto;  border-radius: 10%;
+    margin-top: 3%;
+  }
+  .btn {
+    margin-top: 3%;
+  }
+  .pos
+  {
+    text-align: left;
+    display: inline-block;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .account_info
+  {
+    margin-top: 20%;
+    width: 100%;
+    margin-left: 3%;
+  }
+  .additional_infos
+  {
+    margin-top: 20%;
+    width: 100%;
+    margin-left: 10%;
+
+
+  }
+  p{
+    margin-top: 1%;
+  }
+}

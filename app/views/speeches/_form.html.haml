@@ -11,28 +11,33 @@
               %li= message
 
       .form-group
-        =f.label :theme
-        =f.select :theme_id, options_for_select(Theme.all.pluck(:name, :id), params[:place]), {:prompt => "Select"}, {:class => "form-control"}
+        = f.label :theme
+        = f.select :theme_id, options_for_select(Theme.all.pluck(:name, :id).sort, f.object.theme_id), {:prompt => "Select"}, {:class => "form-control"}
       .form-group
         =f.label :Conference
-        =f.select :conference_id, Conference.all.pluck(:title, :id), autofocus: true, class: "form-control"
+        =f.select :conference_id, options_for_select(Conference.all.pluck(:title, :id), f.object.conference_id), {:prompt => "Select"}, {:class => "form-control"}
+      .form-group.has-warning.has-feedback
+        = f.label :title
+        = f.text_field :title, autofocus: true, class: "form-control", placeholder: "Enter a title"
+        %span.glyphicon.glyphicon-warning-sign.form-control-feedback
       .form-group
-        =f.label :title
-        =f.text_field :title, autofocus: true, class: "form-control"
+        = f.label :description
+        = f.text_area :description, autofocus: true, class: "form-control", placeholder: "Enter some description"
       .form-group
-        =f.label :description
-        =f.text_area :description, autofocus: true, class: "form-control"
-      .form-group
-        =f.label :place
-        =f.select :place, options_for_select(City.pluck(:name), params[:place]), {:prompt => "Select"}, {:class => "form-control"}
-      .form-group
-        =f.label :date
+        = f.label :city
+        = f.text_field :place, autofocus: true, class: "form-control", placeholder: "Enter a city name"
+      .form-group.has-warning.has-feedback
+        = f.label :date
         %br
-        =f.date_select :date, {prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }}, {style: "border-radius: 10px"}
+        = f.date_field :date, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, class: "form-control"
+        %span.glyphicon.glyphicon-warning-sign.form-control-feedback
       .form-group
-        =f.label :image
-        =f.file_field :image, autofocus: true, class: "form-control"
+        = f.label :image
+        = f.file_field :image, autofocus: true, class: "form-control"
       .form-group
-        =f.label :video
-        =f.text_field :video, autofocus: true, class: "form-control", placeholder: "Enter link"
+        = f.label :video
+        = f.text_field :video, autofocus: true, class: "form-control", placeholder: "Enter a link"
       = f.submit class: "btn btn-primary"
+%p{style: "float: right !important;"}
+  %span.glyphicon.glyphicon-warning-sign
+  Required fields

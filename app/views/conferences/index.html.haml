@@ -20,23 +20,26 @@
         %th Title
         %th Adress
         %th Date of event
-        %th Speeches applied to conference
+        -# %th Speeches applied to conference
     %tbody
-      - @conferences.each do |conference|
-        %tr
-          %td=link_to(conference.title,conference)
-          %td= conference.place
-          %td
-            -if conference.start_date<conference.finish_date
-              ="#{conference.start_date.day}-#{conference.finish_date.to_formatted_s(:rfc822) }"
-            -else
-              =conference.start_date.to_date.to_formatted_s(:rfc822)
-          %td
-            -conference.speeches.each do |speech|
-              %p
-                =link_to(speech.title,speech)
-          -# %td=link_to conference.avaliable ? "make unchecked" : "make checked", make_checked_conference_path(conference),
-          -#   remote: true, format: :json, data: {id: conference.id}, class: "link"
+      #conferences
+        =render @conferences
+      -# - @conferences.each do |conference|
+        -# %tr
+        -#   %td=link_to(conference.title,conference)
+        -#   %td= conference.place
+        -#   %td
+        -#     -if conference.start_date<conference.finish_date
+        -#       ="#{conference.start_date.day}-#{conference.finish_date.to_formatted_s(:rfc822) }"
+        -#     -else
+        -#       =conference.start_date.to_date.to_formatted_s(:rfc822)
+        -#   %td
+        -#     -conference.speeches.each do |speech|
+        -#       %p
+        -#         =link_to(speech.title,speech)
+
+#paginator.paginate_pos
+  =paginate @conferences, :theme => 'twitter-bootstrap-3', remote: true
 = link_to 'New Conference', new_conference_path, class: "btn btn-primary"
 
 

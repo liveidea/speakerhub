@@ -10,12 +10,20 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require select2
 //= require jquery
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
-// $("a.link").on("ajax:success",function()
-// {
-//   $(this).closest("tr").css("background-color", "green")
-// });
+//= require_tree
+
+$(document).on('ready page:load', function () {
+    $(".js-select-city").select2({
+      placeholder: 'Select a city(cities)',
+      allowClear: true
+    });
+    $(".js-select-theme").select2({
+      placeholder: 'Select a theme(themes)',
+      allowClear: true
+    });
+  });

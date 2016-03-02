@@ -1,0 +1,4 @@
+%h2.pos="#{@account.f_name} conferences"
+-my_conferences.each do |conference|
+  %p=link_to("#{conference.title}",conference_path(conference), :target => "_blank")
+.paginate_pos=paginate my_conferences, remote: true, :param_name => 'page_2'

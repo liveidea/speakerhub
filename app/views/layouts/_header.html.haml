@@ -2,7 +2,9 @@
   .container-fluid
     .navbar-header
       %ul.nav.navbar-nav
-        %li=link_to('Speakerhub',root_path,class: 'navbar-brand')
+        %li
+          =link_to('Speakerhub',root_path,class: 'navbar-brand')
+          %span.glyphicon.glyphicon-tree-deciduous{style: "margin-top: 10px; font-size: 2em;"}
         %li=link_to('Speakers', accounts_path)
         %li=link_to('Conferences', conferences_path)
         %li=link_to('Speeches', speeches_path)

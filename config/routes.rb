@@ -6,7 +6,10 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :speeches do
-    get 'my_speeches', on: :collection
+    resources :comments, only: [ :create]
+    get 'my_speeches',          on: :collection
+    # get 'select_my_conference', on: :collection
+    get 'maked_checked',        on: :member
   end
   resources :requests, only: [] do
     get 'change_status', on: :member
@@ -22,6 +25,7 @@ Rails.application.routes.draw do
     end
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

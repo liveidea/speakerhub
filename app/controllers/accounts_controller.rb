@@ -4,7 +4,6 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    #@accounts = Account.all
     @accounts = Account.all.page(params[:page]).per(6)
     @accounts = @accounts.name_search(params[:f_name]) if params[:f_name].present?
     @accounts = @accounts.joins(:user => :themes).where( themes: {id: params[:theme]}) if params[:theme].present?
@@ -14,6 +13,12 @@ class AccountsController < ApplicationController
   # GET /accounts/1.json
   def show
     @account_requests = Request.all.where(conference: current_user.conferences)
+    @my_speeches = @account.user.speeches.page(params[:page_1]).per(5)
+    @my_conferences = @account.user.conferences.page(params[:page_2]).per(5)
+    respond_to do |format|
+     format.js
+     format.html
+    end
   end
 
   # GET /accounts/new
