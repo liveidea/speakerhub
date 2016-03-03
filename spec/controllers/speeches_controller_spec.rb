@@ -67,7 +67,7 @@ RSpec.describe SpeechesController, type: :controller do
     it "redirects to showing speech page if validation pass" do
       speech = create(:speech)
       delete :destroy, id: speech.id
-      expect(response).to redirect_to(speeches_url)
+      expect(response).to redirect_to(root_url)
     end
   end
 
