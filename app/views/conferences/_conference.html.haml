@@ -1,0 +1,13 @@
+%tr
+  %td=link_to(conference.title,conference)
+  %td= conference.place
+  %td
+    -if conference.start_date<conference.finish_date
+      ="#{conference.start_date.day}-#{conference.finish_date.to_formatted_s(:rfc822) }"
+    -else
+      =conference.start_date.to_date.to_formatted_s(:rfc822)
+  -# %td=conference.description
+  %td
+    -conference.speeches.each do |speech|
+      %p
+        =link_to(speech.title,speech)

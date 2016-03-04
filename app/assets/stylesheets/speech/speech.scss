@@ -51,7 +51,7 @@
           color: #0080FF;
           text-shadow: 1px 1px 10px rgb(13, 13, 13);
         }
-        &--avatar { 
+        &--avatar {
           @extend .flex-item;
           align-self: center;
           -webkit-align-self: center;
@@ -60,19 +60,19 @@
           background-size: cover;
           border-radius: 2%;
           flex: none;
-          width: 210px;      
-          height: 210px;      
+          width: 210px;
+          height: 210px;
         }
       }
     }
   }
   .profile {
     padding-left: 30px;
-    h2, h3, h4 { 
+    h2, h3, h4 {
       font-family: "Roboto", sans-serif;
       font-weight: 700;
     }
-    p { 
+    p {
       text-indent: 30px;
       text-align: justify;
     }
@@ -93,7 +93,7 @@
     }
     .video {
       display: flex;
-      justify-content: center; 
+      justify-content: center;
     }
   }
   .comment-input { width: 50%; }
@@ -131,7 +131,7 @@
           color: #0080FF;
           text-shadow: 1px 1px 10px rgb(13, 13, 13);
         }
-        &--avatar { 
+        &--avatar {
           @extend .flex-item;
           align-self: center;
           -webkit-align-self: center;
@@ -140,8 +140,8 @@
           background-size: cover;
           border-radius: 50%;
           flex: none;
-          width: 110px;      
-          height: 110px;      
+          width: 110px;
+          height: 110px;
         }
       }
     }

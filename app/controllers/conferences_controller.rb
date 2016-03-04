@@ -4,16 +4,21 @@ class ConferencesController < ApplicationController
   # GET /conferences.json
   before_action :check_permissions, only: [:edit, :update, :destroy]
   def index
-    @conferences = Conference.all
+    @conferences = Conference.all.page(params[:page]).per(5)
     filtering_params(params).each do |key, value|
       @conferences = @conferences.public_send(key, value) if value.present?
     end
     @conferences = @conferences.title(params[:title]) if params[:title].present?
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show
     @request = @conference.requests.build
     @active_conference_requests = Request.all.where(conference_id: params[:id], status: 0)
+    @speeches = @conference.speeches.page(params[:page]).per(4)
     respond_to do |format|
       format.html
       format.js

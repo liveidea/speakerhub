@@ -6,7 +6,7 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-    
+
     = stylesheet_link_tag 'application', 'http://fonts.googleapis.com/css?family=Oleo+Script', media: 'all', 'data-turbolinks-track' => true
     = stylesheet_link_tag 'application', 'http://fonts.googleapis.com/css?family=Arizonia', media: 'all', 'data-turbolinks-track' => true
     = stylesheet_link_tag 'application', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', media: 'all', 'data-turbolinks-track' => true
@@ -17,8 +17,7 @@
 
     %body.page
       -if flash[:alert]
-        -flash[:alert].each do |error|
-          =content_tag(:div, error, class: "alert alert-danger")
+        =content_tag(:div, flash[:alert], class: "alert alert-danger")
       = render 'layouts/header'
       -if flash[:success]
         =content_tag(:div, flash[:success], class: "alert alert-success")

@@ -1,28 +1,31 @@
-%p#notice= notice
-.text
-  %h1.pos=@conference.title
-  %p=@conference.description
-  .speeches_conf
-    -if @conference.speeches.any?
-      %h2 Speeches
-      -@conference.speeches.all.each do |speech|
-        %p
-          =link_to(speech.title, speech, target: "_blank")
-          , by
-          =link_to(" #{speech.user.account.f_name} #{speech.user.account.l_name}",
-            account_path(speech.user.account))
-  %p
-    -if @conference.start_date<@conference.finish_date
-      ="#{@conference.start_date.day}-#{@conference.finish_date.to_formatted_s(:rfc822) }"
-    -else
-      =@conference.start_date.to_date.to_formatted_s(:rfc822)
-  %p=@conference.place
--if @conference.user == current_user
-  = link_to 'Edit', edit_conference_path(@conference), class: "btn btn-primary"
-  #requests_table
-    =render 'requests/my_requests'
-#error_messages
-#request_form
-  -if (@conference.user != current_user &&
-    - @conference.requests.where(account: current_user.account).count == 0)
-    =link_to("Create request",conference_path(@conference), remote: true,class: "btn btn-primary")
+.show-conference
+  %p#notice= notice
+  .text
+    %h1.pos=@conference.title
+    %p=@conference.description
+    .speeches_conf
+      -if @speeches.any?
+        %h2 Speeches
+        -@speeches.each do |speech|
+          %p
+            =link_to(speech.title, speech, target: "_blank")
+            , by
+            =link_to(" #{speech.user.account.f_name} #{speech.user.account.l_name}",
+              account_path(speech.user.account))
+        =paginate @speeches
+    %p
+      -if @conference.start_date<@conference.finish_date
+        ="#{@conference.start_date.day}-#{@conference.finish_date.to_formatted_s(:rfc822) }"
+      -else
+        =@conference.start_date.to_date.to_formatted_s(:rfc822)
+    %p=@conference.place
+  -if @conference.user == current_user
+    = link_to 'Edit', edit_conference_path(@conference), class: "btn btn-primary"
+    .requests
+      #requests_table
+        =render 'requests/my_requests'
+  #error_messages
+  #request_form
+    -if (@conference.user != current_user &&
+      - @conference.requests.where(account: current_user.account).count == 0)
+      =link_to("Create request",conference_path(@conference), remote: true,class: "btn btn-primary")

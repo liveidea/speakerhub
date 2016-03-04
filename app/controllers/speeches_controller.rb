@@ -40,7 +40,7 @@ class SpeechesController < ApplicationController
     @speech = Speech.new(speech_params)
 
     @speech.user = current_user
-    current_user.themes << @speech.theme if @speech.theme && !current_user.themes.include?(@speech.theme) 
+    current_user.account.themes << @speech.theme unless current_user.account.themes.include?(@speech.theme) 
     respond_to do |format|
       if @speech.save
         format.html { redirect_to @speech, notice: 'Speech was successfully created.' }

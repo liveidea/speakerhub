@@ -1,5 +1,4 @@
 -if target.errors.any?
   .alert.alert-danger
-    #error_explanation
-      -target.errors.full_messages.each do |msg|
-        %h3= msg
+    -target.errors.full_messages.each do |msg|
+      %p= msg
