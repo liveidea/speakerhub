@@ -1,1 +1,4 @@
 $('#request_form').html("<%= escape_javascript render(:partial => 'requests/message')%>")
+$('#submit_button').on('click', function(){
+	$('#request_form').css('display', 'none')
+});
