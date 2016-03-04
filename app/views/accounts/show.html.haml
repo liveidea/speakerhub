@@ -17,11 +17,11 @@
           %th=@account.user.email
         %tr.color-tr
           %th Themes:
-          %th=@account.user.themes.pluck(:name).to_sentence
-        -if @account.user.city
+          %th=@account.themes.pluck(:name).to_sentence
+        -if @account.city
           %tr.color-tr
             %th Home city:
-            %th=@account.user.city.name
+            %th=@account.city.name
         -if element_present?(@account.phone)
           %tr.color-tr
             %th Phone number:

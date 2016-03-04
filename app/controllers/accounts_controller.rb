@@ -6,13 +6,13 @@ class AccountsController < ApplicationController
   def index
     @accounts = Account.all.page(params[:page]).per(6)
     @accounts = @accounts.name_search(params[:f_name]) if params[:f_name].present?
-    @accounts = @accounts.joins(:user => :themes).where( themes: {id: params[:theme]}) if params[:theme].present?
+    # @accounts = @accounts.joins(:user => :themes).where( themes: {id: params[:theme]}) if params[:theme].present?
+    @accounts = @accounts.joins(:themes).where( themes: {id: params[:theme]}) if params[:theme].present?
   end
 
   # GET /accounts/1
   # GET /accounts/1.json
   def show
-    @account_requests = Request.all.where(conference: current_user.conferences)
     @my_speeches = @account.user.speeches.page(params[:page_1]).per(5)
     @my_conferences = @account.user.conferences.page(params[:page_2]).per(5)
     respond_to do |format|
@@ -30,9 +30,8 @@ class AccountsController < ApplicationController
   def edit
   end
   def my_requests
-    @active_requests_recieved = Request.where({conference: current_user.conferences, status: 0})
-    @inactive_requests = Request.where({conference: current_user.conferences, status: [1,2]})
-    @account = current_user.account
+    @answered_requests=current_user.account.requests.where(status: [1, 2])
+    @unanswered_requests = current_user.account.requests.where(status: 0)
     respond_to do |format|
       format.html
       format.js
@@ -88,7 +87,7 @@ class AccountsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
       #params[:account]
-      params.require(:account).permit(:f_name, :l_name, :facebook_account, :phone, :skype_account, :image, :city_id, theme_ids:[])
+      params.require(:account).permit(:f_name, :l_name, :facebook_account, :phone, :skype_account, :image, :city_id, { theme_ids:[] })
     end
     def check_permissions
       if current_user == @account.user
