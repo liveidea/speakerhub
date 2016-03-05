@@ -6,10 +6,9 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :speeches do
-    resources :comments, only: [ :create]
-    get 'my_speeches',          on: :collection
-    # get 'select_my_conference', on: :collection
-    get 'maked_checked',        on: :member
+    resources :comments, only: [:create]
+    get :my_speeches,   on: :collection
+    get :maked_checked, on: :member
   end
   resources :requests, only: [] do
     get 'change_status', on: :member
@@ -22,6 +21,7 @@ Rails.application.routes.draw do
       get :make_checked, on: :member
       get :send_email, on: :member
       resources :requests
+      get 'speeches', on: :member
     end
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'

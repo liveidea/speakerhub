@@ -12,7 +12,12 @@ RSpec.describe User, :type => :model do
     speech1 = create(:speech)
   	speech2 = create(:speech)
 
+    
   	user1 = create(:user)
+    # account1 = create(:account)
+    # account1.user = user1
+    # user1.account =  account1
+    
     user1.speeches << speech1
     user1.speeches << speech2
 

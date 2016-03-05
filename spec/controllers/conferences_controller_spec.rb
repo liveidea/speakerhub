@@ -175,7 +175,7 @@ RSpec.describe ConferencesController, type: :controller do
     it "redirects to the conferences list" do
       conference = Conference.create! valid_attributes
       delete :destroy, {:id => conference.to_param}, valid_session
-      expect(response).to redirect_to(conferences_url)
+      expect(response).to redirect_to(my_conferences_conferences_url)
     end
   end
 

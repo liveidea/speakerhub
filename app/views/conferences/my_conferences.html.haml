@@ -8,7 +8,7 @@
       %th Speeches applied to conference
   %tbody
     - @my_conferences.each do |my_conference|
-      %tr
+      %tr{data: {item_id: "#{my_conference.id}"}}
         %td
           = link_to(my_conference.title, my_conference)
           %span(class="badge")=my_conference.requests.where(status: 0).count
@@ -19,8 +19,8 @@
           -else
             =my_conference.start_date.to_date.to_formatted_s(:rfc822)
         %td
-          -my_conference.speeches.each do |speech|
-            %p
-              =link_to(speech.title,speech)
+          #conference_show_speeches{class: "btn btn-info"} Speeches applied to conference
+          #abc
+            #conference_speeches
         %td= link_to 'Edit', edit_conference_path(my_conference)
         %td= link_to 'Destroy', my_conference, :method => :delete, :data => { :confirm => 'Are you sure?' }

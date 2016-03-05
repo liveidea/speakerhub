@@ -72,6 +72,12 @@ class ConferencesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  def speeches
+    @speeches = Conference.find(params[:id]).speeches.page(params[:page]).per(2)
+    respond_to do |format|
+      format.js {}
+    end
+  end
   # def send_email
   #
   #   UserMailer.request_send(current_user, @conference, params[:email_text]).deliver_now

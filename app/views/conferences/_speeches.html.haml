@@ -1,0 +1,20 @@
+=image_tag('close_box_red.png', size: "32x32", alt: "Edit Entry", id: "close")
+.speech_list
+  -# %h1="Speeches applied at #{target.title}"
+  %table.table
+    %thead
+      %tr
+        %th Title
+        %th Author
+        %th Theme
+    %tbody
+    -target.each do |speech|
+      %tr
+        %td=speech.title
+        %td=link_to("#{speech.user.account.f_name} #{speech.user.account.l_name}", account_path(speech.user.account))
+        %td=speech.theme.name
+  =paginate target, remote: true
+:javascript
+  $("img#close").click(function(){
+  $("#abc").fadeOut('slow');
+  })

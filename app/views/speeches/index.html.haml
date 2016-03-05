@@ -22,9 +22,6 @@
               .box
                 = check_box_tag 'sort_by_title', params[:sort_by_title], params[:sort_by_title]
                 Sort by Title
-              / .box
-              /   = check_box_tag 'sort_by_city', params[:sort_by_city], params[:sort_by_city]
-              /   Sort by City
               .box
                 = check_box_tag 'sort_by_date', params[:sort_by_date], params[:sort_by_date]
                 Sort by Date
@@ -52,11 +49,9 @@
                   %h5
                     = link_to "by #{speech.user.account.f_name} #{speech.user.account.l_name}", account_path(speech.user.account), class: "flex-item--by-user"
                 .panel-footer
-                  /%strong= "Conference: #{speech.conference.title unless speech.conference.nil?} | #{speech.date.strftime("Date: %d/%m/%Y")}"
                   %strong{style: "float:left"} Conference:
                   %span= "#{speech.conference.title unless speech.conference.nil?} |"
                   %strong Date:
                   %span= speech.date.strftime("%d/%m/%Y")
-                  /| #{speech.date.strftime("Date: %d/%m/%Y")}"
                   %span.theme= speech.theme.name unless speech.theme.nil?
     .paginate_pos= paginate @speeches, :theme => 'twitter-bootstrap-3'

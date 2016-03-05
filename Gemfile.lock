@@ -145,6 +145,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-rails (0.3.3)
+      pry (>= 0.9.10)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -295,6 +297,7 @@ DEPENDENCIES
   minitest-reporters (= 1.0.5)
   mysql2 (>= 0.3.13, < 0.5)
   pry
+  pry-rails
   rails (= 4.2.5)
   redis-rails
   rspec-html-matchers

@@ -1,10 +1,10 @@
 class SpeechesController < ApplicationController
-  before_action :set_speech, only: [:edit, :update, :destroy, :maked_checked]
+  before_action :set_speech, only: [:show, :edit, :update, :destroy, :maked_checked]
   before_action :check_permissions, only: [:edit, :update, :destroy]
+
   # GET /speeches
   # GET /speeches.json
   def index
-    # @speeches = Speech.all
     @speeches = Speech.all.page(params[:page]).per(5) # creates an anonymous scope
     @speeches = @speeches.location(params[:place]) if params[:place].present?
     @speeches = @speeches.theme(params[:theme]) if params[:theme].present?
@@ -12,8 +12,6 @@ class SpeechesController < ApplicationController
     @speeches = @speeches.order(:title) if params[:sort_by_title] ==  'on'
     @speeches = @speeches.order(:place) if params[:sort_by_city] ==  'on'
     @speeches = @speeches.order(:date ) if params[:sort_by_date] ==  'on'
-    # @speeches = @products.location(params[:location]) if params[:location].present?
-    # @speeches = @products.starts_with(params[:starts_with]) if params[:starts_with].present?
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render xml: @speeches}
@@ -24,9 +22,7 @@ class SpeechesController < ApplicationController
   # GET /speeches/1
   # GET /speeches/1.json
   def show
-    @speech = Speech.where(id: params[:id]).first
-    @comment = Comment.new
-    render text: "Speech not found", status: 404 unless @speech
+    @comments = @speech.comments.order(created_at: :desc)
   end
 
   # GET /speeches/new
@@ -44,7 +40,7 @@ class SpeechesController < ApplicationController
     @speech = Speech.new(speech_params)
 
     @speech.user = current_user
-    current_user.account.themes << @speech.theme unless current_user.account.themes.include?(@speech.theme) 
+    current_user.themes << @speech.theme if @speech.theme && !current_user.themes.include?(@speech.theme)
     respond_to do |format|
       if @speech.save
         format.html { redirect_to @speech, notice: 'Speech was successfully created.' }
@@ -76,6 +72,7 @@ class SpeechesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to speeches_url, notice: 'Speech was successfully destroyed.' }
       format.json { head :no_content }
+      format.json { render json: @speech }
     end
   end
 
@@ -87,6 +84,11 @@ class SpeechesController < ApplicationController
     @my_speeches = @my_speeches.order(:title) if params[:sort_by_title] ==  'on'
     @my_speeches = @my_speeches.order(:place) if params[:sort_by_city] ==  'on'
     @my_speeches = @my_speeches.order(:date ) if params[:sort_by_date] ==  'on'
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render xml: @speeches}
+      format.json { render json: @speeches}
+    end
   end
 
   def maked_checked
@@ -98,15 +100,12 @@ class SpeechesController < ApplicationController
     # end
   end
 
-  # def select_my_conference
-  #   @conferences = Conference.all
-  #   #@conference_id = params
-  # end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_speech
       @speech = Speech.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        render :file => "#{Rails.root}/public/404", :layout => false, :status => 404
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

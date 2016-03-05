@@ -5,18 +5,14 @@
     %thead
       %tr
         %th Conference
-        %th Conference organizator
         %th Message sent with request
-        %th Request status
+        %th Created at
     -@unanswered_requests.each do |request|
       %tbody
         %tr.warning
           %th=link_to("#{request.conference.title}", conference_path(request.conference))
-          %th=link_to("#{request.conference.user.account.f_name} #{request.conference.user.account.l_name}", account_path(request.conference.user.account))
           %th=request.message
-          %th=request.created_at
-          %th=request.status
-          %th=request.answer
+          %th=request.created_at.strftime("%m.%d.%y %H:%M")
           %th=link_to('Destroy request', conference_request_path(request.conference, request) , :method => :delete, :data => { :confirm => 'Are you sure?' })
 -if @answered_requests.any?
   %table.table
@@ -24,7 +20,6 @@
     %thead
       %tr
         %th Conference
-        %th Conference organizator
         %th Message sent with request
         %th Date created
         %th Request status
@@ -35,7 +30,6 @@
       -if request.accepted?
         %tr.success
           %th=link_to("#{request.conference.title}", conference_path(request.conference))
-          %th=link_to("#{request.conference.user.account.f_name} #{request.conference.user.account.l_name}", account_path(request.conference.user.account))
           %th=request.message
           %th=request.created_at.strftime("%m.%d.%y %H:%M")
           %th Accepted
@@ -44,8 +38,8 @@
       -if request.declined?
         %tr.danger
           %th=link_to("#{request.conference.title}", conference_path(request.conference))
-          %th=link_to("#{request.conference.user.account.f_name} #{request.conference.user.account.l_name}", account_path(request.conference.user.account))
           %th=request.message
-          %th=request.created_at
+          %th=request.created_at.strftime("%m.%d.%y %H:%M")
           %th Declined
           %th=request.answer
+          %th=request.updated_at.strftime("%m.%d.%y %H:%M")

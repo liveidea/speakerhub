@@ -18,14 +18,14 @@
         =f.select :conference_id, options_for_select(Conference.all.pluck(:title, :id), f.object.conference_id), {:prompt => "Select"}, {:class => "form-control"}
       .form-group.has-warning.has-feedback
         = f.label :title
-        = f.text_field :title, autofocus: true, class: "form-control", placeholder: "Enter a title"
+        = f.text_field :title, autofocus: true, class: "form-control", placeholder: "Write a title"
         %span.glyphicon.glyphicon-warning-sign.form-control-feedback
       .form-group
         = f.label :description
-        = f.text_area :description, autofocus: true, class: "form-control", placeholder: "Enter some description"
+        = f.text_area :description, autofocus: true, class: "form-control", placeholder: "Write some description"
       .form-group
         = f.label :city
-        = f.text_field :place, autofocus: true, class: "form-control", placeholder: "Enter a city name"
+        = f.text_field :place, autofocus: true, class: "form-control", placeholder: "Write a city name"
       .form-group.has-warning.has-feedback
         = f.label :date
         %br
@@ -36,7 +36,7 @@
         = f.file_field :image, autofocus: true, class: "form-control"
       .form-group
         = f.label :video
-        = f.text_field :video, autofocus: true, class: "form-control", placeholder: "Enter a link"
+        = f.text_field :video, autofocus: true, class: "form-control", placeholder: "Write some URL from youtube..."
       = f.submit class: "btn btn-primary"
 %p{style: "float: right !important;"}
   %span.glyphicon.glyphicon-warning-sign

@@ -19,32 +19,11 @@
       %tr
         %th Title
         %th Adress
-        %th Date of event
+        %th Date
         -# %th Speeches applied to conference
     %tbody
       #conferences
         =render @conferences
-      -# - @conferences.each do |conference|
-        -# %tr
-        -#   %td=link_to(conference.title,conference)
-        -#   %td= conference.place
-        -#   %td
-        -#     -if conference.start_date<conference.finish_date
-        -#       ="#{conference.start_date.day}-#{conference.finish_date.to_formatted_s(:rfc822) }"
-        -#     -else
-        -#       =conference.start_date.to_date.to_formatted_s(:rfc822)
-        -#   %td
-        -#     -conference.speeches.each do |speech|
-        -#       %p
-        -#         =link_to(speech.title,speech)
-
 #paginator.paginate_pos
   =paginate @conferences, :theme => 'twitter-bootstrap-3', remote: true
 = link_to 'New Conference', new_conference_path, class: "btn btn-primary"
-
-
-:javascript
-  $("a.link").on("ajax:success",function()
-  {
-    $(this).closest("tr").css("background-color", "green")
-  });

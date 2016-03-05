@@ -17,13 +17,14 @@
 //= require turbolinks
 //= require_tree
 
+// This code for select2
 $(document).on('ready page:load', function () {
-    $(".js-select-city").select2({
-      placeholder: 'Select a city(cities)',
-      allowClear: true
-    });
-    $(".js-select-theme").select2({
-      placeholder: 'Select a theme(themes)',
-      allowClear: true
-    });
+  $(".js-select-city").select2({
+    placeholder: 'Select a city(cities)',
+    allowClear: true
   });
+  $(".js-select-theme").select2({
+    placeholder: 'Select a theme(themes)',
+    allowClear: true
+  });
+});

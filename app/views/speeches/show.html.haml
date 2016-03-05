@@ -4,6 +4,7 @@
 		.row
 			.col-md-12{class: "title"}
 				%h2= "'#{@speech.title}'"
+
 		/* User */
 		.row
 			.col-md-3.col-sm-3.col-xs-3{class: "foto"}
@@ -14,9 +15,9 @@
 					.row
 						.col-md-12{style: "text-align: center"}
 							.row
-								%div= link_to "Edit speech", edit_speech_path(@speech), class: "btn btn-primary", style: "width: 60%;"
+								.profile_button= link_to "Edit speech", edit_speech_path(@speech), class: "btn btn-primary"
 							.row
-								%div= link_to "Destroy speech", speech_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger", style: "width: 60%;"
+								.profile_button= link_to "Destroy speech", speech_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
 			/* Profile */
 			.col-md-9.col-sm-9.col-xs-9{class: "profile"}
 				%h2= "Conference: #{ @speech.conference.title unless @speech.conference.nil? }"
@@ -27,12 +28,11 @@
 							%br
 							%i{class: "fa fa-map-marker"}
 							= @speech.place
-							/= "#{@speech.conference.start_date.strftime("%d/%m/%Y")}-#{@speech.conference.finish_date.strftime("%d/%m/%Y")}" if @speech.conference
 							= @speech.date.strftime("%d/%m/%Y")
 					.col-md-6
 						%h4.pull-right
 							Theme:
-							= @speech.theme.name
+							= @speech.theme.name if @speech.theme
 				.imagef{style: "background-image: url('#{@speech.image}')"}
 				%h4.margin_left Description:
 				%p.margin_left= @speech.description
@@ -41,21 +41,14 @@
 				%br
 
 				/* Add comments */
-				%h3 Add a comment:
-				= form_for([@speech, @speech.comments.build]) do |comment|
-					.form-group
-						= comment.text_area :description, autofocus: true, class: "form-control", placeholder: "Enter some description"
-					.form-group
-						= comment.submit class: "btn btn-primary"
-				%h3 Comments:
-				- @speech.comments.order(created_at: :desc).each do |comment|
-					.row{class: "comment-account-foto"}
-						.col-md-3.col-sm-4.col-xs-4
-							.flex-container
-								= link_to "", account_path(comment.account), class: "flex-item--avatar", style: "background-image: url(#{comment.account.image})"
-						.col-md-9.col-sm-8.col-xs-8
-							.description
-								%h4 Description:
-								%p= comment.description
-								.pull-right
-									%p= comment.created_at.strftime("%d-%b-%Y")
+				%h4
+					= link_to "Comments", "#", id: "comments-link"
+				.section#coments-section
+					.form
+						= form_for([@speech, @speech.comments.build], remote: true) do |comment|
+							.form-group.comment-input
+								= comment.text_area :description, autofocus: true, class: "form-control", placeholder: "Write some comment..."
+							.form-group
+								= comment.submit "POST Comment", class: "btn btn-primary"
+					#comments
+						= render @comments

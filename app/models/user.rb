@@ -10,15 +10,14 @@ class User < ActiveRecord::Base
    attr_accessor :f_name, :l_name
    after_create :account_create
 
-   def total_speeches
-     speeches.size
-   end
+  def total_speeches
+   speeches.size
+  end
 
-   def account_create
-     self.create_account(f_name: f_name, l_name: l_name)
-     self.save
-     #binding.pry
-   end
+  def account_create
+   self.create_account(f_name: f_name, l_name: l_name)
+   self.save
+  end
 
 
 end
