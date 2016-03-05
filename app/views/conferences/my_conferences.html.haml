@@ -19,7 +19,10 @@
           -else
             =my_conference.start_date.to_date.to_formatted_s(:rfc822)
         %td
-          #conference_show_speeches{class: "btn btn-info"} Speeches applied to conference
+          -if my_conference.speeches.any?
+            #conference_show_speeches{class: "btn btn-info"} Speeches applied to conference
+          -else
+            .btn.btn-info.disabled No speeches here yet
           #abc
             #conference_speeches
         %td= link_to 'Edit', edit_conference_path(my_conference)

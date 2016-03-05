@@ -26,9 +26,10 @@
         =render 'requests/my_requests'
   #error_messages
   #request_link
-    -if (@conference.user != current_user &&
-      - @conference.requests.where(account: current_user.account).count == 0)
-      =link_to("Create request",conference_path(@conference), remote: true,class: "btn btn-primary")
+    -if user_signed_in?
+      -if (@conference.user != current_user &&
+        - @conference.requests.where(account: current_user.account).count == 0)
+        =link_to("Create request",conference_path(@conference), remote: true,class: "btn btn-primary")
   #request_form
 
     /* Add comments */  

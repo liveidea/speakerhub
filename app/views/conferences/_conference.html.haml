@@ -8,7 +8,10 @@
       =conference.start_date.to_date.to_formatted_s(:rfc822)
   -# %td=conference.description
   %td
-    #conference_show_speeches{class: "btn btn-info"} Speeches applied to conference
+    -if conference.speeches.any?
+      #conference_show_speeches{class: "btn btn-info"} Speeches applied to conference
+    -else
+      .btn.btn-info.disabled No speeches here yet
     #abc
       #conference_speeches
       -# =render partial: "conference_speeches", locals: {speeches: conference.speeches}

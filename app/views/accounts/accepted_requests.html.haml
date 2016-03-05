@@ -1,0 +1,21 @@
+=render "my_requests_links"
+-if @requests_accepted.any?
+  %table.table
+    %h2 Accepted requests
+    %thead
+      %tr
+        %th Conference
+        %th Message sent with request
+        %th Date created
+        %th Request status
+        %th Answer sent with request
+        %th Updated at
+    -@requests_accepted.each do |request|
+      %tbody
+        %tr.success
+          %th=link_to("#{request.conference.title}", conference_path(request.conference))
+          %th=request.message
+          %th=request.created_at.strftime("%m.%d.%y %H:%M")
+          %th Accepted
+          %th=request.answer
+          %th=request.updated_at.strftime("%m.%d.%y %H:%M")

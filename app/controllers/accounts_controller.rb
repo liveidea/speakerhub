@@ -30,14 +30,12 @@
   def edit
   end
   def my_requests
-    @answered_requests=current_user.account.requests.where(status: [1, 2])
-    @unanswered_requests = current_user.account.requests.where(status: 0)
+    @my_requests = current_user.account.requests.where(status: params[:type])
     respond_to do |format|
       format.html
       format.js
     end
   end
-
   # POST /accounts
   # POST /accounts.json
   def create
