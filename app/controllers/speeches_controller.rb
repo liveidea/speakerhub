@@ -22,6 +22,7 @@ class SpeechesController < ApplicationController
   # GET /speeches/1
   # GET /speeches/1.json
   def show
+    @comment = @speech.comments.build
     @comments = @speech.comments.order(created_at: :desc)
   end
 

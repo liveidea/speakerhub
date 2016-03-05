@@ -46,11 +46,21 @@
 					= link_to "Comments", "#", id: "comments-link"
 				.section#coments-section
 					.form
-						= form_for([@speech, @speech.comments.build], remote: true) do |comment|
+						= form_for([@speech, @comment], remote: true) do |comment|
 							.form-group.comment-input
 								= comment.text_area :description, autofocus: true, class: "form-control", placeholder: "Write some comment..."
 							.form-group
 								= comment.submit "POST Comment", class: "btn btn-primary"
+							#comment_errors
+								/ - if @comment.errors.any?
+								/ 	#error_explanation
+								/ 		%h2
+								/ 			= pluralize(@comment.errors.count, "error")
+								/ 			prohibited this comment from being saved:
+								/ 		%ul
+								/ 			- @comment.errors.full_messages.each do |message|
+								/ 				%li= message
+												
 					#comments
 						= render @comments
 
