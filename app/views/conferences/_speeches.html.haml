@@ -2,6 +2,7 @@
 .speech_list
   -# %h1="Speeches applied at #{target.title}"
   %table.table
+    %h1="Speeches applied at #{target.first.conference.title}"
     %thead
       %tr
         %th Title
@@ -10,11 +11,14 @@
     %tbody
     -target.each do |speech|
       %tr
-        %td=speech.title
+        %td=link_to("#{speech.title}",speech_path(speech))
         %td=link_to("#{speech.user.account.f_name} #{speech.user.account.l_name}", account_path(speech.user.account))
         %td=speech.theme.name
-  =paginate target, remote: true
+  .paginate_pos=paginate target, remote: true
+
+
 :javascript
   $("img#close").click(function(){
   $("#abc").fadeOut('slow');
+  $('.btn.btn-info.disabled').fadeIn('slow')
   })

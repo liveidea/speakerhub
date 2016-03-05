@@ -1,4 +1,71 @@
+
+
 .account {
+
+  .flex-container {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      overflow: auto;
+      width: 260px;
+      border-radius: 2%;
+      margin: 15px;
+      border: 1px solid grey;
+      &:hover {
+        background-color: #E0E0E0;
+      }
+    .flex-item {
+      margin: 8px;
+
+      &--name {
+        -webkit-align-self: flex-start;
+        align-self: flex-start;
+        @extend .flex-item;
+        font: bold 17px Georgia, serif;
+        color: #0080FF;
+        text-shadow: 1px 1px 10px rgb(13, 13, 13);
+      }
+
+      &--avatar {
+        @extend .flex-item;
+        align-self: center;
+        -webkit-align-self: center;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 2%;
+        flex: none;
+        width: 250px;
+        height: 250px;
+      }
+
+      &--view-prof {
+        @extend .flex-item;
+        align-self: center;
+        width: 50%;
+        flex: none;
+      }
+
+      &--count {
+        @extend .flex-item;
+        font-weight: bold;
+        text-align: center;
+        flex: none;
+        border-radius: 10px;
+        background-color: white;
+      }
+    }
+  }
+
+
+
+
+
+
+
+
+
   width: 100%;
   font-family: Times New Roman, serif;
   font-style: oblique;

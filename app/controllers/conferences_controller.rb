@@ -2,6 +2,7 @@ class ConferencesController < ApplicationController
   before_action :set_conference, only: [:show, :edit, :update, :destroy, :make_checked, :send_email]
   # GET /conferences
   # GET /conferences.json
+  before_action :check_auth, only: [:new, :create]
   before_action :check_permissions, only: [:edit, :update, :destroy]
   def index
     @conferences = Conference.all.page(params[:page]).per(5)
@@ -73,7 +74,7 @@ class ConferencesController < ApplicationController
     end
   end
   def speeches
-    @speeches = Conference.find(params[:id]).speeches.page(params[:page]).per(2)
+    @speeches = Conference.find(params[:id]).speeches.page(params[:page]).per(5)
     respond_to do |format|
       format.js {}
     end
@@ -104,6 +105,14 @@ class ConferencesController < ApplicationController
       else
         redirect_to :root
         flash[:alert] = "You dont have permission to view this page!"
+      end
+    end
+    def check_auth
+      if user_signed_in?
+        true
+      else
+        redirect_to new_user_registration_path
+        flash[:alert] = "Please sign up to create conferences"
       end
     end
 end

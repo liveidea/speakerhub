@@ -26,4 +26,5 @@
         =render @conferences
 #paginator.paginate_pos
   =paginate @conferences, :theme => 'twitter-bootstrap-3', remote: true
-= link_to 'New Conference', new_conference_path, class: "btn btn-primary"
+-if user_signed_in?
+  = link_to 'New Conference', new_conference_path, class: "btn btn-primary"

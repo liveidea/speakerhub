@@ -23,5 +23,5 @@
         =f.label :photo
         =f.file_field :image, autofocus: true, class: "form-control"
         =f.label :themes
-        =f.select :theme_ids, options_for_select(Theme.all.pluck(:name, :id)),{}, {:multiple => true , :class => "js-select-theme form-control"}
+        =f.select :theme_ids, options_for_select(Theme.all.pluck(:name, :id),@account.theme_ids),{}, {:multiple => true , :class => "js-select-theme form-control"}
       =f.submit 'Save',class: "btn btn-primary"
