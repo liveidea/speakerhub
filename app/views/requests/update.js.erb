@@ -2,5 +2,4 @@
   $('#error_messages').html("<%= escape_javascript render(:partial=>'errors', :locals=>{:target=> @request})%>")
 <%else%>
   $('#requests_table').html("<%= escape_javascript render(:partial=>'my_requests')%>")
-
 <%end%>

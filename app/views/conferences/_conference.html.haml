@@ -1,4 +1,4 @@
-%tr
+%tr{data: {item_id: "#{conference.id}"}}
   %td=link_to(conference.title,conference)
   %td= conference.place
   %td
@@ -8,6 +8,7 @@
       =conference.start_date.to_date.to_formatted_s(:rfc822)
   -# %td=conference.description
   %td
-    -conference.speeches.each do |speech|
-      %p
-        =link_to(speech.title,speech)
+    #conference_show_speeches{class: "btn btn-info"} Speeches applied to conference
+    #abc
+      #conference_speeches
+      -# =render partial: "conference_speeches", locals: {speeches: conference.speeches}

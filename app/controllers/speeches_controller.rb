@@ -1,7 +1,7 @@
 class SpeechesController < ApplicationController
   before_action :set_speech, only: [:show, :edit, :update, :destroy, :maked_checked]
   before_action :check_permissions, only: [:edit, :update, :destroy]
-  
+
   # GET /speeches
   # GET /speeches.json
   def index
@@ -41,7 +41,11 @@ class SpeechesController < ApplicationController
     @speech = Speech.new(speech_params)
 
     @speech.user = current_user
-    current_user.account.themes << @speech.theme unless current_user.account.themes.include?(@speech.theme) 
+
+    @speech.user.account.themes << @speech.theme unless current_user.account.themes.include?(@speech.theme) 
+
+    #current_user.themes << @speech.theme if @speech.theme && !current_user.themes.include?(@speech.theme)
+
     respond_to do |format|
       if @speech.save
         format.html { redirect_to @speech, notice: 'Speech was successfully created.' }

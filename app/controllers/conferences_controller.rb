@@ -19,6 +19,10 @@ class ConferencesController < ApplicationController
     @request = @conference.requests.build
     @active_conference_requests = Request.all.where(conference_id: params[:id], status: 0)
     @speeches = @conference.speeches.page(params[:page]).per(4)
+
+    @comments = @conference.comments.order(created_at: :desc)
+    @comment = @conference.comments.build
+    
     respond_to do |format|
       format.html
       format.js
@@ -70,6 +74,12 @@ class ConferencesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to my_conferences_conferences_url, notice: 'Conference was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+  def speeches
+    @speeches = Conference.find(params[:id]).speeches.page(params[:page]).per(2)
+    respond_to do |format|
+      format.js {}
     end
   end
   # def send_email

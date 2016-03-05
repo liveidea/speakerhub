@@ -15,7 +15,8 @@ class RequestsController < ApplicationController
         h = JSON.generate({ 'email' => @conference.user.email,
                             'f_name' => @request.account.f_name,
                             'l_name' => @request.account.l_name,
-                            'message' => @request.message })
+                            'message' => @request.message,
+                            'conf_title' => @conference.title})
         MailWorker.perform_async(h, 1)
         format.html { redirect_to @conference, notice: 'Request was successfully created.' }
         format.json { render :show, status: :created, location: @conference }
@@ -34,8 +35,9 @@ class RequestsController < ApplicationController
 
   def update
     @request.update(request_params)
+
     # redirect_to :back
-    @active_conference_requests = Request.all.where(conference_id: params[:conference_id], status: 0)
+    # @active_conference_requests = Request.all.where(conference_id: params[:conference_id], status: 0)
     respond_to do |format|
       format.html
       format.js

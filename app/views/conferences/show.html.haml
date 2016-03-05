@@ -25,7 +25,27 @@
       #requests_table
         =render 'requests/my_requests'
   #error_messages
-  #request_form
+  #request_link
     -if (@conference.user != current_user &&
       - @conference.requests.where(account: current_user.account).count == 0)
       =link_to("Create request",conference_path(@conference), remote: true,class: "btn btn-primary")
+  #request_form
+
+    /* Add comments */  
+  %h4
+    = link_to "Comments", "#", id: "comments-link"
+  .section#coments-section
+    .row
+      .col-sm-6
+        .form
+          = form_for([@conference, @comment], remote: true) do |comment|
+            = hidden_field_tag :commentable_type, "Conference"
+            = hidden_field_tag :commentable_id, @conference.id
+            .form-group.comment-input
+              = comment.text_area :description, autofocus: true, class: "form-control", placeholder: "Write some comment..."
+            .form-group
+              = comment.submit "POST Comment", class: "btn btn-primary"
+        #comment_errors
+      .col-sm-6
+        #comments
+          = render @comments

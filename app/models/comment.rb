@@ -4,9 +4,9 @@ class Comment < ActiveRecord::Base
 
 	validates :description, presence: true
 	validates :description, length: {
-    minimum: 10,
+    minimum: 2,
     maximum: 300,
-    too_short: "must have at least 1 letter",
+    too_short: "must have at least 2 letters",
     too_long: "must have at most %{count} words"
   }
 end

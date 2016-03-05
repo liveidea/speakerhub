@@ -13,8 +13,3 @@ $(document).on 'ready page:load', ->
         data: _method: 'DELETE'
         success: (result) ->
           $(current_item_row).fadeOut 'slow'
-
-
-
-
-

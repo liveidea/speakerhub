@@ -1,50 +1,35 @@
-%h1 Listing conferences
-.col-sm-3.sidenav
-  .panel.panel-default.text-left{style: "border-style: solid"}
-    .panel-heading
-      %h1 Filter
-    .panel-body{style: "overflow: auto;"}
-      =form_tag(conferences_path, method: :get) do
-        =label_tag "Title"
-        =text_field_tag :title,nil, class: "form-control"
-        =label_tag "Start date"
-        =date_field_tag :start_date
-        =label_tag "Finish date"
-        =date_field_tag :finish_date
-        =submit_tag "search", class: "btn btn-default", style: "margin: top: 30px; width: 100%; font-weight: bold;"
+%p#notice= notice
+.show-conferences
+  .container-fluid
+    .row
+      .col-md-12{class: "title"}
+        %h2 Conferences
+    .col-sm-3.sidenav.filter
+      .panel.panel-default
+        .panel-heading.text-center
+          %h3 Filter
+        .panel-body
+          =form_tag(conferences_path, method: :get) do
+            =label_tag "Title"
+            =text_field_tag :title,nil, class: "form-control"
+            =label_tag "Start date"
+            =date_field_tag :start_date, {} ,class: "form-control"
+            =label_tag "Finish date"
+            =date_field_tag :finish_date, {} ,class: "form-control"
+            .panel-footer
+              =submit_tag "Search", class: "btn btn-default"
 
-.col-sm-9
-  %table.table.table-hover
-    %thead
-      %tr
-        %th Title
-        %th Adress
-        %th Date of event
-        -# %th Speeches applied to conference
-    %tbody
-      #conferences
-        =render @conferences
-      -# - @conferences.each do |conference|
-        -# %tr
-        -#   %td=link_to(conference.title,conference)
-        -#   %td= conference.place
-        -#   %td
-        -#     -if conference.start_date<conference.finish_date
-        -#       ="#{conference.start_date.day}-#{conference.finish_date.to_formatted_s(:rfc822) }"
-        -#     -else
-        -#       =conference.start_date.to_date.to_formatted_s(:rfc822)
-        -#   %td
-        -#     -conference.speeches.each do |speech|
-        -#       %p
-        -#         =link_to(speech.title,speech)
-
-#paginator.paginate_pos
-  =paginate @conferences, :theme => 'twitter-bootstrap-3', remote: true
-= link_to 'New Conference', new_conference_path, class: "btn btn-primary"
-
-
-:javascript
-  $("a.link").on("ajax:success",function()
-  {
-    $(this).closest("tr").css("background-color", "green")
-  });
+    .col-sm-9
+      %table.table.table-hover
+        %thead
+          %tr
+            %th{style: "width: 35%"} Title
+            %th Adress
+            %th Date
+            %th Speeches
+        %tbody
+          #conferences
+            =render @conferences
+    #paginator.paginate_pos
+      =paginate @conferences, :theme => 'twitter-bootstrap-3', remote: true
+    = link_to 'New Conference', new_conference_path, class: "btn btn-primary"
