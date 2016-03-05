@@ -10,7 +10,6 @@ class Account < ActiveRecord::Base
   belongs_to :city
   scope :name_search, -> (name_s) {where("f_name LIKE ? or l_name LIKE ? or concat(f_name, ' ', l_name) LIKE ?", "%#{name_s}%", "%#{name_s}%" , "%#{name_s}%")}
 
-
   private
 
   # def save_params
@@ -22,5 +21,6 @@ class Account < ActiveRecord::Base
   #   theme_ids.map! {|i| i.to_i}
   #   themes = Theme.where(id: (theme_ids - self.user.theme_ids))
   # end
+
 
 end
