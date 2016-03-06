@@ -41,16 +41,25 @@
 					= youtube_video(@speech.video) if @speech.video
 				%br
 
+
 				/* Add comments */
+
 				%h4
 					= link_to "Comments", "#", id: "comments-link"
 				.section#coments-section
-					.form
-						= form_for([@speech, @speech.comments.build], remote: true) do |comment|
-							.form-group.comment-input
-								= comment.text_area :description, autofocus: true, class: "form-control", placeholder: "Write some comment..."
-							.form-group
-								= comment.submit "POST Comment", class: "btn btn-primary"
+					.row
+						.col-sm-6
+							.form
+								= form_for([@speech, @comment], remote: true) do |comment|
+									= hidden_field_tag :commentable_type, "Speech"
+									= hidden_field_tag :commentable_id, @speech.id
+									.form-group.comment-input
+										= comment.text_area :description, autofocus: true, class: "form-control", placeholder: "Write some comment..."
+									.form-group
+										= comment.submit "POST Comment", class: "btn btn-primary"
+						.col-sm-6
+							#comment_errors
+
 					#comments
 						= render @comments
 

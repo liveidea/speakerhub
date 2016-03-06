@@ -35,7 +35,7 @@ class RequestsController < ApplicationController
 
   def update
     @request.update(request_params)
-
+    @active_conference_requests = Request.all.where(conference_id: params[:conference_id], status: 0)
     # redirect_to :back
     # @active_conference_requests = Request.all.where(conference_id: params[:conference_id], status: 0)
     respond_to do |format|

@@ -13,9 +13,9 @@
             =label_tag "Title"
             =text_field_tag :title,nil, class: "form-control"
             =label_tag "Start date"
-            =date_field_tag :start_date, {} ,class: "form-control"
+            =date_field_tag :start_date, (Date.today-1.month),class: "form-control"
             =label_tag "Finish date"
-            =date_field_tag :finish_date, {} ,class: "form-control"
+            =date_field_tag :finish_date, (Date.today+1.month) ,class: "form-control"
             .panel-footer
               =submit_tag "Search", class: "btn btn-default"
 
@@ -31,6 +31,6 @@
           #conferences
             =render @conferences
     #paginator.paginate_pos
-      =paginate @conferences, :theme => 'twitter-bootstrap-3', remote: true
+      =paginate @conferences, :theme => 'twitter-bootstrap-3'
     -if user_signed_in?
       = link_to 'New Conference', new_conference_path, class: "btn btn-primary"

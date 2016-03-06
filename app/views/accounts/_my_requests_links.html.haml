@@ -2,4 +2,4 @@
   =link_to "Accepted requests", my_requests_accounts_path(@account,type: 1), class: "btn btn-success"
   =link_to "Rejected requests", my_requests_accounts_path(@account, type: 2), class: "btn btn-danger"
   =link_to "Pending requests", my_requests_accounts_path(@account, type: 0), class: "btn btn-warning"
-  =link_to "All requests", my_requests_accounts_path(@account, type: [0,1,2]),class: "btn btn-primary"
+  =link_to "All requests", my_requests_accounts_path(@account),class: "btn btn-primary"

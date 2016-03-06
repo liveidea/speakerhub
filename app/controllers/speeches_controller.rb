@@ -22,6 +22,7 @@ class SpeechesController < ApplicationController
   # GET /speeches/1
   # GET /speeches/1.json
   def show
+    @comment = @speech.comments.build
     @comments = @speech.comments.order(created_at: :desc)
   end
 
@@ -38,9 +39,8 @@ class SpeechesController < ApplicationController
   # POST /speeches.json
   def create
     @speech = Speech.new(speech_params)
-
     @speech.user = current_user
-    current_user.account.themes << @speech.theme unless current_user.account.themes.include?(@speech.theme) 
+    @speech.user.account.themes << @speech.theme unless current_user.account.themes.include?(@speech.theme)
     respond_to do |format|
       if @speech.save
         format.html { redirect_to @speech, notice: 'Speech was successfully created.' }

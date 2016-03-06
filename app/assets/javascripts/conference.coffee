@@ -6,3 +6,4 @@ $(document).on 'page:change', ->
       url: '/conferences/' + $(current_conference).attr('data-item-id') + '/speeches'
       type: "GET"
     $('#abc').fadeToggle('slow')
+    $('#paginator').fadeToggle('slow')

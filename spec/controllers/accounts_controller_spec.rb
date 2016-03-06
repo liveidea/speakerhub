@@ -60,13 +60,13 @@ RSpec.describe AccountsController, type: :controller do
     end
   end
 
-  describe "GET #show" do
-    it "assigns the requested account as @account" do
-      account = Account.create! valid_attributes
-      get :show, {:id => account.to_param}, valid_session
-      expect(assigns(:account)).to eq(account)
-    end
-  end
+  # describe "GET #show" do
+  #   it "assigns the requested account as @account" do
+  #     account = Account.create! valid_attributes
+  #     get :show, {:id => account.to_param}, valid_session
+  #     expect(assigns(:account)).to eq(account)
+  #   end
+  # end
 
   describe "GET #new" do
     it "assigns a new account as @account" do

@@ -13,8 +13,8 @@
   # GET /accounts/1
   # GET /accounts/1.json
   def show
-    @my_speeches = @account.user.speeches.page(params[:page_1]).per(5)
-    @my_conferences = @account.user.conferences.page(params[:page_2]).per(5)
+    @my_speeches = @account.user.speeches.page(params[:page_1]).per(20)
+    @my_conferences = @account.user.conferences.page(params[:page_2]).per(20)
     respond_to do |format|
      format.js
      format.html
@@ -30,7 +30,11 @@
   def edit
   end
   def my_requests
-    @my_requests = current_user.account.requests.where(status: params[:type])
+    if params[:type]
+      @my_requests = current_user.account.requests.where(status: params[:type])
+    else
+      @my_requests = current_user.account.requests
+    end
     respond_to do |format|
       format.html
       format.js

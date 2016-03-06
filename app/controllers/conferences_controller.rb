@@ -5,7 +5,7 @@ class ConferencesController < ApplicationController
   before_action :check_auth, only: [:new, :create]
   before_action :check_permissions, only: [:edit, :update, :destroy]
   def index
-    @conferences = Conference.all.page(params[:page]).per(5)
+    @conferences = Conference.all.page(params[:page]).per(10)
     filtering_params(params).each do |key, value|
       @conferences = @conferences.public_send(key, value) if value.present?
     end
@@ -19,7 +19,11 @@ class ConferencesController < ApplicationController
   def show
     @request = @conference.requests.build
     @active_conference_requests = Request.all.where(conference_id: params[:id], status: 0)
-    @speeches = @conference.speeches.page(params[:page]).per(4)
+    @speeches = @conference.speeches.page(params[:page]).per(20)
+
+    @comments = @conference.comments.order(created_at: :desc)
+    @comment = @conference.comments.build
+
     respond_to do |format|
       format.html
       format.js
@@ -50,7 +54,7 @@ class ConferencesController < ApplicationController
   end
 
   def my_conferences
-    @my_conferences=Conference.where(user: current_user)
+    @my_conferences=Conference.where(user: current_user).page(params[:page]).per(20)
   end
 
   def update

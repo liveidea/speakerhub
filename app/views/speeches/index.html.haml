@@ -50,6 +50,7 @@
                     = link_to "by #{speech.user.account.f_name} #{speech.user.account.l_name}", account_path(speech.user.account), class: "flex-item--by-user"
                 .panel-footer
                   %strong{style: "float:left"} Conference:
+
                   %span= "#{speech.conference.title unless speech.conference.nil?} |"
                   %strong Date:
                   %span= speech.date.strftime("%d/%m/%Y")

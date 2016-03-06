@@ -1,13 +1,17 @@
 class CommentsController < ApplicationController
 
   def create
-    @speech = Speech.find(params[:speech_id])
-    @comment = @speech.comments.build(comment_params)
+
+    @comment = Object.const_get(params[:commentable_type]).find(params[:commentable_id]).comments.build(comment_params)
     @comment.account = current_user.account
-    @comment.save!
+
     respond_to do |format|
-      format.html { redirect_to @speech }
-      format.js   # render comments/create.js.erb
+      if @comment.save
+        format.html { redirect_to @speech }
+        format.js   # render comments/create.js.erb
+      else
+        format.js   # render comments/create.js.erb        
+      end
     end
   end
 

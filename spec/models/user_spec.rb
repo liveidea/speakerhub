@@ -14,9 +14,6 @@ RSpec.describe User, :type => :model do
 
     
   	user1 = create(:user)
-    # account1 = create(:account)
-    # account1.user = user1
-    # user1.account =  account1
     
     user1.speeches << speech1
     user1.speeches << speech2
@@ -36,12 +33,6 @@ RSpec.describe User, :type => :model do
     user2.email = user1.email
     user2.save
     expect(user2.valid?).to be false
-  end
-
-  it "shows user-city assosiation works well" do
-    user = build(:user)
-    user.city = build(:city, name: "Berlin")
-    expect(user.city.name).to eq "Berlin"
   end
 
   it "create account after user saving" do

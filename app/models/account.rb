@@ -22,5 +22,4 @@ class Account < ActiveRecord::Base
   #   themes = Theme.where(id: (theme_ids - self.user.theme_ids))
   # end
 
-
 end
