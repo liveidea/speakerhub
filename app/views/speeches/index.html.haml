@@ -41,7 +41,8 @@
           .row.item-list
             .col-md-3.col-sm-4.col-xs-4{class: "foto"}
               .flex-container
-                = link_to "", speech_path(speech), class: "flex-item--avatar", style: "background-image: url(#{speech.image});"
+                = link_to "", account_path(speech.user.account), class: "flex-item--avatar", style: "background-image: url(#{speech.user.account.image});"
+                /= link_to "", speech_path(speech), class: "flex-item--avatar", style: "background-image: url(#{speech.image});"
             .col-md-9.col-sm-8.col-xs-8{class: "profile"}
               .panel-default
                 .panel-body
