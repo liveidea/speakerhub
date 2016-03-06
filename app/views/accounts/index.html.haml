@@ -12,7 +12,7 @@
             =submit_tag "search", class: "btn btn-default"
           -Theme.all.each do |theme|
             %p=link_to theme.name, accounts_path(@account, theme: theme.id)
-          %p=link_to 'Show all',accounts_path(@accounts)
+          %p=link_to 'Show all',accounts_path
     .col-lg-9.active-users
       %h1 Speakers list
     - @accounts.each do |account|
