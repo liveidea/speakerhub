@@ -1,10 +1,43 @@
 Rails.application.routes.draw do
+  root             'static_pages#home'
+  get 'help'    => 'static_pages#help'
+  get 'about'   => 'static_pages#about'
+  get 'contact' => 'static_pages#contact'
+
   devise_for :users
+
+  resources :speeches do
+    resources :comments, only: [:create]
+    get :my_speeches,   on: :collection
+    get :maked_checked, on: :member
+  end
+
+  resources :requests, only: [] do
+    get 'change_status', on: :member
+  end
+
+  resources :accounts do
+    get 'my_requests', on: :collection
+  end
+
+  resources :conferences do
+    get :my_conferences, on: :collection
+    get :make_checked, on: :member
+    get :send_email, on: :member
+    resources :requests
+    resources :comments, only: [:create]
+
+    get 'speeches', on: :member
+  end
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  #root 'speeches#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

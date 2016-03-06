@@ -8,6 +8,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :facebook_account
       t.string :skype_account
       t.belongs_to :city
+      t.string :login
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 

@@ -1,4 +1,4 @@
 class Theme < ActiveRecord::Base
-	belongs_to :speach
-	belongs_to :user
+	has_many :speeches
+  has_and_belongs_to_many :accounts
 end
