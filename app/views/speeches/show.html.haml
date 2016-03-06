@@ -18,27 +18,25 @@
 								.profile_button= link_to "Edit speech", edit_speech_path(@speech), class: "btn btn-primary"
 							.row
 								.profile_button= link_to "Destroy speech", speech_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+				.speech_info
+					%h4
+						Place and date:
+						%br
+						%i{class: "fa fa-map-marker"}
+						= @speech.place
+						= @speech.date.strftime("%d/%m/%Y")
+					%h4
+						Theme:
+						= @speech.theme.name if @speech.theme
+
 			/* Profile */
 			.col-md-9.col-sm-9.col-xs-9{class: "profile"}
 				%h2= "Conference: #{ @speech.conference.title unless @speech.conference.nil? }"
-				.row.margin_left
-					.col-md-6
-						%h4
-							Place and date:
-							%br
-							%i{class: "fa fa-map-marker"}
-							= @speech.place
-							/= "#{@speech.conference.start_date.strftime("%d/%m/%Y")}-#{@speech.conference.finish_date.strftime("%d/%m/%Y")}" if @speech.conference
-							= @speech.date.strftime("%d/%m/%Y")
-					.col-md-6
-						%h4.pull-right
-							Theme:
-							= @speech.theme.name if @speech.theme
-				.imagef{style: "background-image: url('#{@speech.image}')"}
-				%h4.margin_left Description:
-				%p.margin_left= @speech.description
+				/.row.margin_left
 				.video
 					= youtube_video(@speech.video) if @speech.video
+				/.imagef{style: "background-image: url('#{@speech.image}')"}
+				%p.margin_left= @speech.description
 				%br
 
 

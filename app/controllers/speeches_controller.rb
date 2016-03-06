@@ -5,7 +5,7 @@ class SpeechesController < ApplicationController
   # GET /speeches
   # GET /speeches.json
   def index
-    @speeches = Speech.all.page(params[:page]).per(5) # creates an anonymous scope
+    @speeches = Speech.all.page(params[:page]).per(10) # creates an anonymous scope
     @speeches = @speeches.location(params[:place]) if params[:place].present?
     @speeches = @speeches.theme(params[:theme]) if params[:theme].present?
     @speeches = @speeches.joins(:theme).order('themes.name') if params[:sort_by_theme] ==  'on'
