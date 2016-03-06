@@ -1,0 +1,43 @@
+.panel-body
+  .col-md-6.col-md-offset-3
+    = form_for(@speech) do |f|
+      - if @speech.errors.any?
+        #error_explanation
+          %h2
+            = pluralize(@speech.errors.count, "error")
+            prohibited this speech from being saved:
+          %ul
+            - @speech.errors.full_messages.each do |message|
+              %li= message
+
+      .form-group
+        = f.label :theme
+        = f.select :theme_id, options_for_select(Theme.all.pluck(:name, :id).sort, f.object.theme_id), {:prompt => "Select"}, {:class => "form-control"}
+      .form-group
+        =f.label :Conference
+        =f.select :conference_id, options_for_select(Conference.all.pluck(:title, :id), f.object.conference_id), {:prompt => "Select"}, {:class => "form-control"}
+      .form-group.has-warning.has-feedback
+        = f.label :title
+        = f.text_field :title, autofocus: true, class: "form-control", placeholder: "Write a title"
+        %span.glyphicon.glyphicon-warning-sign.form-control-feedback
+      .form-group
+        = f.label :description
+        = f.text_area :description, autofocus: true, class: "form-control", placeholder: "Write some description"
+      .form-group
+        = f.label :city
+        = f.text_field :place, autofocus: true, class: "form-control", placeholder: "Write a city name"
+      .form-group.has-warning.has-feedback
+        = f.label :date
+        %br
+        = f.date_field :date, prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, class: "form-control"
+        %span.glyphicon.glyphicon-warning-sign.form-control-feedback
+      .form-group
+        = f.label :image
+        = f.file_field :image, autofocus: true, class: "form-control"
+      .form-group
+        = f.label :video
+        = f.text_field :video, autofocus: true, class: "form-control", placeholder: "Write some URL from youtube..."
+      = f.submit class: "btn btn-primary"
+%p{style: "float: right !important;"}
+  %span.glyphicon.glyphicon-warning-sign
+  Required fields

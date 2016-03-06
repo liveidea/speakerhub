@@ -1,0 +1,52 @@
+%nav.navbar.navbar-inverse.navbar-fixed-top.navbar-color
+  .container-fluid
+    .navbar-header
+      %ul.nav.navbar-nav
+        %li
+          =link_to(root_path, class: 'navbar-brand', style: "padding: 12px 15px 15px;") do
+            %span.glyphicon.glyphicon-tree-deciduous
+            Speakerhub
+        %li=link_to('Speakers', accounts_path)
+        %li=link_to('Conferences', conferences_path)
+        %li=link_to('Speeches', speeches_path)
+    %ul.nav.navbar-nav.navbar-right
+      %li
+        -if user_signed_in? == false
+          = link_to(new_user_session_path) do
+            Login
+            %span.glyphicon.glyphicon-log-in
+      - if user_signed_in?
+        %li.dropdown
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            Hello,
+            =current_user.account.f_name
+            %span.caret
+          %ul.dropdown-menu
+            %li
+              =link_to(my_speeches_speeches_path) do
+                My speeches
+                %span.glyphicon.glyphicon-pencil
+            %li
+              =link_to(my_conferences_conferences_path) do
+                My conferences
+                %span.glyphicon.glyphicon-blackboard
+            %li
+              =link_to(my_requests_accounts_path) do
+                My requests
+                %span.glyphicon.glyphicon-user
+            %li
+              =link_to(new_conference_path) do
+                Create conference
+                %span.glyphicon.glyphicon-plus
+            %li
+              =link_to(new_speech_path) do
+                Create Speech
+                %span.glyphicon.glyphicon-plus
+            %li
+              =link_to(account_path(current_user.account)) do
+                Account
+                %span.glyphicon.glyphicon-user
+            %li
+              =link_to(destroy_user_session_path, :method => :delete) do
+                Logout
+                %span.glyphicon.glyphicon-log-out

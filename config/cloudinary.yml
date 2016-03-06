@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: dmboz1evq
+  api_key: '467119966774924'
+  api_secret: QMCOOO5rNO3-wzPekL6R7FlX9a4
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: dmboz1evq
+  api_key: '467119966774924'
+  api_secret: QMCOOO5rNO3-wzPekL6R7FlX9a4
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: dmboz1evq
+  api_key: '467119966774924'
+  api_secret: QMCOOO5rNO3-wzPekL6R7FlX9a4
+  enhance_image_tag: true
+  static_image_support: false

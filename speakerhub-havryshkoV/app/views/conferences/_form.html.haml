@@ -1,0 +1,22 @@
+= form_for @conference do |f|
+  - if @conference.errors.any?
+    #error_explanation
+      .alert.alert-danger
+        %h2= "#{pluralize(@conference.errors.count, "error")} prohibited this conference from being saved:"
+        %ul
+          - @conference.errors.full_messages.each do |msg|
+            %li= msg
+  .panel-body
+    .col-md-6.col-md-offset-3
+      .form-group
+        =f.label :title
+        =f.text_field :title, autofocus: true, class: "form-control"
+        =f.label :description
+        =f.text_area :description, autofocus: true, class: "form-control textarea", rows: 10
+        =f.label :adress
+        =f.text_field :place, autofocus: true, class: "form-control"
+        =f.label :start_date
+        =f.date_field :start_date, autofocus: true, class: "form-control"
+        =f.label :finish_date
+        =f.date_field :finish_date, autofocus: true, class: "form-control"
+      = f.submit class: "btn btn-primary"

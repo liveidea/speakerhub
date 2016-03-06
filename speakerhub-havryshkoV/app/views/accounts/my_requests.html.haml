@@ -1,0 +1,70 @@
+=render "my_requests_links"
+#requests_table
+  %table.table
+    %h2 Requests
+    %thead
+      %tr
+        %th Conference
+        %th Message sent with request
+        %th Created at
+        %th Request status
+        %th Answer sent with request
+        %th Updated at
+    -@my_requests.each do |request|
+      %tbody
+      -if request.in_process?
+        %tr.warning
+          %th=link_to("#{request.conference.title}", conference_path(request.conference))
+          %th=request.message
+          %th=request.created_at.strftime("%m.%d.%y %H:%M")
+          -# %th=link_to('Destroy request', conference_request_path(request.conference, request) , :method => :delete, :data => { :confirm => 'Are you sure?' })
+          %th In process
+          %th -
+          %th -
+      -elsif request.accepted?
+        %tr.success
+          %th=link_to("#{request.conference.title}", conference_path(request.conference))
+          %th=request.message
+          %th=request.created_at.strftime("%m.%d.%y %H:%M")
+          -# %th=link_to('Destroy request', conference_request_path(request.conference, request) , :method => :delete, :data => { :confirm => 'Are you sure?' })
+          %th Accepted
+          %th=request.answer
+          %th=request.updated_at.strftime("%m.%d.%y %H:%M")
+      -elsif request.declined?
+        %tr.danger
+          %th=link_to("#{request.conference.title}", conference_path(request.conference))
+          %th=request.message
+          %th=request.created_at.strftime("%m.%d.%y %H:%M")
+          -# %th=link_to('Destroy request', conference_request_path(request.conference, request) , :method => :delete, :data => { :confirm => 'Are you sure?' })
+          %th Declined
+          %th=request.answer
+          %th=request.updated_at.strftime("%m.%d.%y %H:%M")
+-# -if @answered_requests.any?
+-#   %table.table
+-#     %h2 Answered requests
+-#     %thead
+-#       %tr
+-#         %th Conference
+-#         %th Message sent with request
+-#         %th Date created
+-#         %th Request status
+-#         %th Answer sent with request
+-#         %th Updated at
+-#     -@answered_requests.each do |request|
+-#       %tbody
+-#       -if request.accepted?
+-#         %tr.success
+-#           %th=link_to("#{request.conference.title}", conference_path(request.conference))
+-#           %th=request.message
+-#           %th=request.created_at.strftime("%m.%d.%y %H:%M")
+-#           %th Accepted
+-#           %th=request.answer
+-#           %th=request.updated_at.strftime("%m.%d.%y %H:%M")
+-#       -if request.declined?
+-#         %tr.danger
+-#           %th=link_to("#{request.conference.title}", conference_path(request.conference))
+-#           %th=request.message
+-#           %th=request.created_at.strftime("%m.%d.%y %H:%M")
+-#           %th Declined
+-#           %th=request.answer
+-#           %th=request.updated_at.strftime("%m.%d.%y %H:%M")

@@ -1,0 +1,7 @@
+<%if @comment.errors.any?%>
+  $('#comment_errors').html("<%= j render(:partial=>'errors', :locals=>{:target=> @comment})%>")
+<%else%>
+	$('#comments').prepend("<%= j render @comment %>");
+	$('#comment_description').val("");
+	$('#comment_errors').html('');
+<%end%>

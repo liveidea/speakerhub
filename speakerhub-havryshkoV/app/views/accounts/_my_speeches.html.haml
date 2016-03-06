@@ -1,0 +1,4 @@
+%h2.pos="#{@account.f_name} speeches"
+-my_speeches.each do |speech|
+  %p=link_to("#{speech.title}",speech_path(speech), :target => "_blank")
+.paginate_pos=paginate my_speeches, :param_name => 'page_1', remote: true

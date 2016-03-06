@@ -1,0 +1,27 @@
+= form_for @account do |f|
+  - if @account.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@account.errors.count, "error")} prohibited this account from being saved:"
+      %ul
+        - @account.errors.full_messages.each do |msg|
+          %li= msg
+  .panel-body
+    .col-md-6.col-md-offset-3
+      .form-group
+        =f.label :first_name
+        =f.text_field :f_name, autofocus: true, class: "form-control"
+        =f.label :last_name
+        =f.text_field :l_name, autofocus: true, class: "form-control"
+        =f.label :home_city
+        =f.select :city_id, options_for_select(City.all.pluck(:name, :id)), {:prompt => "Select home city"}, {:class => "form-control"}
+        =f.label :phone_number
+        =f.telephone_field :phone, autofocus: true, class: "form-control"
+        =f.label :facebook_account
+        =f.text_field :facebook_account, autofocus: true, class: "form-control"
+        =f.label :skype_account
+        =f.text_field :skype_account, autofocus: true, class: "form-control"
+        =f.label :photo
+        =f.file_field :image, autofocus: true, class: "form-control"
+        =f.label :themes
+        =f.select :theme_ids, options_for_select(Theme.all.pluck(:name, :id),@account.theme_ids),{}, {:multiple => true , :class => "js-select-theme form-control"}
+      =f.submit 'Save',class: "btn btn-primary"

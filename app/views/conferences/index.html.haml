@@ -1,0 +1,35 @@
+%p#notice= notice
+.show-conferences
+  .container-fluid
+    .row
+      .col-md-12{class: "title"}
+        %h2 Conferences
+    .col-sm-3.sidenav.filter
+      .panel.panel-default
+        .panel-heading.text-center
+          %h3 Filter
+        .panel-body
+          =form_tag(conferences_path, method: :get) do
+            =label_tag "Title"
+            =text_field_tag :title,nil, class: "form-control"
+            =label_tag "Start date"
+            =date_field_tag :start_date, (Date.today-1.month),class: "form-control"
+            =label_tag "Finish date"
+            =date_field_tag :finish_date, (Date.today+1.month) ,class: "form-control"
+            .panel-footer
+              =submit_tag "Search", class: "btn btn-default"
+    .col-sm-9
+      %table.table.table-hover
+        %thead
+          %tr
+            %th{style: "width: 35%"} Title
+            %th Adress
+            %th Date
+            %th Speeches
+        %tbody
+          #conferences
+            =render @conferences
+    #paginator.paginate_pos
+      =paginate @conferences, :theme => 'twitter-bootstrap-3'
+    -if user_signed_in?
+      = link_to 'New Conference', new_conference_path, class: "btn btn-primary"

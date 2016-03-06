@@ -1,0 +1,2 @@
+$('tbody').html('<%= j(render partial: @conferences) %>');
+$('#paginator').html('<%= j(paginate(@conferences, :remote => true, :theme => "twitter-bootstrap-3").to_s)%>')
