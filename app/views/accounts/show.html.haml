@@ -5,7 +5,7 @@
       -# %p.account_themes
       -#   ="#{@account.user.themes.pluck(:name).to_sentence}"
       -if @account.image.file
-        =image_tag @account.image.show, class: "img"
+        =image_tag cloudinary_url(@account.image.show), class: "img"
       -if current_user == @account.user
         %br
           = link_to 'Edit account info', edit_account_path(@account), class: "btn btn-primary"
