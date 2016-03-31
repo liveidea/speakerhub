@@ -34,7 +34,6 @@ class ConferencesController < ApplicationController
     @conference = Conference.new
   end
 
-
   def edit
   end
 
@@ -54,7 +53,7 @@ class ConferencesController < ApplicationController
   end
 
   def my_conferences
-    @my_conferences=Conference.where(user: current_user).page(params[:page]).per(20)
+    @my_conferences = Conference.where(user: current_user).page(params[:page]).per(20)
   end
 
   def update
@@ -77,6 +76,7 @@ class ConferencesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
   def speeches
     @speeches = Conference.find(params[:id]).speeches.page(params[:page]).per(5)
     respond_to do |format|
@@ -90,33 +90,36 @@ class ConferencesController < ApplicationController
   # end
 
   private
-    def filtering_params(params)
-      params.slice(:start_date, :finish_date)
-    end
 
-    def set_conference
-      @conference = Conference.find(params[:id])
-    end
+  def filtering_params(params)
+    params.slice(:start_date, :finish_date)
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def conference_params
-      #params[:conference]
-      params.require(:conference).permit(:title, :description, :place, :start_date, :finish_date, :avaliable)
+  def set_conference
+    @conference = Conference.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def conference_params
+    # params[:conference]
+    params.require(:conference).permit(:title, :description, :place, :start_date, :finish_date, :avaliable)
+  end
+
+  def check_permissions
+    if current_user == @conference.user
+      return true
+    else
+      redirect_to :root
+      flash[:alert] = 'You dont have permission to view this page!'
     end
-    def check_permissions
-      if current_user == @conference.user
-        return true
-      else
-        redirect_to :root
-        flash[:alert] = "You dont have permission to view this page!"
-      end
+  end
+
+  def check_auth
+    if user_signed_in?
+      true
+    else
+      redirect_to new_user_registration_path
+      flash[:alert] = 'Please sign up to create conferences'
     end
-    def check_auth
-      if user_signed_in?
-        true
-      else
-        redirect_to new_user_registration_path
-        flash[:alert] = "Please sign up to create conferences"
-      end
-    end
+  end
 end

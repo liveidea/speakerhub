@@ -8,14 +8,14 @@ class SpeechesController < ApplicationController
     @speeches = Speech.all.page(params[:page]).per(10) # creates an anonymous scope
     @speeches = @speeches.location(params[:place]) if params[:place].present?
     @speeches = @speeches.theme(params[:theme]) if params[:theme].present?
-    @speeches = @speeches.joins(:theme).order('themes.name') if params[:sort_by_theme] ==  'on'
-    @speeches = @speeches.order(:title) if params[:sort_by_title] ==  'on'
+    @speeches = @speeches.joins(:theme).order('themes.name') if params[:sort_by_theme] == 'on'
+    @speeches = @speeches.order(:title) if params[:sort_by_title] == 'on'
     @speeches = @speeches.order(:place) if params[:sort_by_city] ==  'on'
-    @speeches = @speeches.order(:date ) if params[:sort_by_date] ==  'on'
+    @speeches = @speeches.order(:date) if params[:sort_by_date] == 'on'
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render xml: @speeches}
-      format.json { render json: @speeches}
+      format.xml  { render xml: @speeches }
+      format.json { render json: @speeches }
     end
   end
 
@@ -65,6 +65,7 @@ class SpeechesController < ApplicationController
       end
     end
   end
+
   # DELETE /speeches/1
   # DELETE /speeches/1.json
   def destroy
@@ -80,14 +81,14 @@ class SpeechesController < ApplicationController
     @my_speeches = Speech.where(user_id: current_user).page(params[:page]).per(5)
     @my_speeches = @my_speeches.location(params[:place]) if params[:place].present?
     @my_speeches = @my_speeches.theme(params[:theme]) if params[:theme].present?
-    @my_speeches = @my_speeches.joins(:theme).order('themes.name') if params[:sort_by_theme] ==  'on'
-    @my_speeches = @my_speeches.order(:title) if params[:sort_by_title] ==  'on'
+    @my_speeches = @my_speeches.joins(:theme).order('themes.name') if params[:sort_by_theme] == 'on'
+    @my_speeches = @my_speeches.order(:title) if params[:sort_by_title] == 'on'
     @my_speeches = @my_speeches.order(:place) if params[:sort_by_city] ==  'on'
-    @my_speeches = @my_speeches.order(:date ) if params[:sort_by_date] ==  'on'
+    @my_speeches = @my_speeches.order(:date) if params[:sort_by_date] == 'on'
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render xml: @speeches}
-      format.json { render json: @speeches}
+      format.xml  { render xml: @speeches }
+      format.json { render json: @speeches }
     end
   end
 
@@ -101,24 +102,25 @@ class SpeechesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_speech
-      @speech = Speech.find(params[:id])
-      rescue ActiveRecord::RecordNotFound
-        render :file => "#{Rails.root}/public/404", :layout => false, :status => 404
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def speech_params
-      params.require(:speech).permit(:title, :description, :place, :date, :image, :video,:theme_id,:conference_id, :available)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_speech
+    @speech = Speech.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render file: "#{Rails.root}/public/404", layout: false, status: 404
+  end
 
-    def check_permissions
-      if current_user == @speech.user
-        return true
-      else
-        redirect_to :root
-        flash[:alert] = "You dont have permission to view this page!"
-      end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def speech_params
+    params.require(:speech).permit(:title, :description, :place, :date, :image, :video, :theme_id, :conference_id, :available)
+  end
+
+  def check_permissions
+    if current_user == @speech.user
+      return true
+    else
+      redirect_to :root
+      flash[:alert] = 'You dont have permission to view this page!'
     end
+  end
 end

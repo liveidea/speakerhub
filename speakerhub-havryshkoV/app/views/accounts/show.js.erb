@@ -1,5 +1,0 @@
-<%if params[:page_1]%>
-  $('#paginate_speech').html('<%= j(render partial: 'my_speeches', locals: {my_speeches: @my_speeches}) %>');
-<%elsif params[:page_2]%>
-  $('#paginate_conf').html('<%= j(render partial: 'my_conferences', locals: {my_conferences: @my_conferences}) %>')
-<%end%>

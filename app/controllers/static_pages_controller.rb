@@ -1,6 +1,8 @@
+# Static pages controller
 class StaticPagesController < ApplicationController
   def home
-    @users = User.joins(:themes).where(themes: {name: params[:theme].strip}) if params[:theme].present?
+    @users = User.joins(:themes).where(themes:
+    { name: params[:theme].strip }) if params[:theme].present?
   end
 
   def help
